@@ -1,0 +1,1703 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fantabun 26/27</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,600;6..96,700&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bosco:#123B23;--bosco-2:#0D2A19;--bosco-3:#1B5230;
+  --oro:#D6A31A;--oro-2:#F0C64A;--crema:#F3F1E8;--crema-2:#E7E3D4;
+  --inch:#15150F;--rosso:#AF3A2C;--blu:#22699F;--verde:#2C9257;--grigio:#6E6B5E;
+  --display:"Bodoni Moda",Georgia,serif;--ui:"Archivo",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--crema);color:var(--inch);font-family:var(--ui);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+input,select{font:inherit}
+:focus-visible{outline:2px solid var(--oro);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.proto{position:sticky;top:0;z-index:60;background:var(--bosco-2);color:var(--crema);display:flex;flex-wrap:wrap;gap:14px;align-items:center;padding:9px 18px;border-bottom:1px solid rgba(214,163,26,.3)}
+.proto__tag{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--oro);border:1px solid rgba(214,163,26,.45);padding:3px 8px;border-radius:2px}
+.proto__lbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(243,241,232,.45)}
+.proto__spacer{flex:1}
+.seg{display:flex;background:rgba(255,255,255,.07);border-radius:3px;padding:2px}
+.seg button{padding:5px 12px;border-radius:2px;font-size:13px;font-weight:500;color:rgba(243,241,232,.65);transition:.15s}
+.seg button[aria-pressed=true]{background:var(--crema);color:var(--bosco-2);font-weight:600}
+.proto select{background:rgba(255,255,255,.07);color:var(--crema);border:1px solid rgba(255,255,255,.14);border-radius:3px;padding:5px 8px;font-size:13px}
+.proto select option{color:#000}
+
+.shell{max-width:1240px;margin:0 auto;padding:26px 20px 90px;display:grid;grid-template-columns:1fr 300px;gap:30px}
+.shell--wide{grid-template-columns:1fr}
+@media(max-width:960px){.shell{grid-template-columns:1fr;padding:18px 14px 60px}}
+
+.eyebrow{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--oro)}
+h1.title{font-family:var(--display);font-size:clamp(28px,4.2vw,44px);font-weight:700;line-height:1.03;margin:6px 0 0;letter-spacing:-.01em}
+h2.sub{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 12px}
+.lede{color:var(--grigio);margin:10px 0 0}
+
+.card{background:#fff;border:1px solid var(--crema-2);border-radius:6px;padding:19px}
+.card+.card{margin-top:15px}
+.card__hd{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:13px}
+
+.stub{display:grid;grid-template-columns:1fr 14px 1fr;border-radius:5px;overflow:hidden;background:var(--bosco)}
+.stub__half{padding:15px 17px;display:flex;flex-direction:column;gap:3px;justify-content:center}
+.stub__half--got{background:var(--bosco);color:var(--crema)}
+.stub__half--owe{background:repeating-linear-gradient(135deg,rgba(214,163,26,.07) 0 7px,transparent 7px 14px),var(--bosco-2);color:var(--oro-2);border:1px dashed rgba(214,163,26,.55);border-left:0;border-radius:0 5px 5px 0}
+.stub__tear{background:var(--bosco);position:relative}
+.stub__tear::before{content:"";position:absolute;inset:0;left:6px;width:2px;background-image:linear-gradient(var(--crema) 55%,transparent 0);background-size:2px 8px}
+.stub__k{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;opacity:.6}
+.stub__v{font-family:var(--display);font-size:25px;font-weight:700;line-height:1}
+.stub__n{font-size:13px;opacity:.85}
+
+.fa{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:22px;padding:0 7px;font-family:var(--mono);font-size:11px;font-weight:700;border-radius:3px;background:var(--bosco);color:var(--oro-2);flex:none}
+.fa--b{background:var(--crema-2);color:var(--bosco)}
+.fa--free{background:transparent;color:var(--grigio);border:1px dashed var(--crema-2)}
+.ru{display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:50%;font-family:var(--mono);font-size:10px;font-weight:700;color:#fff;flex:none}
+.ru--P{background:var(--oro);color:var(--bosco-2)}.ru--D{background:var(--verde)}.ru--C{background:var(--blu)}.ru--A{background:var(--rosso)}
+
+.turno{border-radius:6px;padding:17px 19px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:var(--bosco);color:var(--crema)}
+.turno--tuo{background:var(--oro);color:var(--bosco-2);animation:breathe 2.6s ease-in-out infinite}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 0 rgba(214,163,26,.55)}50%{box-shadow:0 0 0 9px rgba(214,163,26,0)}}
+.turno__t{font-family:var(--display);font-size:23px;font-weight:700;line-height:1.05;margin:0}
+.turno__s{font-size:13px;opacity:.82;margin:2px 0 0}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 17px;border-radius:4px;font-weight:600;font-size:14px;background:var(--bosco);color:var(--crema);transition:.15s}
+.btn:hover{background:var(--bosco-3)}
+.btn--oro{background:var(--oro);color:var(--bosco-2)}.btn--oro:hover{background:var(--oro-2)}
+.btn--ghost{background:transparent;color:var(--bosco);border:1px solid var(--crema-2)}.btn--ghost:hover{background:var(--crema)}
+.btn--dark{background:transparent;color:var(--crema);border:1px solid rgba(255,255,255,.22)}.btn--dark:hover{background:rgba(255,255,255,.08)}
+.btn--sm{padding:6px 12px;font-size:13px}
+.btn[disabled]{opacity:.35;cursor:not-allowed}
+
+.row{display:flex;align-items:center;gap:11px;padding:8px 0;border-bottom:1px solid var(--crema-2);flex-wrap:wrap;row-gap:2px}
+.row:last-child{border-bottom:0}
+.row>*{min-width:0}
+.row__n,.row__m{overflow-wrap:break-word}
+.row__n{font-weight:500}.row__m{font-size:12px;color:var(--grigio)}.row__sp{flex:1}
+.num{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums}
+.mut{color:var(--grigio)}
+.pick{width:100%;text-align:left;border-radius:4px;padding:8px 10px;transition:.12s;display:flex;align-items:center;gap:11px}
+.pick:hover{background:var(--crema)}
+.pick[disabled]{opacity:.3}
+.scroll{max-height:340px;overflow:auto}
+.scroll--tall{max-height:560px}
+.search{width:100%;padding:10px 13px;border:1px solid var(--crema-2);border-radius:4px;background:var(--crema);margin-bottom:6px}
+.inp{padding:9px 11px;border:1px solid var(--crema-2);border-radius:4px;background:var(--crema);width:96px}
+.selbox{padding:8px 10px;border:1px solid var(--crema-2);border-radius:4px;background:var(--crema);color:var(--inch)}
+.chip{padding:6px 13px;border-radius:20px;font-size:12.5px;font-weight:600;border:1px solid var(--crema-2);color:var(--grigio);transition:.12s}
+.chip[aria-pressed=true]{background:var(--bosco);color:var(--crema);border-color:var(--bosco)}
+
+.rail{position:sticky;top:66px;align-self:start}
+@media(max-width:960px){.rail{position:static}}
+.crediti{background:var(--bosco);color:var(--crema);border-radius:6px;padding:15px 17px;margin-bottom:13px}
+.crediti__n{font-family:var(--display);font-size:40px;font-weight:700;line-height:1;color:var(--oro-2)}
+.crediti__k{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;opacity:.55}
+.slots{display:flex;gap:4px;flex-wrap:wrap;margin:-2px 0 6px 30px}
+.slot{width:14px;height:14px;border-radius:2px;background:var(--crema-2)}
+.slot--f{background:var(--bosco)}
+.slot--cap{background:var(--oro);box-shadow:inset 0 0 0 2px var(--bosco)}
+.repline{display:flex;align-items:center;gap:9px;padding:6px 0}
+.repline+.repline{border-top:1px solid var(--crema-2)}
+
+.tv{background:var(--bosco-2);color:var(--crema);min-height:calc(100vh - 44px);padding:32px 40px}
+.tv__hd{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;border-bottom:1px solid rgba(214,163,26,.28);padding-bottom:16px;margin-bottom:24px;flex-wrap:wrap}
+.tv__t{font-family:var(--display);font-size:clamp(30px,4.6vw,54px);font-weight:700;line-height:.98;margin:4px 0 0}
+.tv__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:11px}
+.tvc{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);border-radius:5px;padding:13px 15px}
+.tvc--live{background:var(--oro);color:var(--bosco-2);border-color:var(--oro)}
+.tvc__n{font-family:var(--display);font-size:21px;font-weight:600;margin:0}
+.tvc__v{font-family:var(--mono);font-size:11.5px;opacity:.7}
+.tvc__b{display:flex;gap:7px;margin-top:8px;flex-wrap:wrap}
+.tvc__grp{display:flex;gap:3px;padding:2px 3px;border-radius:3px;background:rgba(255,255,255,.04)}
+.tvc--live .tvc__grp{background:rgba(0,0,0,.06)}
+.tvc__b i{width:10px;height:10px;border-radius:2px;background:rgba(255,255,255,.18);font-style:normal;display:block}
+.tvc--live .tvc__b i{background:rgba(0,0,0,.14)}
+.tvc{width:100%;transition:.12s}
+.tvc:hover{border-color:rgba(214,163,26,.5)}
+.tvModal{position:fixed;inset:0;background:rgba(13,42,25,.72);z-index:120;display:flex;align-items:center;justify-content:center;padding:20px}
+.tvModal__card{background:var(--crema);color:var(--inch);border-radius:8px;padding:22px 24px;max-width:520px;width:100%;max-height:80vh;overflow:auto}
+
+.gonf{display:inline-flex;align-items:center;gap:7px;font-size:13px}
+.gonf i{width:13px;height:18px;display:block;clip-path:polygon(0 0,100% 0,100% 76%,50% 100%,0 76%);flex:none}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+.note{font-size:12.5px;color:var(--grigio);font-style:italic;margin-top:10px}
+.tabs{display:flex;gap:2px;margin-bottom:13px;border-bottom:1px solid var(--crema-2);flex-wrap:wrap}
+.tabs button{padding:8px 13px;font-size:13px;font-weight:500;color:var(--grigio);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button[aria-pressed=true]{color:var(--inch);border-bottom-color:var(--oro);font-weight:600}
+.adminbar{background:var(--bosco-2);color:var(--crema);border-radius:6px;padding:12px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.adminbar__k{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--oro)}
+.warn{border-color:var(--rosso);background:rgba(175,58,44,.06)}
+.ok{border-color:var(--verde);background:rgba(44,146,87,.06)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--bosco-2);color:var(--crema);padding:11px 20px;border-radius:4px;font-size:14px;z-index:99;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+</style>
+
+<div class="proto">
+  <span class="proto__tag">Fantabun</span>
+  <span class="proto__lbl" id="whoLbl">sei</span>
+  <select id="who" onchange="setWho(this.value)"></select>
+  <span class="proto__lbl" id="viewLbl">vista</span>
+  <div class="seg" id="segView"></div>
+  <div class="proto__spacer"></div>
+  <span class="proto__lbl" id="phaseLbl"></span>
+  <button class="btn btn--sm btn--dark" onclick="S.screen='landing';S.landingOpen=null;render()">Regole</button>
+  <span id="adminCtrls" style="display:contents">
+  <button class="btn btn--sm btn--dark" onclick="S.settingsPanel=!S.settingsPanel;S.teamPanel=false;S.linkPanel=false;render()">Impostazioni</button>
+  <input id="imp" type="file" accept=".json" style="display:none" onchange="importG(this)">
+  <input id="impListone" type="file" accept=".csv,.txt" style="display:none" onchange="importListone(this)">
+  </span>
+</div>
+<div id="app"></div>
+
+<script>
+let LISTONE = [[5841,"P","Svilar","Roma",18,65],[5116,"P","Martinez Jo.","Inter",17,63],[4431,"P","Carnesecchi","Atalanta",16,52],[6966,"P","Butez","Como",16,56],[4312,"P","Maignan","Milan",15,50],[2521,"P","De Gea","Fiorentina",13,45],[572,"P","Meret","Napoli",11,45],[133,"P","Skorupski","Bologna",10,37],[4360,"P","Caprile","Cagliari",9,27],[5876,"P","Di Gregorio","Juventus",9,40],[6482,"P","Mandas","Lazio",9,30],[6462,"P","Okoye","Udinese",9,29],[7332,"P","Bijlow","Genoa",8,18],[2134,"P","Falcone","Lecce",8,25],[7411,"P","Daffara","Parma",7,5],[6641,"P","Suzuki","Parma",7,20],[4236,"P","Muric","Sassuolo",7,15],[218,"P","Perin","Juventus",6,10],[6248,"P","Stankovic F.","Venezia",6,14],[4485,"P","Thiam","Monza",5,12],[2170,"P","Milinkovic-Savic V.","Napoli",5,10],[6415,"P","Palmisani","Frosinone",4,8],[7463,"P","Desplanches","Frosinone",2,8],[2814,"P","Provedel","Inter",2,5],[4,"P","Sportiello","Atalanta",1,1],[7533,"P","Happonen","Bologna",1,1],[7172,"P","Pessina Mas.","Bologna",1,1],[6650,"P","Sherri","Cagliari",1,1],[7301,"P","Tornqvist","Como",1,1],[2809,"P","Vigorito","Como",1,1],[6403,"P","Christensen O.","Fiorentina",1,1],[158,"P","Lezzerini","Fiorentina",1,1],[7466,"P","Lolic","Frosinone",1,1],[219,"P","Sommariva","Genoa",1,1],[6569,"P","Stolz","Genoa",1,1],[1926,"P","Di Gennaro","Inter",1,1],[1930,"P","Pinsoglio","Juventus",1,1],[7337,"P","Motta","Lazio",1,1],[7534,"P","Renzetti","Lazio",1,1],[2815,"P","Terracciano","Milan",1,1],[6813,"P","Torriani","Milan",1,1],[6682,"P","Pizzignacco","Monza",1,1],[7475,"P","Strajnar","Monza",1,1],[2845,"P","Contini","Napoli",1,1],[6662,"P","Corvi","Parma",1,1],[7048,"P","De Marzi","Roma",1,1],[610,"P","Gollini","Roma",1,1],[4518,"P","Russo A.","Sassuolo",1,1],[4867,"P","Turati","Sassuolo",1,3],[7457,"P","Mascardi","Torino",1,1],[5320,"P","Paleari","Torino",1,1],[7363,"P","Siviero","Torino",1,1],[543,"P","Padelli","Udinese",1,1],[5707,"P","Piana","Udinese",1,1],[6671,"P","Grandi","Venezia",1,1],[7531,"P","Pozzi","Venezia",1,1],[7545,"P","Vismara","Atalanta",1,1],[2127,"P","Satalino","Sassuolo",1,1],[7557,"P","Penev","Lecce",1,1],[254,"D","Dimarco","Inter",32,265],[4998,"D","Molina N.","Roma",18,87],[7181,"D","Wesley","Roma",17,83],[4159,"D","Akanji","Inter",16,55],[2788,"D","Bremer","Juventus",15,50],[2296,"D","Mancini","Roma",15,49],[2120,"D","Bastoni","Inter",14,44],[5022,"D","Pavlovic","Milan",14,48],[4409,"D","Rrahmani","Napoli",14,47],[4976,"D","Kalulu","Juventus",13,46],[4317,"D","N'Dicka","Roma",13,44],[6956,"D","Solet","Udinese",13,46],[2514,"D","Stones","Inter",12,38],[5833,"D","Gila","Milan",12,31],[2816,"D","Di Lorenzo","Napoli",12,40],[5750,"D","Ostigard","Genoa",11,40],[6217,"D","Bisseck","Inter",11,33],[5526,"D","Scalvini","Atalanta",10,28],[6869,"D","Ramon","Como",10,32],[5885,"D","Dodò","Fiorentina",10,30],[4807,"D","Hermoso","Roma",10,26],[5514,"D","Vasquez","Genoa",9,33],[5520,"D","Cambiaso","Juventus",9,27],[5641,"D","Chalobah T.","Como",9,26],[6046,"D","Hien","Atalanta",8,16],[554,"D","Zappacosta","Atalanta",8,24],[6042,"D","Lucumì","Bologna",8,18],[4734,"D","Miranda J.","Bologna",8,24],[4210,"D","Mina","Cagliari",8,20],[5365,"D","Dragusin","Fiorentina",8,27],[6531,"D","Jimenez A.","Fiorentina",8,23],[6814,"D","Norton-Cuffy","Genoa",8,22],[4657,"D","Celik","Juventus",8,21],[6496,"D","Bartesaghi","Milan",8,25],[1852,"D","Spinazzola","Napoli",8,24],[6664,"D","Delprato","Parma",8,21],[5862,"D","Valeri","Parma",8,24],[7529,"D","Koulierakis","Roma",8,20],[4994,"D","Vojvoda","Udinese",8,19],[6727,"D","Couto","Como",8,27],[5701,"D","Obert","Cagliari",7,14],[7414,"D","Kaiki","Como",7,23],[5877,"D","Carlos Augusto","Inter",7,27],[6320,"D","Doekhi","Lazio",7,22],[460,"D","Romagnoli","Lazio",7,24],[6989,"D","Tiago Gabriel","Lecce",7,17],[4401,"D","Gabbia","Milan",7,23],[4751,"D","Tomori","Milan",7,20],[2724,"D","Buongiorno","Napoli",7,18],[6672,"D","Idzes","Sassuolo",7,19],[6642,"D","Coco","Torino",7,18],[5010,"D","Ismajli","Torino",7,18],[6485,"D","Kristensen T.","Udinese",7,15],[6916,"D","Ahanor","Atalanta",6,16],[4887,"D","Bellanova","Atalanta",6,15],[7219,"D","Bernasconi","Atalanta",6,17],[7212,"D","Heggem","Bologna",6,15],[4433,"D","Zortea","Bologna",6,19],[6867,"D","Valle","Como",6,18],[7294,"D","Valdepenas","Fiorentina",6,18],[7410,"D","Viery","Fiorentina",6,19],[4952,"D","Monterisi","Frosinone",6,14],[6660,"D","Marcandalli","Genoa",6,13],[4177,"D","Pavard","Inter",6,18],[5620,"D","Tavares N.","Lazio",6,17],[2188,"D","Marusic","Lazio",6,20],[4502,"D","Gallo","Lecce",6,13],[7485,"D","Mangas","Monza",6,15],[6202,"D","Beukema","Napoli",6,16],[6663,"D","Circati","Parma",6,18],[6495,"D","Comuzzo","Torino",6,11],[5555,"D","Kamara H.","Udinese",6,12],[7253,"D","Bella-Kotchap","Venezia",6,13],[2640,"D","Kolasinac","Atalanta",5,12],[7068,"D","Vitik","Bologna",5,11],[5678,"D","Holm","Bologna",5,13],[7532,"D","Kofler","Cagliari",5,11],[7274,"D","Zè Pedro","Cagliari",5,11],[6893,"D","Kempf","Como",5,13],[5449,"D","Parisi","Fiorentina",5,12],[7469,"D","Bracaglia","Frosinone",5,11],[6238,"D","Oyono A.","Frosinone",5,12],[2593,"D","Martin","Genoa",5,15],[6766,"D","Kelly L.","Juventus",5,13],[4817,"D","Pedraza","Lazio",5,15],[6632,"D","Gaspar K.","Lecce",5,12],[6990,"D","Veiga D.","Lecce",5,11],[5840,"D","Olivera","Napoli",5,13],[6986,"D","Rensch","Roma",5,16],[6426,"D","Pedersen","Torino",5,13],[6890,"D","Moreno M.","Venezia",5,11],[5695,"D","Haps","Venezia",5,11],[4461,"D","Zappa","Cagliari",4,9],[7014,"D","Smolcic I.","Como",4,10],[5603,"D","Pongracic","Fiorentina",4,8],[7467,"D","Calvani","Frosinone",4,10],[7537,"D","Mitaj","Genoa",4,9],[5831,"D","Gatti","Juventus",4,10],[7240,"D","Siebert","Lecce",4,12],[2115,"D","Delli Carri","Monza",4,11],[6659,"D","Lucchesi","Monza",4,12],[5838,"D","Birindelli","Monza",4,12],[5307,"D","Valenti","Parma",4,10],[6631,"D","Ghilardi","Roma",4,10],[4374,"D","Walukiewicz","Sassuolo",4,10],[5851,"D","Doig","Sassuolo",4,13],[7526,"D","Comert","Torino",4,10],[4263,"D","Kabasele","Udinese",4,9],[5820,"D","Bertola","Udinese",4,10],[5527,"D","Zanoli","Udinese",4,10],[7312,"D","Arizala","Udinese",4,8],[7538,"D","Halhal","Venezia",4,10],[4845,"D","Correia T.","Venezia",4,12],[5578,"D","Kossounou","Atalanta",3,7],[5498,"D","Casale","Bologna",3,6],[7268,"D","Rodriguez Ju.","Cagliari",3,10],[7125,"D","Idrissi R.","Cagliari",3,7],[4378,"D","Ranieri L.","Fiorentina",3,7],[7175,"D","Joao Mario","Fiorentina",3,7],[7540,"D","Akpoguma","Frosinone",3,7],[5757,"D","Cittadini","Frosinone",3,8],[7012,"D","Provstgaard","Lazio",3,10],[7131,"D","Floriani Mussolini","Lazio",3,12],[5739,"D","De Winter","Milan",3,12],[7211,"D","Athekame","Milan",3,8],[5273,"D","Estupinan","Milan",3,9],[7238,"D","Kouadio","Monza",3,9],[4925,"D","Carboni A.","Monza",3,9],[7235,"D","Troilo","Parma",3,8],[7255,"D","Britschgi","Parma",3,10],[6985,"D","Candè","Sassuolo",3,12],[6892,"D","Schingtienne","Venezia",3,7],[6673,"D","Sverko","Venezia",3,7],[6821,"D","Hainaut","Venezia",3,7],[7326,"D","Helland","Bologna",2,5],[7483,"D","Alhassane","Bologna",2,6],[6896,"D","Van Der Brempt","Como",2,5],[6977,"D","Otoa","Genoa",2,5],[7413,"D","Puczka","Genoa",2,7],[791,"D","Sabelli","Genoa",2,5],[2263,"D","Lazzari","Lazio",2,8],[2728,"D","Pellegrini Lu.","Lazio",2,5],[6883,"D","Jean","Lecce",2,4],[7525,"D","Diawara S.","Milan",2,4],[6638,"D","Marin R.","Napoli",2,6],[252,"D","Biraghi","Torino",2,5],[6925,"D","Palma","Udinese",2,5],[5994,"D","Ebosse","Udinese",2,4],[7478,"D","Franjic","Venezia",2,4],[6681,"D","Sagrado","Venezia",2,4],[7548,"D","Aurelio","Cagliari",2,5],[487,"D","De Silvestri","Bologna",1,4],[418,"D","Goldaniga","Como",1,1],[7407,"D","Cuenca A.","Como",1,8],[5424,"D","Amey","Frosinone",1,1],[7468,"D","Gelli J.","Frosinone",1,1],[7470,"D","Oyono J.","Frosinone",1,3],[7471,"D","Corrado","Frosinone",1,3],[6244,"D","Matturro","Genoa",1,2],[294,"D","Rugani","Juventus",1,3],[6039,"D","Cabal","Juventus",1,4],[327,"D","Patric","Lazio",1,4],[7164,"D","Perez M.","Lecce",1,1],[7182,"D","Ndaba","Lecce",1,4],[5399,"D","Antov","Monza",1,2],[7476,"D","Bakoune","Monza",1,4],[6809,"D","Marianucci","Napoli",1,5],[5481,"D","Mazzocchi","Napoli",1,3],[7202,"D","Ndiaye","Parma",1,4],[6149,"D","Carboni F.","Parma",1,3],[7260,"D","Ziolkowski","Roma",1,2],[6189,"D","Missori","Sassuolo",1,2],[7156,"D","Pieragnolo","Sassuolo",1,1],[7356,"D","Mlacic","Udinese",1,3],[6021,"D","Abankwah","Udinese",1,3],[7454,"D","Gomes","Venezia",1,1],[6875,"C","Paz N.","Como",30,250],[4777,"C","McTominay","Napoli",28,240],[2194,"C","Calhanoglu","Inter",27,230],[2167,"C","Orsolini","Bologna",26,200],[2423,"C","Pulisic","Milan",25,180],[2379,"C","Rabiot","Milan",22,128],[7126,"C","Baturina","Como",19,102],[5559,"C","Da Cunha","Como",18,90],[2766,"C","Zaniolo","Udinese",18,100],[6908,"C","Atta","Fiorentina",17,87],[1870,"C","Barella","Inter",17,80],[4973,"C","McKennie","Juventus",17,68],[632,"C","Zaccagni","Lazio",16,91],[2517,"C","De Bruyne","Napoli",15,98],[5687,"C","Vlasic","Torino",14,80],[5800,"C","Gudmundsson A.","Fiorentina",13,61],[7314,"C","Taylor K.","Lazio",13,64],[5792,"C","Ederson D.S.","Atalanta",12,45],[5119,"C","Samardzic","Atalanta",12,42],[7129,"C","Rodriguez Je.","Como",12,32],[7436,"C","Alajbegovic","Juventus",12,56],[6884,"C","Conceicao","Juventus",12,60],[2606,"C","Modric","Milan",12,50],[7078,"C","Mastantuono","Fiorentina",12,58],[6844,"C","Rowe","Bologna",11,37],[5823,"C","Baldanzi","Genoa",11,30],[4220,"C","Zambo Anguissa","Napoli",11,54],[6151,"C","Perrone","Como",10,38],[152,"C","Zielinski","Inter",10,41],[5562,"C","Thuram K.","Juventus",10,41],[4892,"C","Saelemaekers","Milan",10,43],[536,"C","Politano","Napoli",10,47],[5589,"C","Konè M.","Roma",10,42],[5844,"C","Thorstvedt","Sassuolo",10,41],[5888,"C","Casadei","Torino",10,37],[6684,"C","Ekkelenkamp","Udinese",10,41],[530,"C","Pellegrini Lo.","Roma",10,28],[2077,"C","Pasalic","Atalanta",9,32],[184,"C","Bernardeschi","Bologna",9,21],[1933,"C","Mandragora","Fiorentina",9,28],[5500,"C","Cancellieri","Lazio",9,28],[6398,"C","Isaksen","Lazio",9,25],[6717,"C","Konè I.","Sassuolo",9,20],[2765,"C","Odgaard","Bologna",8,22],[4436,"C","Cambiaghi","Bologna",8,25],[4465,"C","Fagioli","Fiorentina",8,23],[6294,"C","Ndour","Fiorentina",8,25],[6274,"C","Diouf","Inter",8,37],[7070,"C","Sucic P.","Inter",8,26],[827,"C","Locatelli","Juventus",8,32],[5878,"C","Colpani","Monza",8,25],[7223,"C","Vergara","Napoli",8,34],[779,"C","Cristante","Roma",8,29],[7551,"C","Schmid","Frosinone",8,30],[4364,"C","Gaetano","Atalanta",7,24],[5858,"C","Ferguson","Bologna",7,18],[6010,"C","Fazzini","Cagliari",7,19],[7472,"C","Calò","Frosinone",7,25],[5791,"C","Frendrup","Genoa",7,19],[2848,"C","Frattesi","Inter",7,13],[2741,"C","Pessina","Monza",7,20],[4287,"C","Lobotka","Napoli",7,20],[6666,"C","Bernabè","Parma",7,36],[5735,"C","Volpato","Sassuolo",7,23],[6218,"C","Oristanio","Torino",7,27],[6783,"C","Unai Gomez","Udinese",7,23],[5946,"C","Sow","Genoa",7,14],[5422,"C","Zalewski","Atalanta",6,21],[5298,"C","Pobega","Bologna",6,14],[4870,"C","Adopo","Cagliari",6,13],[4260,"C","Winks","Cagliari",6,14],[5036,"C","Caqueret","Como",6,20],[6678,"C","Liberali","Como",6,22],[7464,"C","Oulai","Fiorentina",6,20],[6020,"C","Ellertsson","Genoa",6,18],[5761,"C","Zhegrova","Juventus",6,18],[4459,"C","Rovella","Lazio",6,16],[5504,"C","Coulibaly L.","Lecce",6,14],[6549,"C","Pierotti","Lecce",6,19],[4856,"C","Chukwueze","Milan",6,11],[6593,"C","Akinsanmiro","Monza",6,16],[4349,"C","Nicolussi Caviglia","Parma",6,18],[6680,"C","Karlstrom","Udinese",6,20],[5674,"C","Basic","Venezia",6,19],[7528,"C","Amondarain","Bologna",5,12],[7311,"C","Romano","Cagliari",5,12],[6640,"C","Felici","Cagliari",5,10],[7412,"C","Milla","Como",5,14],[7127,"C","Addai","Como",5,10],[5998,"C","Zerbin","Frosinone",5,13],[7409,"C","Meichtry","Genoa",5,14],[2857,"C","Traorè Hj.","Genoa",5,11],[2529,"C","Mkhitaryan","Inter",5,19],[5685,"C","Koopmeiners","Juventus",5,14],[6629,"C","Dele-Bashiru","Lazio",5,13],[6015,"C","Berisha M.","Lecce",5,16],[7318,"C","Gandelman","Lecce",5,14],[4686,"C","Fofana Y.","Milan",5,23],[6898,"C","Keita M.","Parma",5,15],[6984,"C","Ondrejka","Parma",5,18],[6190,"C","Pisilli","Roma",5,17],[2528,"C","Matic","Sassuolo",5,15],[6677,"C","Adzic","Sassuolo",5,14],[7036,"C","Bakola","Sassuolo",5,16],[7060,"C","Cacciamani","Torino",5,18],[6170,"C","Gineitis","Torino",5,13],[7198,"C","Piotrowski","Udinese",5,15],[5507,"C","Busio","Venezia",5,14],[5319,"C","Sohm","Venezia",5,14],[6994,"C","Perez K.","Venezia",5,14],[7550,"C","Grillitsch","Frosinone",5,14],[22,"C","De Roon","Atalanta",4,12],[6054,"C","Moro N.","Bologna",4,10],[6424,"C","Prati","Cagliari",4,7],[6206,"C","Fabbian","Fiorentina",4,8],[7473,"C","Cichella","Frosinone",4,11],[7474,"C","Koutsoupias","Frosinone",4,12],[7341,"C","Amorim","Genoa",4,11],[5301,"C","Luis Henrique","Inter",4,13],[4911,"C","Douglas Luiz","Juventus",4,12],[333,"C","Cataldi","Lazio",4,12],[7322,"C","Ngom","Lecce",4,11],[5453,"C","Ricci S.","Milan",4,11],[7203,"C","Jashari","Milan",4,11],[4199,"C","Loftus-Cheek","Milan",4,11],[6252,"C","Folorunsho","Napoli",4,10],[6207,"C","Almqvist","Parma",4,14],[6271,"C","El Aynaoui","Roma",4,18],[7535,"C","Fitz-Jim","Torino",4,13],[6005,"C","Ilkhan","Torino",4,10],[6827,"C","Njie","Torino",4,12],[6024,"C","Sulemana I.","Atalanta",3,7],[6895,"C","Dominguez B.","Sassuolo",3,8],[1871,"C","Deiola","Cagliari",3,8],[4947,"C","Brescianini","Fiorentina",3,7],[6241,"C","Gelli F.","Frosinone",3,8],[6506,"C","Fini ","Frosinone",3,9],[4970,"C","Messias","Genoa",3,8],[6503,"C","Stankovic A.","Inter",3,10],[5813,"C","Miretti","Juventus",3,11],[7477,"C","Colombo L.","Monza",3,7],[5131,"C","Gilmour","Napoli",3,9],[7209,"C","Sorensen O.","Parma",3,12],[7536,"C","Diallo O.","Parma",3,12],[7183,"C","Aboukhlal","Torino",3,5],[7208,"C","Miller L.","Udinese",3,12],[5872,"C","Helgason","Venezia",3,7],[6225,"C","El Azzouzi O.","Bologna",2,4],[6815,"C","Fadera","Como",2,3],[6903,"C","Hasa","Frosinone",2,5],[6917,"C","Masini","Frosinone",2,4],[6980,"C","Venturino","Genoa",2,6],[5457,"C","Maleh","Lecce",2,5],[5295,"C","Musah","Milan",2,6],[5880,"C","Ciurria","Monza",2,6],[7138,"C","Ordonez C.","Parma",2,5],[6219,"C","Boloca","Sassuolo",2,5],[6246,"C","Lipani","Sassuolo",2,5],[7418,"C","Chakvetadze","Udinese",2,6],[526,"C","Duncan","Venezia",2,4],[7165,"C","Liteta","Cagliari",1,1],[7357,"C","Lahdo","Como",1,1],[7456,"C","El Azzouzi A.","Frosinone",1,3],[5725,"C","Kone B.","Frosinone",1,3],[6191,"C","Belahyane","Lazio",1,5],[7345,"C","Przyborek","Lazio",1,5],[7248,"C","Gorter","Lecce",1,3],[6410,"C","Kaba","Lecce",1,2],[7319,"C","Fofana Sa.","Lecce",1,1],[7276,"C","Cremaschi","Parma",1,3],[7157,"C","Iannoni","Sassuolo",1,1],[5007,"C","Ilic","Torino",1,4],[6889,"C","Anjorin","Torino",1,4],[7392,"C","Camara A.","Udinese",1,3],[6212,"C","Zarraga","Udinese",1,4],[7481,"C","Dagasso","Venezia",1,1],[2764,"A","Martinez L.","Inter",35,370],[5585,"A","Malen","Roma",34,365],[4871,"A","Thuram","Inter",29,280],[6052,"A","Hojlund","Napoli",28,271],[6397,"A","Ramos G.","Milan",27,232],[5951,"A","Kolo Muani","Juventus",26,225],[2097,"A","Kean","Fiorentina",25,212],[6434,"A","Yildiz","Juventus",23,192],[7017,"A","Douvikas","Como",20,157],[2137,"A","Scamacca","Atalanta",19,131],[5637,"A","Davis K.","Udinese",19,122],[6435,"A","Krstovic","Atalanta",18,95],[4510,"A","Leao","Milan",18,120],[531,"A","Berardi","Sassuolo",18,115],[5995,"A","De Ketelaere","Atalanta",17,106],[6675,"A","Dovbyk","Bologna",16,84],[7071,"A","Esposito F.P.","Inter",16,93],[7023,"A","Pellegrino M.","Parma",15,81],[6060,"A","Laurientè","Sassuolo",15,88],[2061,"A","Simeone","Torino",15,82],[7351,"A","Santos A.","Napoli",14,57],[309,"A","Dybala","Roma",14,67],[6572,"A","Castro S.","Roma",14,81],[4371,"A","Raspadori","Atalanta",13,62],[4463,"A","Esposito Se.","Cagliari",13,50],[4728,"A","Nkunku","Milan",13,52],[2038,"A","Pinamonti","Sassuolo",13,55],[7547,"A","Kevin Carlos","Cagliari",13,47],[5734,"A","Soulè","Roma",12,53],[7484,"A","Adams A.","Venezia",12,51],[6967,"A","Diao","Como",11,50],[4923,"A","Colombo","Genoa",11,63],[6229,"A","Tourè E.","Parma",11,43],[5672,"A","Dia","Lazio",10,31],[7313,"A","Ratkov","Lazio",10,32],[7347,"A","Bowie","Sassuolo",10,39],[6530,"A","Ghedjemis","Frosinone",9,30],[5544,"A","David","Juventus",9,40],[5029,"A","Geubbels","Lecce",9,25],[2155,"A","Cutrone","Monza",9,33],[6646,"A","Adams C.","Torino",9,32],[6643,"A","Dallinga","Bologna",8,23],[4359,"A","Piccoli","Fiorentina",8,24],[6164,"A","Vitinha O.","Genoa",8,20],[6904,"A","Yeboah J.","Venezia",8,28],[7449,"A","Rrahmani Al.","Venezia",8,20],[5436,"A","Raimondo","Frosinone",7,24],[6669,"A","Bonny","Inter",7,21],[7252,"A","Stulic","Lecce",7,18],[608,"A","Zapata D.","Torino",7,18],[5918,"A","Sulemana K.","Atalanta",6,16],[6598,"A","Mutandwa","Cagliari",6,19],[2832,"A","Boga","Juventus",6,25],[6556,"A","Noslin","Lazio",6,17],[7008,"A","Gimenez","Milan",6,14],[6831,"A","Neres","Napoli",6,22],[4896,"A","Maldini","Cagliari",5,14],[6519,"A","Camarda","Milan",5,18],[5882,"A","Mota","Monza",5,18],[7213,"A","Frigan","Parma",5,13],[4387,"A","Adorante","Venezia",5,14],[6243,"A","Borrelli","Cagliari",4,9],[7374,"A","Mendy P.","Cagliari",4,9],[313,"A","Morata","Como",4,10],[6204,"A","Kvernadze","Frosinone",4,15],[7453,"A","Havel","Genoa",4,9],[7162,"A","Giovane","Napoli",4,10],[7349,"A","Kulenovic","Torino",4,9],[7272,"A","Gueye","Udinese",4,7],[7546,"A","Robinson J.","Monza",4,10],[7128,"A","Kuhn","Como",3,5],[6822,"A","Ekhator","Juventus",3,10],[7001,"A","N'Dri","Lecce",3,9],[7523,"A","Varela G.","Monza",3,7],[7120,"A","Lang","Napoli",3,10],[6215,"A","Lucca","Napoli",3,10],[7342,"A","Elphege","Parma",3,11],[383,"A","Petagna","Monza",2,5],[7249,"A","Buksa","Udinese",2,4],[7338,"A","Albarracin","Cagliari",1,1],[7317,"A","Trepy","Cagliari",1,2],[7027,"A","Azon","Como",1,1],[6981,"A","Vaz","Roma",1,4],[7158,"A","Moro L.","Sassuolo",1,1],[7161,"A","Bayo V.","Udinese",1,3],[7408,"A","Lisman","Venezia",1,1],[7482,"A","Lauberbach","Venezia",1,1]];
+let PL,byId,KITS;
+
+const BND=i=>i<5?'A1':i<10?'A2':i<15?'B1':'B2';
+const COMPL={A1:'B2',A2:'B1',B1:'A2',B2:'A1'};
+const PBAND={A1:'1',A2:'2',B1:'3',B2:'4'};
+const ROLE={P:'Portieri',D:'Difensori',C:'Centrocampisti',A:'Attaccanti'};
+const ROLE1={P:'portiere',D:'difensore',C:'centrocampista',A:'attaccante'};
+const TOT={P:2,D:8,C:8,A:6};
+const Q={P:[0,0,1,1,0],D:[0,0,2,3,3],C:[0,0,2,3,3],A:[0,0,2,2,2]};
+const CONTRADE={Oca:'#0F7B3E',Torre:'#8C3020',Onda:'#1B5FA8',Pantera:'#8E2C6B',Selva:'#2E7D4F',Nicchio:'#1B4C8C',Aquila:'#C9A227',Chiocciola:'#7A5CA8',Drago:'#B03A2C',Istrice:'#3F6E8C'};
+const NOMI=['Dario','Lollo','Nico','Giulio','Fede','Marta','Ale','Pippo','Teo','Vale'];
+const RCOL={P:'oro',D:'verde',C:'blu',A:'rosso'};
+
+/* ---------------- codici di accesso (link personali) ----------------
+   I link personali non usano più il nome della squadra in chiaro (chiunque
+   avrebbe potuto provare a scrivere il nome di un altro), ma un codice
+   opaco per squadra + uno per l'admin, generati una volta e salvati a
+   parte da 'fantabun_state' (così sopravvivono ad Azzera/Carica e i link
+   già condivisi restano validi). L'admin può rigenerarli da 'Link'. */
+function randCode(){const a='abcdefghijkmnpqrstuvwxyz23456789';return Array.from({length:8},()=>a[Math.floor(Math.random()*a.length)]).join('');}
+function nuoviCodici(){const teams={};NOMI.forEach((_,i)=>teams[i]=randCode());return{admin:randCode(),teams};}
+function salvaCodici(c){try{localStorage.setItem('fantabun_codes',JSON.stringify(c));}catch(e){}}
+function caricaCodici(){
+  let c=null;
+  try{c=JSON.parse(localStorage.getItem('fantabun_codes'));}catch(e){}
+  if(!c||!c.admin||!c.teams||Object.keys(c.teams).length!==NOMI.length){c=nuoviCodici();salvaCodici(c);}
+  return c;
+}
+let CODES=caricaCodici();
+function rigeneraCodici(){askConfirm('rigenera');}
+
+let FASCE={},ROLE_RANK={},LISTONE_ALL_KEYS=[];
+/* ricostruisce PL/byId/KITS/FASCE/ROLE_RANK/LISTONE_ALL_KEYS a partire da
+   LISTONE: si chiama una volta al boot e di nuovo ogni volta che si carica
+   un listone aggiornato da Impostazioni → Carica listone. */
+function buildDerived(){
+  PL=LISTONE.map(r=>({id:r[0],r:r[1],n:r[2],s:r[3],q:r[4],v:r[5]}));
+  byId=new Map(PL.map(p=>[p.id,p]));
+  KITS=(()=>{const m=new Map();
+    PL.filter(p=>p.r==='P').forEach(p=>{const c=m.get(p.s); if(!c||p.q>c.q||(p.q===c.q&&p.v>c.v)) m.set(p.s,{s:p.s,v:p.v,q:p.q,tit:p.n});});
+    return [...m.values()].sort((a,b)=>b.q-a.q||b.v-a.v||a.s.localeCompare(b.s));})();
+  FASCE={};ROLE_RANK={};
+  for(const r of ['D','C','A']){
+    const sorted=PL.filter(p=>p.r===r).sort((a,b)=>b.q-a.q||b.v-a.v||a.id-b.id);
+    sorted.forEach((p,i)=>ROLE_RANK['c:'+p.id]=i+1);
+    sorted.slice(0,20).forEach((p,i)=>FASCE['c:'+p.id]={banda:BND(i),rank:i+1,ruolo:r});
+  }
+  KITS.forEach((k,i)=>{FASCE['k:'+k.s]={banda:BND(i),rank:i+1,ruolo:'P'};ROLE_RANK['k:'+k.s]=i+1;});
+  LISTONE_ALL_KEYS=[...KITS.map(k=>'k:'+k.s),...PL.filter(p=>p.r!=='P').map(p=>'c:'+p.id)]
+    .sort((ka,kb)=>{const a=ent(ka),b=ent(kb);return b.q-a.q||b.v-a.v||a.nome.localeCompare(b.nome);});
+}
+buildDerived();
+
+function ent(key){
+  if(key[0]==='c'){const p=byId.get(+key.slice(2));return{key,tipo:'c',nome:p.n,sub:p.s,ruolo:p.r,v:p.v,q:p.q,id:p.id};}
+  const k=KITS.find(x=>x.s===key.slice(2));return{key,tipo:'k',nome:k.s,sub:'kit portiere · '+k.tit,ruolo:'P',v:k.v,q:k.q};
+}
+const bandaOf=k=>FASCE[k]?FASCE[k].banda:null;
+const isTop20=k=>!!FASCE[k];
+
+/* ---------------- stato ---------------- */
+let G,HIST=[],S={screen:'landing',landingOpen:null,view:'player',who:0,tab:'D',capTab:'Tutti',v0team:'Tutte',v0band:'Tutte',
+  f2team:'Tutte',f2role:'Tutti',f2band:'Tutte',f3team:'Tutte',f3role:'Tutti',tvSel:null,
+  lsRole:'Tutti',lsTeam:'Tutte',lsStatus:'Tutti',locked:false,f2Sum:false,f3Sum:false,f4Sum:false,
+  teamPanel:false,linkPanel:false,settingsPanel:false,confirmAction:null,confirmMsg:null,
+  f5Ladro:null,f5Vittima:null,f5KeyRubato:null,f5KeyRestituito:null,
+  f6Team:null,f6KeyOut:null,
+  q:'',focus:false,msg:''};
+
+function freshG(){
+  const shuf=[...Object.keys(CONTRADE)].sort(()=>Math.random()-.5);
+  const g={phase:0,
+    pl:NOMI.map((n,i)=>({id:i,nome:n,crediti:80,contrada:shuf[i]})),
+    own:{},ros:{},
+    f1:{stato:'scelta',sel:{},bids:{},duels:[],di:0},
+    f2:{open:null,q:[],pos:0},
+    f3:{round:-1,order:[],pos:0},
+    f4:{cur:null,skip:null,last:null,esclusi:[],role:'D',bandIdx:0,band:[],bandDrawn:[]},
+    log:[]};
+  g.pl.forEach(p=>g.ros[p.id]=[]);
+  return g;
+}
+function reset(){
+  G=freshG();
+  HIST=[];S.view='player';S.who=0;S.q='';save();render();
+}
+const P=()=>G.pl;
+const me=()=>G.pl[S.who];
+const ros=pid=>G.ros[pid];
+const cap=pid=>ros(pid).find(a=>a.cap);
+const owner=k=>G.own[k];
+const free=k=>G.own[k]===undefined;
+function snap(){HIST.push(JSON.stringify(G));if(HIST.length>60)HIST.shift();}
+function undo(){if(!HIST.length)return toast('Niente da annullare');G=JSON.parse(HIST.pop());render();}
+function toast(m){S.msg=m;render();setTimeout(()=>{S.msg='';render();},1900);}
+function logit(t){G.log.unshift({t,ts:Date.now()});}
+
+const got=(pid,fase,r)=>ros(pid).filter(a=>a.fase===fase&&a.ruolo===r).length;
+const gotTot=(pid,r)=>ros(pid).filter(a=>a.ruolo===r).length;
+/* valore di riferimento = Qt.A (quotazione di acquisto) del listone, non il FVM */
+const valore=pid=>ros(pid).reduce((s,a)=>s+ent(a.key).q,0);
+const completa=pid=>['P','D','C','A'].every(r=>gotTot(pid,r)>=TOT[r]);
+
+function give(pid,key,fase,prezzo,isCap,isLiv){
+  const e=ent(key);
+  G.own[key]=pid;
+  ros(pid).push({key,ruolo:e.ruolo,fase,banda:bandaOf(key),prezzo:prezzo||0,cap:!!isCap,liv:!!isLiv});
+  if(prezzo)G.pl[pid].crediti-=prezzo;
+}
+/* toglie un calciatore dalla rosa di una squadra e lo rimette libero: serve
+   alle Fasi 5 e 6, dove per la prima volta un calciatore può cambiare
+   squadra o uscire di rosa DOPO essere già stato assegnato. */
+function removeRoster(pid,key){
+  const arr=ros(pid);
+  const i=arr.findIndex(a=>a.key===key);
+  if(i<0)return null;
+  const rec=arr.splice(i,1)[0];
+  delete G.own[key];
+  return rec;
+}
+
+/* ---------------- fase 1 ---------------- */
+const capOk=k=>k[0]==='c'&&!isTop20(k)&&free(k)&&byId.get(+k.slice(2)).r!=='P';
+function scegliCap(key){
+  if(!capOk(key))return toast('Non ammesso come capitano');
+  snap();G.f1.sel[me().id]=key;render();
+}
+function chiudiScelte(){
+  const sel=G.f1.sel;
+  if(Object.keys(sel).length<10)return toast('Non tutti hanno scelto');
+  snap();
+  const m={};Object.entries(sel).forEach(([pid,k])=>{(m[k]=m[k]||[]).push(+pid);});
+  const duels=Object.entries(m).filter(([k,ps])=>ps.length>1).map(([k,ps])=>({key:k,pids:ps,winner:null,prezzo:0,done:false}));
+  Object.entries(m).forEach(([k,ps])=>{if(ps.length===1)give(ps[0],k,1,0,true);});
+  G.f1.duels=duels;G.f1.di=0;G.f1.bids={};
+  G.f1.stato=duels.length?'duelli':'riscelta';
+  if(!duels.length)G.f1.stato=chiRiscegli().length?'riscelta':'rivelato';
+  logit('Scelte capitano chiuse'+(duels.length?` · ${duels.length} doppioni`:''));
+  render();
+}
+const duel=()=>G.f1.duels[G.f1.di]||null;
+function punta(v){const d=duel();if(!d)return;snap();G.f1.bids[me().id]=Math.max(0,Math.min(v,me().crediti));render();}
+function risolviDuel(wid){
+  const d=duel();if(!d)return;
+  const b=G.f1.bids,prezzo=b[wid]||0;
+  if(d.pids.some(p=>b[p]===undefined))return toast('Mancano delle offerte');
+  snap();
+  give(wid,d.key,1,prezzo,true);
+  const persi=d.pids.filter(p=>p!==wid);
+  const qta=Math.floor(prezzo/persi.length),resto=prezzo-qta*persi.length;
+  persi.forEach((p,i)=>G.pl[p].crediti+=qta+(i<resto?1:0));
+  d.winner=wid;d.prezzo=prezzo;d.done=true;
+  logit(`${G.pl[wid].nome} vince ${ent(d.key).nome} per ${prezzo} · rimborso a ${persi.map(p=>G.pl[p].nome).join(', ')}`);
+  G.f1.bids={};
+  if(G.f1.di<G.f1.duels.length-1)G.f1.di++;
+  else G.f1.stato=chiRiscegli().length?'riscelta':'rivelato';
+  render();
+}
+const chiRiscegli=()=>P().filter(p=>!cap(p.id)).map(p=>p.id);
+function risceglie(key){
+  if(!capOk(key))return toast('Non ammesso');
+  snap();give(me().id,key,1,0,true);
+  logit(`${me().nome} riscegli ${ent(key).nome} come capitano`);
+  if(!chiRiscegli().length)G.f1.stato='rivelato';
+  render();
+}
+
+/* ---------------- fase 2 — asta libera ---------------- */
+/* L'ordine di chiamata è CASUALE (una coda mescolata a inizio Fase 2).
+   Ogni turno il chiamante sceglie QUALSIASI ruolo (P/D/C/A) ancora dovuto,
+   rispettando solo la fascia dovuta per quel ruolo specifico. In più, tutta
+   la Fase 2 è divisa in due GIRI GLOBALI: finché anche una sola squadra
+   deve ancora prendere una fascia A1/A2 (o 1/2 per i portieri) di un ruolo
+   che le manca, si possono chiamare SOLO calciatori di fascia A — le B1/B2
+   restano bloccate per tutti, anche per chi le ha già "sbloccate" prendendo
+   la propria A. Solo quando tutte le squadre hanno preso, per ogni ruolo
+   che serve loro, la propria fascia A, si apre il giro B e si chiamano le
+   B1/B2 complementari. Chi vince la propria chiamata richiama subito; a chi
+   viene "soffiata" la chiamata il turno torna al giro successivo. Chi ha
+   completato tutta la quota di Fase 2 (1P + 2D + 2C + 2A) esce dalla coda
+   e non chiama più; chi non ha più nulla di chiamabile nel giro corrente
+   (ha già la sua A ma la B è ancora bloccata) viene saltato automaticamente
+   finché il giro B non si apre. */
+function neededRoles(pid){
+  return ['P','D','C','A'].filter(r=>got(pid,2,r)<Q[r][2]);
+}
+/* fascia dovuta da questa squadra per questo ruolo, SENZA il vincolo del giro globale */
+function reqBandsRole(pid,r){
+  if(got(pid,2,r)>=Q[r][2])return[];
+  const a=ros(pid).find(x=>x.fase===2&&x.ruolo===r&&x.banda&&x.banda[0]==='A');
+  if(a)return[COMPL[a.banda]];
+  return['A1','A2'];
+}
+/* true finché il giro A è aperto: almeno una squadra deve ancora prendere
+   la fascia A di un ruolo che le serve. */
+function stageAOpen(){
+  return P().some(p=>['P','D','C','A'].some(r=>{
+    if(got(p.id,2,r)>=Q[r][2])return false;
+    return !ros(p.id).some(a=>a.fase===2&&a.ruolo===r&&a.banda&&a.banda[0]==='A');
+  }));
+}
+/* fascia dovuta da questa squadra per questo ruolo, filtrata sul giro globale
+   corrente: durante il giro A nasconde le B anche a chi le avrebbe già sbloccate. */
+function callableBandsRole(pid,r){
+  const raw=reqBandsRole(pid,r);
+  if(!raw.length)return raw;
+  return stageAOpen()?raw.filter(b=>b[0]==='A'):raw;
+}
+function restaF2(pid){return['P','D','C','A'].reduce((s,r)=>s+Math.max(0,Q[r][2]-got(pid,2,r)),0);}
+const maxSpesa=pid=>Math.max(1,G.pl[pid].crediti-Math.max(0,restaF2(pid)-1));
+function attivi2(){return P().map(p=>p.id).filter(pid=>neededRoles(pid).length>0);}
+/* salta automaticamente chi è ancora in coda ma non ha nulla di chiamabile
+   nel giro corrente (ha già la sua A, aspetta che si apra il giro B). */
+function caller2(){
+  if(!G.f2.q.length)return null;
+  let tries=0;
+  while(tries<G.f2.q.length){
+    const pid=G.f2.q[G.f2.pos%G.f2.q.length];
+    if(candidati2(pid).length)return pid;
+    G.f2.pos=(G.f2.pos+1)%G.f2.q.length;
+    tries++;
+  }
+  return null;
+}
+function avviaFase2(){
+  snap();
+  G.f2={open:null,q:P().map(p=>p.id).sort(()=>Math.random()-.5),pos:0};
+  G.phase=2;
+  logit('Fase 2 · apre l\'asta libera degli Intoccabili (ordine casuale, si parte dalle fasce A1/A2)');
+  render();
+}
+function chiama2(key){
+  const c=caller2();if(c===null)return;
+  if(!free(key))return toast('Già preso');
+  const e=ent(key);
+  const allowed=callableBandsRole(c,e.ruolo);
+  if(!allowed.includes(bandaOf(key))){
+    const raw=reqBandsRole(c,e.ruolo);
+    return toast(raw.includes(bandaOf(key))?'Prima si chiudono tutte le fasce A1/A2, poi si passa alle B':'Fascia non consentita per questo ruolo');
+  }
+  snap();G.f2.open={key,caller:c};S.q='';render();
+}
+function eligibili2(){
+  const o=G.f2.open;if(!o)return[];
+  const e=ent(o.key),b=bandaOf(o.key);
+  return P().map(p=>p.id).filter(pid=>reqBandsRole(pid,e.ruolo).includes(b));
+}
+function aggiudica(wid,prezzo){
+  const o=G.f2.open;if(!o)return;
+  prezzo=Math.max(1,Math.floor(+prezzo||1));
+  if(prezzo>maxSpesa(wid))return toast(`${G.pl[wid].nome} può spendere al massimo ${maxSpesa(wid)}`);
+  snap();
+  const caller=o.caller;
+  give(wid,o.key,2,prezzo);
+  logit(`${ent(o.key).nome} → ${G.pl[wid].nome} per ${prezzo} (chiamato da ${G.pl[caller].nome})`);
+  if(!neededRoles(wid).length){
+    const wi=G.f2.q.indexOf(wid);if(wi>=0)G.f2.q.splice(wi,1);
+  }
+  if(wid===caller){
+    if(G.f2.pos>=G.f2.q.length)G.f2.pos=0;
+  } else {
+    const ci=G.f2.q.indexOf(caller);
+    G.f2.pos=ci>=0?(ci+1)%Math.max(1,G.f2.q.length):(G.f2.q.length?G.f2.pos%G.f2.q.length:0);
+  }
+  G.f2.open=null;
+  if(!G.f2.q.length){logit('Asta libera completata');G.phase=3;G.f3.round=-1;apriGiro3();}
+  render();
+}
+function annullaChiamata(){snap();G.f2.open=null;render();}
+function candidati2(pid){
+  if(pid===null)return[];
+  const roles=neededRoles(pid);
+  const out=[];
+  roles.forEach(r=>{
+    const b=callableBandsRole(pid,r);
+    if(!b.length)return;
+    const src=r==='P'?KITS.map(k=>'k:'+k.s):PL.filter(p=>p.r===r).map(p=>'c:'+p.id);
+    src.forEach(k=>{if(free(k)&&b.includes(bandaOf(k)))out.push(ent(k));});
+  });
+  return out.sort((a,b)=>b.q-a.q||b.v-a.v||((a.id||0)-(b.id||0)));
+}
+
+/* ---------------- fase 3 — draft dei Rockies ---------------- */
+function apriGiro3(){
+  const ri=G.f3.round+1;
+  if(ri>=9){
+    const mosse=livellaSquadre();
+    const msg=mosse
+      ? `Livellamento pre-Fase 4 · ${mosse} calciatori assegnati per pareggiare il numero di giocatori in rosa`
+      : `Fase 3 chiusa · tutte le squadre hanno già lo stesso numero di calciatori in rosa`;
+    logit(msg);
+    G.phase=4;nextF4();
+    toast(msg);
+    return;
+  }
+  G.f3.round=ri;G.f3.pos=0;
+  G.f3.order=P().map(p=>p.id).sort((a,b)=>valore(a)-valore(b)||G.pl[a].nome.localeCompare(G.pl[b].nome));
+  G.phase=3;
+  logit(`Fase 3 · apre il giro ${ri+1}`);
+  render();
+}
+/* ---------------- livellamento pre-fase4 ---------------- */
+/* Anche la scelta del capitano (Fase 1) è di fatto un draft libero, quindi a
+   fine Fase 3 il numero totale di calciatori in rosa deve essere identico
+   per tutte le squadre prima di aprire la Fase 4 dell'estrazione casuale.
+   Con le quote fisse di Fase 2/3 (uguali per tutti, indipendenti dal ruolo
+   scelto per il capitano) questo è già garantito nel gioco normale — questo
+   passaggio è la verifica esplicita e la rete di sicurezza che ripristina la
+   parità in ogni caso limite (rosa corretta a mano, stato importato da un
+   salvataggio precedente...). Le squadre indietro pescano, come nel draft,
+   il miglior calciatore libero ancora disponibile per un ruolo che manca
+   loro davvero (rispetto alla quota FINALE di rosa, non più a quella della
+   sola Fase 3, ormai esaurita per tutti), finché non raggiungono anche loro
+   il numero massimo di calciatori delle altre squadre. */
+function okLivella(pid,key){
+  if(!free(key))return false;
+  const e=ent(key);
+  if(gotTot(pid,e.ruolo)>=TOT[e.ruolo])return false;
+  if(e.tipo==='k'){
+    const k2=ros(pid).find(a=>a.fase===2&&a.ruolo==='P');
+    return k2?bandaOf(key)===COMPL[k2.banda]:true;
+  }
+  if(isTop20(key))return false;
+  return true;
+}
+function candidatiLivella(pid){
+  const out=[];
+  KITS.forEach(k=>{if(okLivella(pid,'k:'+k.s))out.push(ent('k:'+k.s));});
+  PL.forEach(p=>{const k='c:'+p.id;if(p.r!=='P'&&okLivella(pid,k))out.push(ent(k));});
+  return out.sort((a,b)=>b.q-a.q||b.v-a.v||((a.id||0)-(b.id||0)));
+}
+function livellaSquadre(){
+  const max=Math.max(...P().map(p=>ros(p.id).length));
+  let mosse=0,guard=0;
+  while(guard++<400){
+    const corte=P().filter(p=>ros(p.id).length<max);
+    if(!corte.length)break;
+    let progress=false;
+    corte.forEach(p=>{
+      const cand=candidatiLivella(p.id)[0];
+      if(cand){give(p.id,cand.key,3,0,false,true);logit(`Livellamento · ${p.nome} prende ${cand.nome}`);mosse++;progress=true;}
+    });
+    if(!progress)break;
+  }
+  return mosse;
+}
+/* il capitano (Fase 1) è di fatto una scelta di draft: alla squadra che lo
+   ha preso in un certo ruolo, la Fase 3 chiede un calciatore in meno in
+   quello stesso ruolo, cosi che dopo la Fase 3 tutte le squadre abbiano lo
+   stesso numero di calciatori per ruolo, qualunque ruolo abbia il capitano. */
+function capRuolo(pid){const c=cap(pid);return c?c.ruolo:null;}
+function q3(pid,r){const base=Q[r][3];return capRuolo(pid)===r?Math.max(0,base-1):base;}
+function caller3(){
+  while(G.f3.pos<10&&!candidati3(G.f3.order[G.f3.pos]).length)G.f3.pos++;
+  return G.f3.pos<10?G.f3.order[G.f3.pos]:null;
+}
+/* draft libero: qualsiasi calciatore libero e fuori dai top 20 (riservati
+   alla Fase 2) va bene, in qualunque posizione del listone — niente più
+   limite ai migliori 10 rimasti per ruolo. */
+function ok3(pid,key){
+  if(!free(key))return false;
+  const e=ent(key);
+  if(got(pid,3,e.ruolo)>=q3(pid,e.ruolo))return false;
+  if(e.tipo==='k'){
+    const k2=ros(pid).find(a=>a.fase===2&&a.ruolo==='P');
+    return k2?bandaOf(key)===COMPL[k2.banda]:false;
+  }
+  if(isTop20(key))return false;
+  return true;
+}
+function pick3(key){
+  const c=caller3();if(c===null)return;
+  if(!ok3(c,key))return toast('Scelta non valida');
+  snap();give(c,key,3,0);
+  logit(`Draft · ${G.pl[c].nome} prende ${ent(key).nome}`);
+  G.f3.pos++;S.q='';
+  if(G.f3.pos>=10)logit(`Giro ${G.f3.round+1} chiuso · valori ricalcolati`);
+  render();
+}
+
+/* ---------------- fase 4 ---------------- */
+/* L'estrazione procede un ruolo alla volta — prima i difensori, poi i
+   centrocampisti, poi gli attaccanti — e dentro ogni ruolo a "fasce" da 10
+   calciatori (i migliori 10 ancora liberi per quel ruolo). Dentro la fascia
+   l'ordine dei calciatori NON è casuale: si segue il listone, quindi si
+   mette in palio sempre il calciatore di valore più alto rimasto nella
+   fascia. L'unica cosa che resta a sorte è QUALE squadra lo riceve (il tiro
+   di dado sulla contrada, in estrai()). Il capitano di ciascuna squadra ha
+   già "consumato" un posto del suo ruolo in Fase 3 (vedi q3()), quindi qui
+   ogni fascia vale sempre 10 e ogni squadra pesca sempre 3 D, 3 C, 2 A. */
+const RUOLI_F4=['D','C','A'];
+function restanti4(){
+  const need={};RUOLI_F4.forEach(r=>need[r]=P().some(p=>gotTot(p.id,r)<TOT[r]));
+  const esclusi=G.f4.esclusi||[];
+  return PL.filter(p=>need[p.r]&&free('c:'+p.id)&&!esclusi.includes('c:'+p.id)).sort((a,b)=>b.q-a.q||b.v-a.v||a.id-b.id);
+}
+/* riempie G.f4.band con la prossima fascia del ruolo corrente, avanzando
+   di ruolo (D→C→A→fine) quando un ruolo è completo per tutte le squadre. */
+/* quanti D/C/A servono ANCORA in totale a tutte le squadre insieme, per il
+   ruolo r (somma dei "posti mancanti" squadra per squadra). */
+function domandaRuolo(r){return P().reduce((s,p)=>s+Math.max(0,TOT[r]-gotTot(p.id,r)),0);}
+function fillBand(){
+  let guard=0;
+  while(G.f4.role&&guard++<200){
+    const r=G.f4.role;
+    const domanda=domandaRuolo(r);
+    if(!domanda){
+      const i=RUOLI_F4.indexOf(r);
+      G.f4.role=i<RUOLI_F4.length-1?RUOLI_F4[i+1]:null;
+      G.f4.bandIdx=0;
+      continue;
+    }
+    const grezza=10;
+    /* mai più grande della domanda residua vera: evita candidati "orfani"
+       che nessuna squadra può più ricevere (es. dopo un ripristino di uno
+       stato salvato a metà fascia, quando la posizione esatta nella
+       sequenza non è più nota con certezza). */
+    const size=Math.min(grezza,domanda);
+    G.f4.bandIdx++;
+    if(!size)continue;
+    const esclusi=G.f4.esclusi||[];
+    const pool=PL.filter(p=>p.r===r&&free('c:'+p.id)&&!esclusi.includes('c:'+p.id))
+      .sort((a,b)=>b.q-a.q||b.v-a.v||a.id-b.id)
+      .slice(0,size).map(p=>'c:'+p.id);
+    if(!pool.length)continue;
+    /* niente rimescolamento: il pool è già ordinato per valore (Qt.A poi FVM)
+       discendente, quindi si segue il listone e si mette in palio sempre il
+       primo/migliore rimasto nella fascia. */
+    G.f4.band=pool;
+    G.f4.bandDrawn=[];
+    return;
+  }
+  G.f4.band=[];
+  G.f4.bandDrawn=[];
+}
+function nextF4(){
+  if(!G.f4.band||!G.f4.band.length)fillBand();
+  G.phase=4;G.f4.cur=(G.f4.band&&G.f4.band.length)?G.f4.band[0]:null;G.f4.skip=null;
+  render();
+}
+/* l'urna si restringe al reparto del calciatore in palio: una squadra che ha
+   già completato QUEL ruolo (anche se la rosa nel complesso non è ancora
+   finita) non entra proprio nel tiro a sorte, così ci si concentra solo su
+   chi ha davvero un buco lì. In più, dentro la STESSA fascia da 10 una
+   squadra che ha già ricevuto un calciatore non può essere ripescata: così
+   ogni fascia si distribuisce equamente, una a testa, invece di lasciare
+   che la sorte dia due calciatori alla stessa squadra e zero a un'altra.
+   L'esclusione si azzera a ogni nuova fascia (fillBand). Se per uno stato
+   anomalo (es. un ripristino a metà fascia) l'esclusione lascerebbe l'urna
+   vuota pur essendoci squadre col ruolo scoperto, si ignora come rete di
+   sicurezza — meglio un'estrazione ripetuta che un blocco totale. Senza un
+   calciatore in palio (fra un'estrazione e l'altra) torna al criterio
+   generale di rosa completa. */
+const urna=()=>{
+  const k=G.f4.cur;
+  if(!k)return P().filter(p=>!completa(p.id));
+  const r=ent(k).ruolo;
+  const base=P().filter(p=>gotTot(p.id,r)<TOT[r]);
+  const drawn=G.f4.bandDrawn||[];
+  const fresh=base.filter(p=>!drawn.includes(p.id));
+  return fresh.length?fresh:base;
+};
+function estrai(pid){
+  const k=G.f4.cur;if(!k)return;
+  const e=ent(k);snap();
+  if(completa(pid)){G.f4.skip=`${G.pl[pid].nome} ha la rosa completa: fuori dall'urna.`;return render();}
+  if(gotTot(pid,e.ruolo)>=TOT[e.ruolo]){
+    G.f4.skip=`${G.pl[pid].nome} ha già ${TOT[e.ruolo]} ${ROLE[e.ruolo].toLowerCase()}. Si riestrae.`;
+    G.f4.last={esito:'scartata',nome:e.nome,sub:e.sub,ruolo:e.ruolo,contrada:G.pl[pid].contrada,squadra:G.pl[pid].nome};
+    logit(`${e.nome} · ${G.pl[pid].contrada} scartata (ruolo pieno)`);
+    return render();
+  }
+  G.f4.last={esito:'assegnato',nome:e.nome,sub:e.sub,ruolo:e.ruolo,contrada:G.pl[pid].contrada,squadra:G.pl[pid].nome};
+  give(pid,k,4,0);
+  G.f4.bandDrawn=G.f4.bandDrawn||[];
+  if(!G.f4.bandDrawn.includes(pid))G.f4.bandDrawn.push(pid);
+  logit(`${e.nome} → ${G.pl[pid].nome} (${G.pl[pid].contrada})`);
+  if(G.f4.band&&G.f4.band[0]===k)G.f4.band.shift();
+  nextF4();
+}
+/* l'admin può escludere il calciatore in palio (es. infortunio grave) prima
+   di estrarre: non va a nessuna squadra ed esce definitivamente dall'urna. */
+function escludiCorrente(){
+  const k=G.f4.cur;if(!k)return;
+  const e=ent(k);
+  snap();
+  G.f4.esclusi=G.f4.esclusi||[];
+  G.f4.esclusi.push(k);
+  G.f4.skip=null;
+  G.f4.last={esito:'escluso',nome:e.nome,sub:e.sub,ruolo:e.ruolo};
+  logit(`${e.nome} escluso dall'estrazione dall'admin (non assegnato a nessuna squadra)`);
+  if(G.f4.band&&G.f4.band[0]===k)G.f4.band.shift();
+  nextF4();
+}
+
+/* ---------------- fase 5 — le carte ----------------
+   Le carte si giocano OFFLINE, fuori dall'app: qui c'è solo la "regia" che
+   registra l'esito. Una squadra (la "ladra") ne usa una per rubare un
+   calciatore a un'altra (la "derubata"); in cambio, la derubata riceve
+   sempre indietro un calciatore dello STESSO ruolo dalla squadra ladra —
+   uno scambio 1 a 1 che non altera mai la composizione per ruolo delle
+   rose (restano sempre 2 P, 8 D, 8 C, 6 A a testa). */
+function apriFase5(){
+  snap();G.phase=5;
+  logit('Fase 5 · si aprono le carte');
+  render();
+}
+function f5SetLadro(v){S.f5Ladro=v?+v:null;if(S.f5Ladro===S.f5Vittima)S.f5Vittima=null;S.f5KeyRubato=null;S.f5KeyRestituito=null;render();}
+function f5SetVittima(v){S.f5Vittima=v?+v:null;if(S.f5Vittima===S.f5Ladro)S.f5Ladro=null;S.f5KeyRubato=null;S.f5KeyRestituito=null;render();}
+function f5PickRubato(key){S.f5KeyRubato=key;S.f5KeyRestituito=null;render();}
+function f5PickRestituito(key){S.f5KeyRestituito=key;render();}
+function f5Reset(){S.f5Ladro=null;S.f5Vittima=null;S.f5KeyRubato=null;S.f5KeyRestituito=null;render();}
+function scambiaCarte(ladroId,vittimaId,keyRubato,keyRestituito){
+  if(ladroId==null||vittimaId==null||ladroId===vittimaId)return toast('Scegli due squadre diverse');
+  if(owner(keyRubato)!==vittimaId)return toast('Il calciatore rubato non è (più) di quella squadra');
+  if(owner(keyRestituito)!==ladroId)return toast('Il calciatore restituito non è (più) di quella squadra');
+  const eR=ent(keyRubato),eD=ent(keyRestituito);
+  if(eR.ruolo!==eD.ruolo)return toast('Lo scambio deve avvenire tra calciatori dello stesso ruolo');
+  snap();
+  removeRoster(vittimaId,keyRubato);
+  removeRoster(ladroId,keyRestituito);
+  give(ladroId,keyRubato,5,0);
+  give(vittimaId,keyRestituito,5,0);
+  logit(`Carte · ${G.pl[ladroId].nome} ruba ${eR.nome} a ${G.pl[vittimaId].nome}, in cambio ${eD.nome}`);
+  f5Reset();
+  toast('Scambio registrato');
+}
+
+/* ---------------- fase 6 — ultime modifiche ----------------
+   Per infortuni gravi tra i calciatori già assegnati: si sostituisce un
+   calciatore in rosa con uno libero dello STESSO ruolo, scelto da tutto il
+   listone senza i vincoli di fascia delle fasi di assegnazione — qui conta
+   solo tappare il buco prima dell'inizio del campionato. */
+function apriFase6(){
+  snap();G.phase=6;
+  logit('Fase 6 · si aprono le ultime modifiche');
+  render();
+}
+function f6SetTeam(v){S.f6Team=v?+v:null;S.f6KeyOut=null;S.q='';render();}
+function f6PickOut(key){S.f6KeyOut=key;S.q='';render();}
+function f6Reset(){S.f6Team=null;S.f6KeyOut=null;S.q='';render();}
+function sostituisci(pid,keyVecchio,keyNuovo){
+  if(pid==null||!keyVecchio||!keyNuovo)return;
+  if(owner(keyVecchio)!==pid)return toast('Calciatore non (più) in quella rosa');
+  if(!free(keyNuovo))return toast('Quel calciatore non è libero');
+  const eV=ent(keyVecchio),eN=ent(keyNuovo);
+  if(eV.ruolo!==eN.ruolo)return toast('La sostituzione deve avvenire tra calciatori dello stesso ruolo');
+  snap();
+  removeRoster(pid,keyVecchio);
+  give(pid,keyNuovo,6,0);
+  logit(`Modifica finale · ${G.pl[pid].nome} sostituisce ${eV.nome} con ${eN.nome} (infortunio)`);
+  f6Reset();
+  toast('Sostituzione registrata');
+}
+
+/* ---------------- auto ---------------- */
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+function auto(n){
+  for(let i=0;i<n;i++){
+    if(G.phase===0){G.phase=1;continue;}
+    if(G.phase===1){
+      if(G.f1.stato==='scelta'){
+        const chi=P().find(p=>!G.f1.sel[p.id]);
+        if(chi){const c=PL.filter(p=>capOk('c:'+p.id));G.f1.sel[chi.id]='c:'+rnd(c).id;continue;}
+        chiudiScelte();continue;
+      }
+      if(G.f1.stato==='duelli'){const d=duel();d.pids.forEach(p=>{if(G.f1.bids[p]===undefined)G.f1.bids[p]=1+Math.floor(Math.random()*18);});
+        let w=d.pids[0];d.pids.forEach(p=>{if(G.f1.bids[p]>G.f1.bids[w])w=p;});risolviDuel(w);continue;}
+      if(G.f1.stato==='riscelta'){const chi=chiRiscegli()[0];if(chi!==undefined){const c=PL.filter(p=>capOk('c:'+p.id));
+        give(chi,'c:'+rnd(c).id,1,0,true);if(!chiRiscegli().length)G.f1.stato='rivelato';continue;}}
+      if(G.f1.stato==='rivelato'){avviaFase2();continue;}
+    }
+    if(G.phase===2){
+      if(!G.f2.q.length){G.phase=3;G.f3.round=-1;apriGiro3();continue;}
+      if(!G.f2.open){const c=caller2();const cand=candidati2(c);if(!cand.length){continue;}
+        G.f2.open={key:rnd(cand.slice(0,8)).key,caller:c};continue;}
+      const el=eligibili2();const w=rnd(el.length?el:[G.f2.open.caller]);
+      aggiudica(w,1+Math.floor(Math.random()*Math.min(9,maxSpesa(w))));continue;
+    }
+    if(G.phase===3){
+      if(G.f3.pos>=10){apriGiro3();continue;}
+      const c=caller3();const cand=candidati3(c);
+      if(!cand.length){G.f3.pos++;continue;}
+      pick3(rnd(cand.slice(0,25)).key);continue;
+    }
+    if(G.phase===4){
+      if(!G.f4.cur){nextF4();if(!G.f4.cur)break;}
+      const u=urna();if(!u.length)break;estrai(rnd(u).id);continue;
+    }
+  }
+  render();
+}
+function autoCapitani(){
+  let guard=0;
+  while(G.phase===1&&G.f1.stato!=='rivelato'&&guard<500){
+    guard++;
+    if(G.f1.stato==='scelta'){
+      const chi=P().find(p=>!G.f1.sel[p.id]);
+      if(chi){const c=PL.filter(p=>capOk('c:'+p.id));G.f1.sel[chi.id]='c:'+rnd(c).id;continue;}
+      chiudiScelte();continue;
+    }
+    if(G.f1.stato==='duelli'){
+      const d=duel();if(!d)break;
+      d.pids.forEach(p=>{if(G.f1.bids[p]===undefined)G.f1.bids[p]=1+Math.floor(Math.random()*18);});
+      let w=d.pids[0];d.pids.forEach(p=>{if(G.f1.bids[p]>G.f1.bids[w])w=p;});
+      risolviDuel(w);continue;
+    }
+    if(G.f1.stato==='riscelta'){
+      const chi=chiRiscegli()[0];
+      if(chi===undefined)break;
+      const c=PL.filter(p=>capOk('c:'+p.id));
+      give(chi,'c:'+rnd(c).id,1,0,true);
+      if(!chiRiscegli().length)G.f1.stato='rivelato';
+      continue;
+    }
+    break;
+  }
+  render();
+}
+function candidati3(pid){
+  if(pid===null)return[];
+  const out=[];
+  KITS.forEach(k=>{if(ok3(pid,'k:'+k.s))out.push(ent('k:'+k.s));});
+  PL.forEach(p=>{const k='c:'+p.id;if(p.r!=='P'&&ok3(pid,k))out.push(ent(k));});
+  return out.sort((a,b)=>b.q-a.q||b.v-a.v||((a.id||0)-(b.id||0)));
+}
+
+/* ---------------- viste ---------------- */
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ru=r=>`<span class="ru ru--${r}">${r}</span>`;
+const fab=(b,pr)=>b?`<span class="fa ${b[0]==='B'?'fa--b':''}">${pr?PBAND[b]:b}</span>`:`<span class="fa fa--free">—</span>`;
+const gonf=c=>`<span class="gonf"><i style="background:${CONTRADE[c]}"></i>${c}</span>`;
+function stub(got,gotN,owe){return `<div class="stub">
+  <div class="stub__half stub__half--got"><span class="stub__k">hai vinto</span><span class="stub__v">${got}</span><span class="stub__n">${esc(gotN)}</span></div>
+  <div class="stub__tear"></div>
+  <div class="stub__half stub__half--owe"><span class="stub__k">ti manca</span><span class="stub__v">${owe}</span><span class="stub__n">da chiamare in questo giro</span></div></div>`;}
+function entRow(e,extra,showPos){const pos=showPos&&ROLE_RANK[e.key]?`<span class="num mut" style="width:30px">${ROLE_RANK[e.key]}°</span>`:'';
+  return `${pos}${e.ruolo?ru(e.ruolo):''}${fab(bandaOf(e.key),e.ruolo==='P')}<span class="row__n">${esc(e.nome)}</span><span class="row__m">${esc(e.sub)}</span><span class="row__sp"></span><span class="num mut">${e.q}</span>${extra||''}`;}
+function lista(cands,onclick,dis,max,showPos){
+  const q=S.q.toLowerCase();
+  const f=cands.filter(e=>!q||e.nome.toLowerCase().includes(q)||e.sub.toLowerCase().includes(q));
+  if(!f.length)return `<div class="note">Nessun risultato con questi filtri.</div>`;
+  return `<div class="scroll scroll--tall">${f.slice(0,max||300).map(e=>
+    `<button class="pick" ${dis?'disabled':''} onclick="${onclick}('${e.key}')">${entRow(e,null,showPos)}</button>`).join('')}</div>`;
+}
+function searchBox(ph){return `<input class="search" id="sq" placeholder="${ph}" value="${esc(S.q)}" oninput="S.q=this.value;S.focus=true;render()">`;}
+function teamSelect(val,onchange,teams){return `<select class="selbox" onchange="${onchange}">
+    <option value="Tutte" ${val==='Tutte'?'selected':''}>Tutte le squadre</option>
+    ${teams.map(t=>`<option value="${esc(t)}" ${t===val?'selected':''}>${esc(t)}</option>`).join('')}
+  </select>`;}
+function roleTabs(val,onchange,roles){return `<div style="display:flex;gap:5px;flex-wrap:wrap">${['Tutti',...roles].map(x=>
+    `<button class="chip" aria-pressed="${x===val}" onclick="${onchange}('${x}')">${x==='Tutti'?'Tutti':x}</button>`).join('')}</div>`;}
+function bandChips(val,onchange,bands){return `<div style="display:flex;gap:5px;flex-wrap:wrap">${['Tutte',...bands].map(b=>
+    `<button class="chip" aria-pressed="${b===val}" onclick="${onchange}('${b}')">${b}</button>`).join('')}</div>`;}
+/* dropdown per scegliere una delle 10 squadre (Fasi 5 e 6): esclude
+   opzionalmente una squadra già scelta nell'altro campo (es. non si può
+   rubare a se stessi). */
+function squadraSelect(val,onchangeFn,exclude){
+  return `<select class="selbox" onchange="${onchangeFn}(this.value)">
+    <option value="" ${val==null?'selected':''}>Scegli…</option>
+    ${P().filter(p=>p.id!==exclude).map(p=>`<option value="${p.id}" ${val===p.id?'selected':''}>${esc(p.nome)} · ${esc(p.contrada)}</option>`).join('')}
+  </select>`;
+}
+
+function rail(){
+  const p=me(),c=cap(p.id);
+  let out='';
+  for(const r of ['P','D','C','A']){
+    const arr=ros(p.id).filter(a=>a.ruolo===r);
+    let s='';
+    for(let i=0;i<TOT[r];i++){
+      const a=arr[i];
+      s+=`<span class="slot ${a?(a.cap?'slot--cap':'slot--f'):''}"></span>`;
+    }
+    out+=`<div class="repline">${ru(r)}<span class="row__n" style="font-size:13px">${ROLE[r]}</span><span class="row__sp"></span><span class="num mut">${arr.length}/${TOT[r]}</span></div><div class="slots">${s}</div>`;
+  }
+  const det=ros(p.id).slice().sort((a,b)=>'PDCA'.indexOf(a.ruolo)-'PDCA'.indexOf(b.ruolo)||b.prezzo-a.prezzo)
+    .map(a=>`<div class="row">${ru(a.ruolo)}${fab(a.banda,a.ruolo==='P')}<span class="row__n">${esc(ent(a.key).nome)}${a.cap?' <span style="color:var(--oro)">♛</span>':''}</span><span class="row__sp"></span><span class="num mut">${a.prezzo||'—'}</span></div>`).join('');
+  return `<aside class="rail">
+    <div class="crediti">
+      <div class="crediti__k">crediti residui</div><div class="crediti__n">${p.crediti}</div>
+      <div class="crediti__k" style="margin-top:9px">capitano</div>
+      <div style="font-family:var(--display);font-size:18px;font-weight:600">${c?esc(ent(c.key).nome)+' <span style="color:var(--oro-2)">♛</span>':'<span style="opacity:.5">non ancora</span>'}</div>
+      <div class="crediti__k" style="margin-top:9px">contrada · valore squadra (acquisto)</div>
+      <div style="font-size:13px">${gonf(p.contrada)} <span class="num" style="opacity:.8">${valore(p.id)}</span></div>
+    </div>
+    <div class="card"><div class="card__hd"><h2 class="sub" style="margin:0">La mia rosa</h2><span class="num mut">${ros(p.id).length}/24</span></div>
+      ${out}${det?`<div style="margin-top:12px;border-top:1px solid var(--crema-2);padding-top:6px">${det}</div>`:''}</div></aside>`;
+}
+
+/* --- fase 0 --- */
+const teamOf=e=>e.tipo==='k'?e.nome:e.sub;
+function v0(){
+  const r=S.tab;
+  const full=r==='P'?KITS.map(k=>'k:'+k.s):PL.filter(p=>p.r===r).sort((a,b)=>b.q-a.q||b.v-a.v||a.id-b.id).slice(0,20).map(p=>'c:'+p.id);
+  const teams=[...new Set(full.map(k=>teamOf(ent(k))))].sort((a,b)=>a.localeCompare(b));
+  const teamF=S.v0team||'Tutte',bandF=S.v0band||'Tutte';
+  const rows=full.map((k,i)=>({k,i})).filter(({k,i})=>{
+    if(teamF!=='Tutte'&&teamOf(ent(k))!==teamF)return false;
+    if(bandF!=='Tutte'&&BND(i)!==bandF)return false;
+    return true;
+  }).map(({k,i})=>{const e=ent(k);return `<div class="row"><span class="num mut" style="width:22px">${i+1}</span>${fab(BND(i),r==='P')}<span class="row__n">${esc(e.nome)}</span><span class="row__m">${esc(e.sub)}</span><span class="row__sp"></span><span class="num">${e.q}</span></div>`;}).join('');
+  const admin=S.view==='admin'?`<div class="adminbar"><span class="adminbar__k">regia</span><span>Fase 0 · fasce calcolate dal listone</span><span class="proto__spacer"></span>
+    <button class="btn btn--sm btn--oro" onclick="snap();G.phase=1;logit('Fasce congelate · apre la Fase 1');render()">Congela e apri la Fase 1</button></div>`:'';
+  return `${admin}<span class="eyebrow">Fase 0 — preparazione</span><h1 class="title">Le fasce</h1>
+    <p class="lede">I primi 20 per ruolo, ordinati per valore (Qt.A). Parità risolta per FVM, poi per Id listone. Tutti gli altri sono liberi.</p>
+    <div class="card" style="margin-top:20px"><div class="tabs">${['P','D','C','A'].map(x=>`<button aria-pressed="${x===r}" onclick="S.tab='${x}';S.v0team='Tutte';render()">${ROLE[x]}</button>`).join('')}</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px">
+      <select class="selbox" onchange="S.v0team=this.value;render()">
+        <option value="Tutte" ${teamF==='Tutte'?'selected':''}>Tutte le squadre</option>
+        ${teams.map(t=>`<option value="${esc(t)}" ${t===teamF?'selected':''}>${esc(t)}</option>`).join('')}
+      </select>
+      <div style="display:flex;gap:5px;flex-wrap:wrap">
+        ${['Tutte','A1','A2','B1','B2'].map(b=>`<button class="chip" aria-pressed="${b===bandF}" onclick="S.v0band='${b}';render()">${b}</button>`).join('')}
+      </div>
+    </div>
+    ${rows||'<div class="note">Nessun risultato con questi filtri.</div>'}<div class="note">${r==='P'?'I portieri si prendono a kit-squadra, ordinati per il valore del titolare. Fasce 1↔4 e 2↔3.':'Le fasce si accoppiano A1↔B2 e A2↔B1.'}</div></div>`;
+}
+
+/* --- fase 1 --- */
+function v1p(){
+  const p=me(),st=G.f1.stato,sel=G.f1.sel[p.id],c=cap(p.id);
+  if(st==='rivelato'||(c&&st!=='riscelta')){
+    return `<span class="eyebrow">Fase 1 — capitano</span><h1 class="title">${c?esc(ent(c.key).nome):'In attesa'}</h1>
+      <p class="lede">${c?'È tuo per sempre. Nessuna carta potrà rubartelo.':'L\'admin sta sciogliendo i doppioni.'}</p>
+      ${st==='rivelato'?`<div class="card" style="margin-top:20px"><div class="card__hd"><h2 class="sub" style="margin:0">I capitani della lega</h2></div>
+        ${P().map(x=>{const k=cap(x.id);return `<div class="row">${gonf(x.contrada)}<span class="row__n">${x.nome}</span><span class="row__sp"></span><span class="row__m">${k?esc(ent(k.key).nome):'—'}</span><span class="num mut">${k&&k.prezzo?k.prezzo+' cr':''}</span></div>`;}).join('')}</div>`:''}`;
+  }
+  if(st==='duelli'){
+    const d=duel();
+    if(!d.pids.includes(p.id))return `<span class="eyebrow">Fase 1</span><h1 class="title">Asta in corso</h1><p class="lede">Si sta decidendo ${esc(ent(d.key).nome)}. Non ti riguarda.</p>`;
+    const b=G.f1.bids[p.id];
+    return `<span class="eyebrow" style="color:var(--rosso)">Fase 1 — doppione</span><h1 class="title">${esc(ent(d.key).nome)}</h1>
+      <p class="lede">Anche ${d.pids.filter(x=>x!==p.id).map(x=>G.pl[x].nome).join(' e ')} ha scritto questo nome. Punta a busta chiusa: chi vince paga, chi perde incassa e riscegli.</p>
+      <div class="card" style="margin-top:20px"><div class="card__hd"><h2 class="sub" style="margin:0">La tua offerta</h2><span class="row__m">massimo ${p.crediti}</span></div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <input class="inp" id="bid" type="number" min="0" max="${p.crediti}" value="${b!==undefined?b:''}" placeholder="crediti">
+        <button class="btn btn--oro" onclick="punta(+document.getElementById('bid').value)">${b!==undefined?'Cambia offerta':'Punta'}</button>
+        ${b!==undefined?`<span class="row__m">offerta registrata: ${b} crediti</span>`:''}
+      </div></div>`;
+  }
+  if(st==='riscelta'&&!c){
+    return `<span class="eyebrow" style="color:var(--rosso)">Fase 1 — hai perso il duello</span><h1 class="title">Riscegli il capitano</h1>
+      <p class="lede">Sei stato rimborsato. Scegli liberamente un altro calciatore fuori dai top 20.</p>
+      <div class="card" style="margin-top:20px">${searchBox('Cerca…')}${lista(PL.filter(x=>capOk('c:'+x.id)).map(x=>ent('c:'+x.id)).sort((a,b)=>b.q-a.q||b.v-a.v||a.id-b.id),'risceglie',false,300,true)}</div>`;
+  }
+  if(st==='riscelta')return `<span class="eyebrow">Fase 1</span><h1 class="title">${esc(ent(c.key).nome)}</h1><p class="lede">Aspetta che chi ha perso i duelli riscelga.</p>`;
+  const rt=S.capTab||'Tutti';
+  const cands=PL.filter(x=>capOk('c:'+x.id)&&(rt==='Tutti'||x.r===rt)).map(x=>ent('c:'+x.id))
+    .sort((a,b)=>b.q-a.q||b.v-a.v||a.id-b.id);
+  return `<span class="eyebrow">Fase 1 — capitano</span><h1 class="title">Scegli il tuo capitano</h1>
+    <p class="lede">Un calciatore fuori dai primi 20 del suo ruolo, portieri esclusi. Occupa uno slot della rosa. Se qualcun altro scrive lo stesso nome si va all'asta.</p>
+    ${sel?`<div class="card ok" style="margin-top:20px"><div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+      <div><div class="row__m">la tua scelta, ancora modificabile</div>
+      <div style="font-family:var(--display);font-size:30px;font-weight:700;line-height:1.1">${esc(ent(sel).nome)}</div>
+      <div class="row__m">${esc(ent(sel).sub)} · ${ROLE1[ent(sel).ruolo]} · ${ROLE_RANK[sel]}° per valore · valore ${ent(sel).q}</div></div>
+      <span class="row__sp"></span><span class="row__m">${Object.keys(G.f1.sel).length}/10 hanno scelto</span></div></div>`:''}
+    <div class="card">${searchBox('Cerca un calciatore fuori dai top 20…')}
+    <div class="tabs">${['Tutti','D','C','A'].map(x=>`<button aria-pressed="${x===rt}" onclick="S.capTab='${x}';render()">${x==='Tutti'?'Tutti i ruoli':ROLE[x]}</button>`).join('')}</div>
+    ${lista(cands,'scegliCap',false,300,true)}</div>`;
+}
+function v1a(){
+  const st=G.f1.stato,n=Object.keys(G.f1.sel).length;
+  let body='';
+  if(st==='scelta'){
+    body=`<div class="card"><div class="card__hd"><h2 class="sub" style="margin:0">Chi ha scelto</h2><span class="num mut">${n}/10</span></div>
+      ${P().map(p=>`<div class="row">${gonf(p.contrada)}<span class="row__n">${p.nome}</span><span class="row__sp"></span>
+        <span class="row__m">${G.f1.sel[p.id]?'ha scelto':'in attesa'}</span></div>`).join('')}
+      <div class="note">I nomi restano nascosti finché non chiudi le scelte.</div></div>`;
+  } else if(st==='duelli'){
+    const d=duel();
+    body=`<div class="card warn"><div class="card__hd"><h2 class="sub" style="margin:0;color:var(--rosso)">${esc(ent(d.key).nome)} — ${d.pids.length} squadre</h2><span class="row__m">duello ${G.f1.di+1} di ${G.f1.duels.length}</span></div>
+      <div class="grid2">${d.pids.map(pid=>{const b=G.f1.bids[pid];
+        return `<button class="pick" style="border:1px solid var(--crema-2);border-radius:4px" onclick="risolviDuel(${pid})">
+        <span class="row__n">${G.pl[pid].nome}</span><span class="row__sp"></span><span class="num">${b!==undefined?b:'—'}</span></button>`;}).join('')}</div>
+      <div class="note">Le offerte arrivano dagli schermi dei giocatori. Clicca su chi ha vinto per assegnare e rimborsare.</div></div>`;
+  } else if(st==='riscelta'){
+    body=`<div class="card"><div class="card__hd"><h2 class="sub" style="margin:0">Chi deve riscegliere</h2></div>
+      ${chiRiscegli().map(pid=>`<div class="row">${gonf(G.pl[pid].contrada)}<span class="row__n">${G.pl[pid].nome}</span><span class="row__sp"></span><span class="row__m">sta riscegliendo</span></div>`).join('')||'<div class="note">Nessuno.</div>'}</div>`;
+  } else {
+    body=`<div class="card ok"><div class="card__hd"><h2 class="sub" style="margin:0">Capitani assegnati</h2></div>
+      ${P().map(p=>{const k=cap(p.id);return `<div class="row">${gonf(p.contrada)}<span class="row__n">${p.nome}</span><span class="row__sp"></span>${k?ru(k.ruolo):''}<span class="row__m">${k?esc(ent(k.key).nome):'—'}</span><span class="num mut">${k&&k.prezzo?k.prezzo:''}</span></div>`;}).join('')}</div>`;
+  }
+  return `<div class="adminbar"><span class="adminbar__k">regia</span><span>Fase 1 · ${st}</span><span class="proto__spacer"></span>
+    ${st!=='rivelato'?`<button class="btn btn--sm btn--dark" onclick="autoCapitani()">Simula capitani</button>`:''}
+    ${st==='scelta'?`<button class="btn btn--sm btn--oro" onclick="chiudiScelte()">Chiudi le scelte</button>`:''}
+    ${st==='rivelato'?`<button class="btn btn--sm btn--oro" onclick="avviaFase2()">Apri la Fase 2</button>`:''}
+    </div>
+    <span class="eyebrow">Fase 1 — capitani</span><h1 class="title">${st==='scelta'?'Scelte in corso':st==='duelli'?'Doppioni da sciogliere':st==='riscelta'?'Riscelte in corso':'Tutti hanno un capitano'}</h1>
+    <div style="margin-top:18px">${body}</div>`;
+}
+
+/* --- fase 2 --- */
+function f2SumToggle(){
+  return `<div style="margin:10px 0 0">
+    <button class="btn btn--sm btn--ghost" onclick="S.f2Sum=!S.f2Sum;render()">${S.f2Sum?'Nascondi':'Vedi'} lo stato di tutte le squadre</button>
+  </div>${S.f2Sum?f2Riepilogo():''}`;
+}
+function f2Riepilogo(){
+  const rows=P().map(p=>{
+    const cells=['P','D','C','A'].map(r=>{
+      const need=Q[r][2];
+      const picks=ros(p.id).filter(a=>a.fase===2&&a.ruolo===r);
+      const badges=picks.map(a=>fab(a.banda,r==='P')).join('');
+      const empty=Array(Math.max(0,need-picks.length)).fill(fab(null,r==='P')).join('');
+      return `<td style="padding:6px 8px;white-space:nowrap">${badges}${empty}</td>`;
+    }).join('');
+    return `<tr style="border-bottom:1px solid var(--crema-2)${p.id===me().id?';background:rgba(214,163,26,.08)':''}">
+      <td style="padding:6px 8px;white-space:nowrap">${gonf(p.contrada)} <span class="row__n">${esc(p.nome)}</span></td>${cells}</tr>`;
+  }).join('');
+  return `<div class="card" style="margin-top:10px;padding:14px 15px">
+    <div class="card__hd" style="margin-bottom:8px"><h2 class="sub" style="margin:0;font-size:15px">Stato Intoccabili per squadra</h2>
+      <button class="btn btn--sm btn--ghost" onclick="S.f2Sum=false;render()">Chiudi</button></div>
+    <div class="scroll" style="overflow-x:auto;max-height:none">
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="border-bottom:1px solid var(--crema-2)">
+        <th style="text-align:left;padding:6px 8px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--grigio)">Squadra</th>
+        ${['P','D','C','A'].map(r=>`<th style="text-align:left;padding:6px 8px">${ru(r)}</th>`).join('')}
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    <div class="note">Casella piena = fascia già presa in Fase 2, — = ancora da prendere.</div></div>`;
+}
+function v2p(){
+  const p=me(),o=G.f2.open,c=caller2(),mio=neededRoles(p.id).length>0;
+  const stageA=stageAOpen();
+  const testa=`<span class="eyebrow">Fase 2 — asta libera degli Intoccabili · ${stageA?'giro A (fasce A1/A2)':'giro B (fasce B1/B2)'}</span>
+    <h1 class="title">${mio?'Chiama qualsiasi ruolo ti manchi':'Hai completato la tua quota'}</h1>`;
+  if(o){
+    const e=ent(o.key),el=eligibili2().includes(p.id);
+    return `${testa}
+      <div class="turno ${el?'turno--tuo':''}" style="margin-top:18px"><div>
+        <p class="turno__t">${esc(e.nome)}</p>
+        <p class="turno__s">${ru(e.ruolo)} chiamato da ${G.pl[o.caller].nome} · base 1 credito · ${el?`puoi puntare fino a ${maxSpesa(p.id)}`:'non ti serve questo ruolo/fascia'}</p>
+      </div><span class="proto__spacer"></span>${fab(bandaOf(o.key),e.ruolo==='P')}</div>
+      ${f2SumToggle()}
+      <div class="card" style="margin-top:15px"><div class="card__hd"><h2 class="sub" style="margin:0">Si punta a voce</h2><span class="row__m">l'admin registra il vincitore</span></div>
+      ${P().map(x=>{const inEl=eligibili2().includes(x.id);return `<div class="row" style="${inEl?'':'opacity:.4'}">${gonf(x.contrada)}<span class="row__n">${x.nome}</span><span class="row__sp"></span><span class="num mut">${inEl?'max '+maxSpesa(x.id):'non partecipa'}</span></div>`;}).join('')}</div>`;
+  }
+  if(!mio)return `${testa}<div class="turno" style="margin-top:18px"><div><p class="turno__t">Hai già tutti i tuoi Intoccabili</p>
+    <p class="turno__s">Aspetta che gli altri completino la loro asta.</p></div></div>${f2SumToggle()}`;
+  const raw2=candidati2(p.id);
+  if(!raw2.length){
+    return `${testa}<div class="turno" style="margin-top:18px"><div><p class="turno__t">Hai già preso tutte le fasce A che ti servivano</p>
+      <p class="turno__s">Aspetta che anche le altre squadre completino le loro fasce A1/A2: appena si apre il giro B potrai chiamare ${neededRoles(p.id).map(r=>ROLE[r].toLowerCase()).join(', ')}.</p></div></div>${f2SumToggle()}`;
+  }
+  const tocca=c===p.id;
+  const manca=neededRoles(p.id).map(r=>{const b=reqBandsRole(p.id,r);return `${ROLE[r]} (${r==='P'?PBAND[b[0]]:b.join('/')})`;}).join(' · ');
+  const teams2=[...new Set(raw2.map(e=>teamOf(e)))].sort((a,b)=>a.localeCompare(b));
+  const bands2=[...new Set(raw2.map(e=>bandaOf(e.key)))].filter(Boolean).sort();
+  const roles2=['P','D','C','A'].filter(r=>raw2.some(e=>e.ruolo===r));
+  if(S.f2role!=='Tutti'&&!roles2.includes(S.f2role))S.f2role='Tutti';
+  const rt2=S.f2role||'Tutti',tt2=S.f2team||'Tutte',bt2=S.f2band||'Tutte';
+  const filtered2=raw2.filter(e=>(rt2==='Tutti'||e.ruolo===rt2)&&(tt2==='Tutte'||teamOf(e)===tt2)&&(bt2==='Tutte'||bandaOf(e.key)===bt2));
+  return `${testa}
+    <div class="turno ${tocca?'turno--tuo':''}" style="margin-top:18px"><div>
+      <p class="turno__t">${tocca?'Tocca a te chiamare':'Sta chiamando '+(c!==null?G.pl[c].nome:'—')}</p>
+      <p class="turno__s">${tocca?'Scegli un giocatore di qualsiasi ruolo, tra quelli che ti mancano ancora. Apri l\'asta con base 1 credito.':'L\'ordine di chiamata è casuale.'}</p>
+    </div><span class="proto__spacer"></span><span class="num" style="font-size:12px;opacity:.8">${p.crediti} crediti · max ${maxSpesa(p.id)} · valore rosa ${valore(p.id)}</span></div>
+    ${f2SumToggle()}
+    <div class="card" style="margin-top:15px"><div class="card__hd"><h2 class="sub" style="margin:0">Ti mancano ancora</h2><span class="row__m">${manca}</span></div>
+    ${searchBox('Cerca…')}
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+      ${teamSelect(tt2,"S.f2team=this.value;render()",teams2)}
+      ${roleTabs(rt2,'setF2role',roles2)}
+      ${bandChips(bt2,'setF2band',bands2)}
+    </div>
+    ${lista(filtered2,'chiama2',!tocca)}</div>`;
+}
+function v2a(){
+  const o=G.f2.open,c=caller2(),q=G.f2.q,stageA=stageAOpen();
+  const bar=`<div class="adminbar"><span class="adminbar__k">regia</span><span>Fase 2 · asta libera · ${stageA?'giro A (fasce A1/A2)':'giro B (fasce B1/B2)'} · ${q.length} squadre ancora in corsa</span><span class="proto__spacer"></span>
+    ${o?`<button class="btn btn--sm btn--dark" onclick="annullaChiamata()">Annulla chiamata</button>`:''}
+    <button class="btn btn--sm btn--dark" onclick="auto(1)">Simula 1</button><button class="btn btn--sm btn--dark" onclick="auto(30)">Simula 30</button></div>`;
+  if(o){
+    const e=ent(o.key),el=eligibili2();
+    const fuori=P().filter(x=>!el.includes(x.id));
+    return `${bar}<span class="eyebrow">Asta aperta</span>
+      <h1 class="title">${esc(e.nome)} <span class="mut" style="font-weight:400;font-size:.5em">chiamato da ${G.pl[o.caller].nome}</span></h1>
+      <p class="lede">${ru(e.ruolo)} ${esc(e.sub)} · fascia ${e.ruolo==='P'?PBAND[bandaOf(o.key)]:bandaOf(o.key)} · valore ${e.q}. Registra chi ha vinto l'asta a voce.</p>
+      ${f2SumToggle()}
+      <div class="card" style="margin-top:15px"><div class="card__hd"><h2 class="sub" style="margin:0">Aggiudica</h2><span class="row__m">solo chi deve ancora questa fascia/ruolo</span></div>
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px"><span class="row__m">prezzo</span><input class="inp" id="pz" type="number" min="1" value="1"></div>
+      <div class="grid2">${el.map(pid=>`<button class="pick" style="border:1px solid var(--crema-2);border-radius:4px" onclick="aggiudica(${pid},document.getElementById('pz').value)">
+        ${gonf(G.pl[pid].contrada)}<span class="row__n">${G.pl[pid].nome}</span><span class="row__sp"></span><span class="num mut">${G.pl[pid].crediti} cr · max ${maxSpesa(pid)}</span></button>`).join('')}</div>
+      ${fuori.length?`<div class="note">Non partecipano a questa chiamata: ${fuori.map(x=>x.nome).join(', ')}.</div>`:''}
+      <div class="note">Se nessuno rilancia, il calciatore va al chiamante a 1 credito.</div></div>`;
+  }
+  return `${bar}<span class="eyebrow">Fase 2</span><h1 class="title">${c!==null?'In attesa della chiamata di '+G.pl[c].nome:'Asta libera completata'}</h1>
+    ${f2SumToggle()}
+    <div class="card" style="margin-top:15px"><div class="card__hd"><h2 class="sub" style="margin:0">Coda di chiamata</h2><span class="row__m">ordine casuale · prima tutte le fasce A, poi tutte le B · chi vince richiama, a chi viene soffiata la chiamata torna il giro dopo</span></div>
+    ${q.length?q.map((pid,i)=>{const canCall=candidati2(pid).length>0;return `<div class="row" style="${i===G.f2.pos%q.length?'background:rgba(214,163,26,.12);border-radius:3px':''}">
+      <span class="num mut" style="width:20px">${i+1}</span>${gonf(G.pl[pid].contrada)}<span class="row__n">${G.pl[pid].nome}</span><span class="row__sp"></span>
+      <span class="row__m">manca: ${neededRoles(pid).join(' ')}${canCall?'':' · in attesa del giro B'}</span></div>`;}).join('')
+      :'<div class="note">Tutti hanno preso i loro Intoccabili. Si passa alla Fase 3.</div>'}</div>
+    ${logCard()}`;
+}
+
+/* --- fase 3 --- */
+function f3SumToggle(){
+  return `<div style="margin:10px 0 0">
+    <button class="btn btn--sm btn--ghost" onclick="S.f3Sum=!S.f3Sum;render()">${S.f3Sum?'Nascondi':'Vedi'} i buchi di ruolo di tutte le squadre</button>
+  </div>${S.f3Sum?f3Riepilogo():''}`;
+}
+function f3Riepilogo(){
+  const rows=P().map(p=>{
+    const cells=['P','D','C','A'].map(r=>{
+      const have=got(p.id,3,r),need=q3(p.id,r),done=have>=need;
+      return `<td style="padding:6px 8px;white-space:nowrap"><span class="num" style="color:${done?'var(--verde)':'var(--inch)'}">${have}/${need}</span>${done?' <span style="color:var(--verde)">✓</span>':''}</td>`;
+    }).join('');
+    return `<tr style="border-bottom:1px solid var(--crema-2)${p.id===me().id?';background:rgba(214,163,26,.08)':''}">
+      <td style="padding:6px 8px;white-space:nowrap">${gonf(p.contrada)} <span class="row__n">${esc(p.nome)}</span></td>${cells}</tr>`;
+  }).join('');
+  return `<div class="card" style="margin-top:10px;padding:14px 15px">
+    <div class="card__hd" style="margin-bottom:8px"><h2 class="sub" style="margin:0;font-size:15px">Buchi di ruolo per squadra · Fase 3</h2>
+      <button class="btn btn--sm btn--ghost" onclick="S.f3Sum=false;render()">Chiudi</button></div>
+    <div class="scroll" style="overflow-x:auto;max-height:none">
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="border-bottom:1px solid var(--crema-2)">
+        <th style="text-align:left;padding:6px 8px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--grigio)">Squadra</th>
+        ${['P','D','C','A'].map(r=>`<th style="text-align:left;padding:6px 8px">${ru(r)}</th>`).join('')}
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    <div class="note">Ruolo/quota di Fase 3 già presa su quella dovuta (1 P, 3 D, 3 C, 2 A a testa; a chi ha scelto il capitano in un ruolo, quel ruolo ne chiede uno in meno).</div></div>`;
+}
+function v3p(){
+  const p=me(),c=caller3(),tocca=c===p.id,pos=G.f3.order.indexOf(p.id);
+  const manca=['P','D','C','A'].map(r=>{const n=q3(p.id,r)-got(p.id,3,r);return n>0?`${n} ${r}`:null}).filter(Boolean).join(' · ');
+  return `<span class="eyebrow" style="color:var(--verde)">Fase 3 — draft dei Rockies</span>
+    <h1 class="title">Giro ${G.f3.round+1} di 9</h1>
+    <div class="turno ${tocca?'turno--tuo':''}" style="margin-top:18px"><div>
+      <p class="turno__t">${tocca?'Tocca a te':(G.f3.pos>=10?'Giro chiuso':'Sta scegliendo '+G.pl[c].nome)}</p>
+      <p class="turno__s">${tocca?'Scegli liberamente un calciatore libero, di qualsiasi ruolo mancante: qualunque posizione del listone va bene, fuori solo dai primi 20 di ruolo (già assegnati in Fase 2).':pos>G.f3.pos?`Chiami fra ${pos-G.f3.pos} turni.`:'Hai già scelto in questo giro.'}</p>
+    </div><span class="proto__spacer"></span><span class="num" style="font-size:12px;opacity:.8">valore squadra ${valore(p.id)}</span></div>
+    ${f3SumToggle()}
+    <div class="card" style="margin-top:15px"><div class="card__hd"><h2 class="sub" style="margin:0">Ordine del giro</h2><span class="row__m">Valore Rosa · dal più basso</span></div>
+    ${G.f3.order.map((pid,i)=>`<div class="row" style="${pid===p.id?'background:rgba(214,163,26,.12);border-radius:3px;padding-left:5px':''}">
+      <span class="num mut" style="width:20px">${i+1}</span>${gonf(G.pl[pid].contrada)}<span class="row__n">${G.pl[pid].nome}</span><span class="row__sp"></span>
+      <span class="num mut" title="Valore Rosa">${valore(pid)}</span><span class="row__m" style="width:58px;text-align:right">${i<G.f3.pos?'fatto':i===G.f3.pos?'in corso':''}</span></div>`).join('')}
+    <div class="note">Il valore si ricalcola solo a fine giro.</div></div>
+    <div class="card"><div class="card__hd"><h2 class="sub" style="margin:0">Calciatori disponibili</h2><span class="row__m">${manca?'ti mancano '+manca:'quota di fase completa'}</span></div>
+    ${searchBox('Cerca…')}
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+      ${teamSelect(S.f3team||'Tutte',"S.f3team=this.value;render()",[...new Set(candidati3(p.id).map(e=>teamOf(e)))].sort((a,b)=>a.localeCompare(b)))}
+      ${roleTabs(S.f3role||'Tutti','setF3role',[...new Set(candidati3(p.id).map(e=>e.ruolo))])}
+    </div>
+    ${lista(candidati3(p.id).filter(e=>(S.f3role==='Tutti'||!S.f3role||e.ruolo===S.f3role)&&(S.f3team==='Tutte'||!S.f3team||teamOf(e)===S.f3team)),'pick3',!tocca,300,true)}</div>`;
+}
+function v3a(){
+  const c=caller3();
+  return `<div class="adminbar"><span class="adminbar__k">regia</span><span>Fase 3 · giro ${G.f3.round+1} di 9 · scelta ${Math.min(G.f3.pos+1,10)}/10</span><span class="proto__spacer"></span>
+    ${G.f3.pos>=10?`<button class="btn btn--sm btn--oro" onclick="snap();apriGiro3()">${G.f3.round>=8?'Apri la Fase 4':'Chiudi il giro e ricalcola'}</button>`:''}
+    <button class="btn btn--sm btn--dark" onclick="auto(1)">Simula 1</button><button class="btn btn--sm btn--dark" onclick="auto(30)">Simula 30</button></div>
+    <span class="eyebrow" style="color:var(--verde)">Fase 3 — draft</span>
+    <h1 class="title">${G.f3.pos>=10?'Giro chiuso':'Sta scegliendo '+G.pl[c].nome}</h1>
+    <p class="lede">I giocatori scelgono liberamente dal proprio schermo, qualsiasi calciatore libero di qualsiasi ruolo mancante (fuori dai primi 20, già assegnati in Fase 2). Intervieni solo se qualcuno si blocca.</p>
+    ${f3SumToggle()}
+    <div class="card" style="margin-top:18px"><div class="card__hd"><h2 class="sub" style="margin:0">Ordine del giro</h2><span class="row__m">Valore Rosa</span></div>
+    ${G.f3.order.map((pid,i)=>`<div class="row"><span class="num mut" style="width:20px">${i+1}</span>${gonf(G.pl[pid].contrada)}<span class="row__n">${G.pl[pid].nome}</span><span class="row__sp"></span><span class="num mut" title="Valore Rosa">${valore(pid)}</span><span class="row__m" style="width:58px;text-align:right">${i<G.f3.pos?'fatto':i===G.f3.pos?'in corso':''}</span></div>`).join('')}</div>
+    ${logCard()}`;
+}
+
+/* --- fase 4 --- */
+function f4LastCard(){
+  const l=G.f4.last;if(!l)return'';
+  if(l.esito==='assegnato')
+    return `<div class="card ok" style="margin-top:14px"><div class="row__m">ultima estrazione</div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:4px">
+        ${ru(l.ruolo)}<span class="row__n" style="font-size:16px">${esc(l.nome)}</span><span class="row__m">${esc(l.sub)}</span>
+        <span class="row__sp"></span><span class="gonf"><i style="background:${CONTRADE[l.contrada]}"></i>${esc(l.contrada)}</span>
+        <span class="row__n">→ ${esc(l.squadra)}</span>
+      </div></div>`;
+  if(l.esito==='escluso')
+    return `<div class="card warn" style="margin-top:14px"><div class="row__m">ultimo movimento — escluso dall'urna</div>
+      <div style="margin-top:4px">${ru(l.ruolo)} <b>${esc(l.nome)}</b> · ${esc(l.sub)} escluso dall'admin, non assegnato a nessuna squadra.</div></div>`;
+  return `<div class="card warn" style="margin-top:14px"><div class="row__m">ultima estrazione — riestratta</div>
+    <div style="margin-top:4px">${ru(l.ruolo)} <b>${esc(l.nome)}</b> · uscita ${esc(l.contrada)} (${esc(l.squadra)}), che aveva già il ruolo pieno: si riestrae.</div></div>`;
+}
+function f4SumToggle(){
+  return `<div style="margin:10px 0 0">
+    <button class="btn btn--sm btn--ghost" onclick="S.f4Sum=!S.f4Sum;render()">${S.f4Sum?'Nascondi':'Vedi'} cosa manca a tutte le squadre</button>
+  </div>${S.f4Sum?f4Riepilogo():''}`;
+}
+function f4Riepilogo(){
+  const rows=P().map(p=>{
+    const cells=['P','D','C','A'].map(r=>{
+      const have=gotTot(p.id,r),need=TOT[r],done=have>=need;
+      return `<td style="padding:6px 8px;white-space:nowrap"><span class="num" style="color:${done?'var(--verde)':'var(--inch)'}">${have}/${need}</span>${done?' <span style="color:var(--verde)">✓</span>':''}</td>`;
+    }).join('');
+    return `<tr style="border-bottom:1px solid var(--crema-2)${p.id===me().id?';background:rgba(214,163,26,.08)':''}">
+      <td style="padding:6px 8px;white-space:nowrap">${gonf(p.contrada)} <span class="row__n">${esc(p.nome)}</span></td>${cells}</tr>`;
+  }).join('');
+  return `<div class="card" style="margin-top:10px;padding:14px 15px">
+    <div class="card__hd" style="margin-bottom:8px"><h2 class="sub" style="margin:0;font-size:15px">Rosa completa per squadra</h2>
+      <button class="btn btn--sm btn--ghost" onclick="S.f4Sum=false;render()">Chiudi</button></div>
+    <div class="scroll" style="overflow-x:auto;max-height:none">
+    <table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="border-bottom:1px solid var(--crema-2)">
+        <th style="text-align:left;padding:6px 8px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--grigio)">Squadra</th>
+        ${['P','D','C','A'].map(r=>`<th style="text-align:left;padding:6px 8px">${ru(r)}</th>`).join('')}
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    <div class="note">Totale rosa: 2 P, 8 D, 8 C, 6 A a testa.</div></div>`;
+}
+function v4p(){
+  const p=me(),k=G.f4.cur;
+  const mie=ros(p.id).filter(a=>a.fase===4);
+  return `<span class="eyebrow" style="color:var(--rosso)">Fase 4 — i Figli dei Berberi</span>
+    <h1 class="title">${k?'Estrazione in corso':'Rose complete'}</h1>
+    <p class="lede">${k?`Si tira il berbero un ruolo alla volta — prima ${ROLE.D.toLowerCase()}, poi ${ROLE.C.toLowerCase()}, poi ${ROLE.A.toLowerCase()} — a fasce da 10 seguendo il listone (si mette in palio sempre il calciatore di valore più alto rimasto nella fascia). A sorte è solo quale squadra lo riceve, tra quelle che hanno ancora un buco in quel reparto e non hanno già ricevuto un calciatore in questa stessa fascia.`:'Tutte le squadre sono al completo. Da qui in poi si entra nella Fase 5 — le carte.'}</p>
+    ${f4SumToggle()}
+    ${f4LastCard()}
+    ${k?`<div class="card" style="margin-top:18px;text-align:center;padding:30px 18px">
+      <div class="row__m">calciatore in palio</div>
+      <div style="font-family:var(--display);font-size:40px;font-weight:700;line-height:1.05;margin:3px 0 2px">${esc(ent(k).nome)}</div>
+      <div class="row__m">${esc(ent(k).sub)} · ${ROLE1[ent(k).ruolo]} · valore ${ent(k).q}</div>
+      <div style="margin-top:20px;display:flex;justify-content:center;gap:7px;flex-wrap:wrap">
+        ${P().map(x=>`<span class="gonf" style="opacity:${urna().some(u=>u.id===x.id)?1:.25};border:1px solid var(--crema-2);padding:5px 10px;border-radius:3px">
+          <i style="background:${CONTRADE[x.contrada]}"></i>${x.nome}</span>`).join('')}</div>
+      <div class="note">${10-urna().length} squadre fuori dall'urna: hanno già completato ${ent(k).ruolo==='A'?'gli':'i'} ${ROLE[ent(k).ruolo].toLowerCase()}, oppure ne hanno già ricevuto uno in questa fascia.</div></div>`:''}
+    <div class="card"><div class="card__hd"><h2 class="sub" style="margin:0">I tuoi Figli dei Berberi</h2><span class="num mut">${mie.length}</span></div>
+    ${mie.map(a=>`<div class="row">${ru(a.ruolo)}<span class="row__n">${esc(ent(a.key).nome)}</span><span class="row__m">${esc(ent(a.key).sub)}</span></div>`).join('')||'<div class="note">Ancora nessuno.</div>'}</div>`;
+}
+function v4a(){
+  const k=G.f4.cur,u=urna();
+  if(!k)return `<div class="adminbar"><span class="adminbar__k">regia</span><span>Fase 4 conclusa</span><span class="proto__spacer"></span>
+    <button class="btn btn--sm btn--oro" onclick="apriFase5()">Apri la Fase 5 · le carte</button></div>
+    <span class="eyebrow" style="color:var(--rosso)">Fase 4</span><h1 class="title">Rose complete</h1>
+    <p class="lede">Tutte e 10 le squadre hanno 2 kit portiere, 8 difensori, 8 centrocampisti e 6 attaccanti.</p>${f4LastCard()}${logCard()}`;
+  const e=ent(k);
+  return `<div class="adminbar"><span class="adminbar__k">regia</span><span>Fase 4 · ruolo ${ROLE[G.f4.role]||e.ruolo} · fascia ${G.f4.bandIdx} · ${G.f4.band.length} in questa fascia · ${restanti4().length} calciatori rimasti in totale</span><span class="proto__spacer"></span>
+    <button class="btn btn--sm btn--dark" onclick="askConfirm('escludi')">Salta questo calciatore</button>
+    <button class="btn btn--sm btn--dark" onclick="auto(1)">Simula 1</button><button class="btn btn--sm btn--dark" onclick="auto(60)">Simula 60</button></div>
+    <span class="eyebrow" style="color:var(--rosso)">Fase 4 — estrazione</span><h1 class="title">${esc(e.nome)}</h1>
+    <p class="lede">${esc(e.sub)} · ${ROLE1[e.ruolo]} · valore ${e.q} · il migliore rimasto tra gli ultimi 10 ${ROLE[e.ruolo].toLowerCase()} di questa fascia, in ordine di listone. Tira il dado e registra la contrada uscita.</p>
+    ${f4SumToggle()}
+    ${f4LastCard()}
+    ${G.f4.skip?`<div class="card warn" style="margin-top:16px"><b>${G.f4.skip}</b></div>`:''}
+    <div class="card" style="margin-top:15px"><div class="card__hd"><h2 class="sub" style="margin:0">Contrada uscita</h2><span class="row__m">${u.length} nell'urna</span></div>
+    <div class="grid3">${P().map(x=>{const inU=u.some(y=>y.id===x.id);
+      return `<button class="pick" style="border:1px solid var(--crema-2);border-radius:4px;opacity:${inU?1:.3}" ${inU?'':'disabled'} onclick="estrai(${x.id})">
+      <i style="width:13px;height:18px;background:${CONTRADE[x.contrada]};clip-path:polygon(0 0,100% 0,100% 76%,50% 100%,0 76%);flex:none"></i>
+      <span><span class="row__n">${x.contrada}</span><br><span class="row__m">${x.nome} · ${gotTot(x.id,e.ruolo)}/${TOT[e.ruolo]} ${e.ruolo}</span></span></button>`;}).join('')}</div></div>`;
+}
+
+/* --- fase 5 --- */
+function v5p(){
+  const p=me();
+  const mie=ros(p.id).filter(a=>a.fase===5);
+  return `<span class="eyebrow" style="color:var(--oro-2)">Fase 5 — le carte</span><h1 class="title">Scambi</h1>
+    <p class="lede">Le carte si giocano offline: quando una squadra ne usa una per rubarti un calciatore, l'admin registra qui l'esito. In cambio ricevi sempre un calciatore dello stesso ruolo dalla squadra che ha rubato.</p>
+    <div class="card"><div class="card__hd"><h2 class="sub" style="margin:0">I tuoi scambi</h2><span class="num mut">${mie.length}</span></div>
+    ${mie.length?mie.map(a=>`<div class="row">${ru(a.ruolo)}<span class="row__n">${esc(ent(a.key).nome)}</span><span class="row__m">${esc(ent(a.key).sub)}</span></div>`).join(''):'<div class="note">Nessuno scambio, per ora.</div>'}</div>
+    ${logCard()}`;
+}
+function v5a(){
+  const ladro=S.f5Ladro,vittima=S.f5Vittima,keyRubato=S.f5KeyRubato,keyRestituito=S.f5KeyRestituito;
+  const ruoloScelto=keyRubato?ent(keyRubato).ruolo:null;
+  const candRubato=vittima!=null?ros(vittima).map(a=>ent(a.key)).sort((a,b)=>'PDCA'.indexOf(a.ruolo)-'PDCA'.indexOf(b.ruolo)||b.q-a.q):[];
+  const candRestituito=(ladro!=null&&ruoloScelto)?ros(ladro).map(a=>ent(a.key)).filter(e=>e.ruolo===ruoloScelto).sort((a,b)=>b.q-a.q):[];
+  return `<div class="adminbar"><span class="adminbar__k">regia</span><span>Fase 5 · le carte</span><span class="proto__spacer"></span>
+    <button class="btn btn--sm btn--oro" onclick="apriFase6()">Chiudi le carte · apri la Fase 6</button></div>
+    <span class="eyebrow" style="color:var(--oro-2)">Fase 5 — le carte</span><h1 class="title">Registra uno scambio</h1>
+    <p class="lede">Le carte si giocano offline: quando una squadra ne usa una per rubare un calciatore a un'altra, registra qui l'esito. Alla squadra derubata torna sempre indietro, in cambio, un calciatore dello stesso ruolo dalla squadra ladra.</p>
+    <div class="card" style="margin-top:18px"><div class="card__hd"><h2 class="sub" style="margin:0">1 · le due squadre</h2>${(ladro!=null||vittima!=null)?`<button class="btn btn--sm btn--ghost" onclick="f5Reset()">Ricomincia</button>`:''}</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;padding:2px 0">
+        <div><div class="row__m" style="margin-bottom:5px">Squadra ladra</div>${squadraSelect(ladro,'f5SetLadro',vittima)}</div>
+        <div><div class="row__m" style="margin-bottom:5px">Squadra derubata</div>${squadraSelect(vittima,'f5SetVittima',ladro)}</div>
+      </div></div>
+    ${(ladro!=null&&vittima!=null)?`<div class="card" style="margin-top:15px"><div class="card__hd"><h2 class="sub" style="margin:0">2 · calciatore rubato, dalla rosa di ${esc(G.pl[vittima].nome)}</h2></div>
+      ${candRubato.length?candRubato.map(e=>`<button class="pick" onclick="f5PickRubato('${e.key}')" ${e.key===keyRubato?'style="background:rgba(214,163,26,.14)"':''}>${entRow(e,null,false)}</button>`).join(''):'<div class="note">Rosa vuota.</div>'}</div>`:''}
+    ${(vittima!=null&&ladro!=null&&keyRubato)?`<div class="card" style="margin-top:15px"><div class="card__hd"><h2 class="sub" style="margin:0">3 · cosa dà indietro ${esc(G.pl[ladro].nome)} (${ROLE1[ruoloScelto]})</h2></div>
+      ${candRestituito.length?candRestituito.map(e=>`<button class="pick" onclick="f5PickRestituito('${e.key}')" ${e.key===keyRestituito?'style="background:rgba(214,163,26,.14)"':''}>${entRow(e,null,false)}</button>`).join(''):`<div class="note">${esc(G.pl[ladro].nome)} non ha calciatori di quel ruolo da restituire.</div>`}</div>`:''}
+    ${(keyRubato&&keyRestituito)?`<div class="card ok" style="margin-top:15px;padding:16px">
+      <div>${ru(ruoloScelto)} <b>${esc(ent(keyRubato).nome)}</b> → ${esc(G.pl[ladro].nome)} · in cambio <b>${esc(ent(keyRestituito).nome)}</b> → ${esc(G.pl[vittima].nome)}</div>
+      <button class="btn btn--sm btn--oro" style="margin-top:10px" onclick="scambiaCarte(${ladro},${vittima},'${keyRubato}','${keyRestituito}')">Conferma scambio</button></div>`:''}
+    ${logCard()}`;
+}
+
+/* --- fase 6 --- */
+function v6p(){
+  const p=me();
+  const mie=ros(p.id).filter(a=>a.fase===6);
+  return `<span class="eyebrow" style="color:var(--rosso)">Fase 6 — ultime modifiche</span><h1 class="title">Sostituzioni</h1>
+    <p class="lede">In caso di infortuni gravi tra i calciatori già assegnati, qui trovi le sostituzioni registrate dall'admin.</p>
+    <div class="card"><div class="card__hd"><h2 class="sub" style="margin:0">Le tue sostituzioni</h2><span class="num mut">${mie.length}</span></div>
+    ${mie.length?mie.map(a=>`<div class="row">${ru(a.ruolo)}<span class="row__n">${esc(ent(a.key).nome)}</span><span class="row__m">${esc(ent(a.key).sub)}</span></div>`).join(''):'<div class="note">Nessuna sostituzione, per ora.</div>'}</div>
+    ${logCard()}`;
+}
+function v6a(){
+  const team=S.f6Team,keyOut=S.f6KeyOut;
+  const ruoloOut=keyOut?ent(keyOut).ruolo:null;
+  const candOut=team!=null?ros(team).map(a=>ent(a.key)).sort((a,b)=>'PDCA'.indexOf(a.ruolo)-'PDCA'.indexOf(b.ruolo)||b.q-a.q):[];
+  const candIn=ruoloOut?PL.filter(x=>x.r===ruoloOut&&free('c:'+x.id)).map(x=>ent('c:'+x.id)).sort((a,b)=>b.q-a.q||b.v-a.v||a.id-b.id):[];
+  return `<div class="adminbar"><span class="adminbar__k">regia</span><span>Fase 6 · ultime modifiche</span></div>
+    <span class="eyebrow" style="color:var(--rosso)">Fase 6 — ultime modifiche</span><h1 class="title">Sostituzioni finali</h1>
+    <p class="lede">A rose ormai definite, in caso di infortunio grave, sostituisci qui un calciatore con uno libero dello stesso ruolo — senza i vincoli di fascia delle fasi precedenti, da tutto il listone.</p>
+    <div class="card" style="margin-top:18px"><div class="card__hd"><h2 class="sub" style="margin:0">1 · squadra</h2>${team!=null?`<button class="btn btn--sm btn--ghost" onclick="f6Reset()">Ricomincia</button>`:''}</div>
+      ${squadraSelect(team,'f6SetTeam',null)}</div>
+    ${team!=null?`<div class="card" style="margin-top:15px"><div class="card__hd"><h2 class="sub" style="margin:0">2 · chi esce, da ${esc(G.pl[team].nome)}</h2></div>
+      ${candOut.map(e=>`<button class="pick" onclick="f6PickOut('${e.key}')" ${e.key===keyOut?'style="background:rgba(214,163,26,.14)"':''}>${entRow(e,null,false)}</button>`).join('')}</div>`:''}
+    ${(team!=null&&keyOut)?`<div class="card" style="margin-top:15px"><div class="card__hd"><h2 class="sub" style="margin:0">3 · chi entra al suo posto (${ROLE1[ruoloOut]}, libero)</h2></div>
+      ${searchBox('Cerca un calciatore…')}
+      <div class="scroll scroll--tall" style="margin-top:8px">${lista(candIn,'f6PickIn',false,300,false)}</div></div>`:''}
+    ${logCard()}`;
+}
+function f6PickIn(key){sostituisci(S.f6Team,S.f6KeyOut,key);}
+
+function logCard(){
+  return `<div class="card"><div class="card__hd"><h2 class="sub" style="margin:0">Registro</h2></div>
+    ${G.log.slice(0,12).map(l=>`<div class="row"><span class="row__m">${esc(l.t)}</span></div>`).join('')||'<div class="note">Vuoto.</div>'}</div>`;
+}
+
+/* --- tv --- */
+function tvSlots(pid){
+  const arr=ros(pid);
+  return ['P','D','C','A'].map(r=>{
+    const roleArr=arr.filter(a=>a.ruolo===r);
+    let inner='';
+    for(let i=0;i<TOT[r];i++){
+      const a=roleArr[i];
+      const fillStyle=a?`background:var(--${RCOL[r]})${a.cap?';box-shadow:inset 0 0 0 2px var(--bosco-2)':''}`:'';
+      inner+=`<i style="${fillStyle}"></i>`;
+    }
+    return `<span class="tvc__grp">${inner}</span>`;
+  }).join('');
+}
+function tvManca(pid){
+  const miss=['P','D','C','A'].map(r=>{const n=TOT[r]-gotTot(pid,r);return n>0?`${n} ${r}`:null;}).filter(Boolean);
+  return miss.length?`<span style="color:var(--oro-2)">manca:</span> ${miss.join(' · ')}`:`<span style="color:#8fd6a8">rosa completa</span>`;
+}
+const FASE_LBL={1:'Capitano',2:'Asta',3:'Draft',4:'Casuale',5:'Carte',6:'Modifica finale'};
+function tvOpen(pid){S.tvSel=pid;render();}
+function tvClose(){S.tvSel=null;render();}
+function tvModal(){
+  if(S.tvSel==null)return'';
+  const p=G.pl[S.tvSel];
+  const rows=ros(p.id).slice().sort((a,b)=>'PDCA'.indexOf(a.ruolo)-'PDCA'.indexOf(b.ruolo)||b.prezzo-a.prezzo);
+  return `<div class="tvModal" onclick="if(event.target===this)tvClose()">
+    <div class="tvModal__card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <span style="width:13px;height:18px;background:${CONTRADE[p.contrada]};display:block;clip-path:polygon(0 0,100% 0,100% 76%,50% 100%,0 76%);flex:none"></span>
+        <div><h2 class="sub" style="margin:0">${esc(p.nome)}</h2><span class="row__m">${esc(p.contrada)} · ${p.crediti} crediti residui · valore ${valore(p.id)}</span></div>
+        <span class="row__sp"></span><button class="btn btn--sm btn--ghost" onclick="tvClose()">Chiudi</button>
+      </div>
+      ${rows.length?rows.map(a=>{const e=ent(a.key);return `<div class="row">${ru(a.ruolo)}<span class="row__n">${esc(e.nome)}</span><span class="row__m">${esc(e.sub)}</span><span class="row__sp"></span>
+        <span class="row__m">${a.liv?'Livellamento':FASE_LBL[a.fase]}${a.cap?' · Capitano':''}</span><span class="num mut" style="width:44px;text-align:right">${a.prezzo?a.prezzo+' cr':'—'}</span></div>`;}).join(''):'<div class="note">Ancora nessun calciatore.</div>'}
+    </div></div>`;
+}
+function tv(){
+  const st={0:'Preparazione delle fasce',1:'Scelta dei capitani',2:'Asta libera degli Intoccabili',3:`Draft dei Rockies · giro ${G.f3.round+1} di 9`,4:'I Figli dei Berberi',5:'Le carte',6:'Ultime modifiche'}[G.phase];
+  let live=-1,head='',sub='';
+  if(G.phase===2&&G.f2.open){live=G.f2.open.caller;head=ent(G.f2.open.key).nome;sub='in asta adesso';}
+  else if(G.phase===2){live=caller2();head=live!==null?G.pl[live].nome:'—';sub='chiama';}
+  else if(G.phase===3){live=caller3();head=live!==null?G.pl[live].nome:'—';sub='sceglie';}
+  else if(G.phase===4&&G.f4.cur){head=ent(G.f4.cur).nome;sub='in palio';}
+  else{head=`${P().filter(p=>completa(p.id)).length} / 10`;sub='rose complete';}
+  const lastBanner=(G.phase===4&&G.f4.last)?(()=>{const l=G.f4.last;
+    if(l.esito==='assegnato')return `<div style="background:rgba(214,163,26,.14);border:1px solid rgba(214,163,26,.4);border-radius:6px;padding:10px 16px;margin-bottom:18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span class="crediti__k" style="opacity:.8">ultima estrazione</span>${ru(l.ruolo)}<b>${esc(l.nome)}</b><span class="row__sp"></span>
+        <span class="gonf"><i style="background:${CONTRADE[l.contrada]}"></i>${esc(l.contrada)}</span> → <b style="color:var(--oro-2)">${esc(l.squadra)}</b></div>`;
+    if(l.esito==='escluso')return `<div style="background:rgba(175,58,44,.18);border:1px solid rgba(175,58,44,.4);border-radius:6px;padding:10px 16px;margin-bottom:18px">
+        <span class="crediti__k" style="opacity:.8">escluso dall'urna</span> ${ru(l.ruolo)}<b>${esc(l.nome)}</b> escluso dall'admin: non assegnato a nessuna squadra.</div>`;
+    return `<div style="background:rgba(175,58,44,.18);border:1px solid rgba(175,58,44,.4);border-radius:6px;padding:10px 16px;margin-bottom:18px">
+        <span class="crediti__k" style="opacity:.8">ultima estrazione — riestratta</span> ${ru(l.ruolo)}<b>${esc(l.nome)}</b> uscita ${esc(l.contrada)} (${esc(l.squadra)}, ruolo pieno): si riestrae.</div>`;
+  })():'';
+  return `<div class="tv"><div class="tv__hd">
+    <div><span class="eyebrow">Fantabun 26/27 · fase ${G.phase}</span><h1 class="tv__t">${st}</h1></div>
+    <div style="text-align:right"><div class="crediti__k">${sub}</div>
+      <div style="font-family:var(--display);font-size:36px;font-weight:700;color:var(--oro-2);line-height:1">${esc(head)}</div></div></div>
+    ${lastBanner}
+    <div class="tv__grid">${P().map(p=>{
+      return `<button class="tvc ${p.id===live?'tvc--live':''}" onclick="tvOpen(${p.id})" style="text-align:left;cursor:pointer">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="width:11px;height:15px;background:${CONTRADE[p.contrada]};display:block;clip-path:polygon(0 0,100% 0,100% 76%,50% 100%,0 76%)"></span>
+          <p class="tvc__n">${p.nome}</p></div>
+        <div class="tvc__v">${p.crediti} crediti · valore ${valore(p.id)} · ${ros(p.id).length}/24</div>
+        <div class="tvc__b">${tvSlots(p.id)}</div>
+        <div class="tvc__v" style="margin-top:5px">${tvManca(p.id)}</div></button>`;}).join('')}</div>${tvModal()}</div>`;
+}
+
+/* --- landing --- */
+const FASI=[
+  {n:0,t:'Le fasce',d:"Il listone viene diviso per ruolo. I primi 20 per ruolo (i primi 10 kit portiere) sono ordinati per valore di acquisto (Qt.A) e divisi in 4 fasce da 5: A1, A2, B1, B2 — per i portieri 1, 2, 3, 4. Le fasce si accoppiano A1↔B2 e A2↔B1: chi prende un giocatore di una fascia dovrà completare con uno della fascia complementare. Tutti gli altri calciatori restano liberi per le fasi successive."},
+  {n:1,t:'Scelta del capitano',d:"Ogni squadra sceglie in segreto un capitano: un calciatore fuori dai primi 20 del proprio ruolo, portieri esclusi. Il capitano resta per sempre in rosa, nessuno può rubarlo. Se due o più squadre scelgono lo stesso nome, si va a un'asta a buste chiuse fra loro: chi vince paga in crediti, gli altri sono rimborsati e riscelgono un altro nome."},
+  {n:2,t:'Asta libera degli Intoccabili',d:"Si assegnano gli Intoccabili — 1 portiere (kit), 2 difensori, 2 centrocampisti, 2 attaccanti a testa — tutti dalle fasce A1/A2/B1/B2 (1-4 per i portieri). L'ordine di chiamata è casuale: ogni turno il chiamante propone un ruolo che gli manca, partendo dalla fascia A/1-2, e passa alla fascia B/3-4 complementare solo dopo aver preso quella A. Si punta a voce, base 1 credito; chi vince richiama subito, a chi viene soffiata la chiamata tocca al giro dopo. Si esce dalla coda a quota completata."},
+  {n:3,t:'Draft dei Rockies',d:"Un draft a giri: l'ordine di ogni giro va dal valore squadra più basso al più alto (somma dei Qt.A in rosa), ricalcolato solo a fine giro. Il draft è libero: si può scegliere qualsiasi calciatore ancora disponibile, di qualsiasi ruolo mancante, in qualunque posizione del listone — fuori solo dai primi 20 di ruolo (già assegnati in Fase 2). La quota per ruolo è 1 P, 3 D, 3 C, 2 A a testa, tranne per il ruolo del proprio capitano: la scelta del capitano, in Fase 1, vale come una scelta di draft, quindi in quel ruolo la squadra ne pesca uno in meno in Fase 3. Cosi, qualunque ruolo abbia il capitano, tutte le squadre chiudono la Fase 3 con lo stesso numero di calciatori per ruolo. Il draft dura 9 giri da 10 chiamate ciascuno (una squadra può chiudere prima se ha già completato tutte le sue quote). Prima di aprire la Fase 4, un livellamento di sicurezza pareggia eventuali squadre rimaste indietro."},
+  {n:4,t:'I Figli dei Berberi',d:"I calciatori rimasti vengono assegnati per estrazione, un ruolo alla volta — prima i difensori, poi i centrocampisti, poi gli attaccanti — a fasce da 10 (i migliori 10 ancora liberi per quel ruolo). Dentro la fascia si segue il listone: è sempre in palio il calciatore di valore più alto rimasto, non uno a caso. Per ogni calciatore in palio si tira a sorte quale squadra (contrada) lo riceve, tra quelle che hanno ancora un posto libero in quel ruolo E non hanno già ricevuto un calciatore in quella stessa fascia: dentro una fascia da 10 ogni squadra ne prende al massimo uno, cosi la sorte distribuisce equamente invece di dare due calciatori alla stessa squadra e zero a un'altra. Poiché il capitano ha già consumato un posto del suo ruolo in Fase 3, ogni squadra arriva in Fase 4 con lo stesso identico fabbisogno — 3 D, 3 C, 2 A — e finisce con 2 kit portiere, 8 difensori, 8 centrocampisti, 6 attaccanti."},
+  {n:5,t:'Le carte',d:"Si gioca offline, fuori dall'app: una squadra può usare una carta per rubare un calciatore a un'altra. L'app serve solo a registrare l'esito — l'admin indica chi ruba, a chi, e quale calciatore; in cambio, la squadra derubata riceve sempre un calciatore dello stesso ruolo dalla squadra ladra, cosi lo scambio è sempre alla pari e le rose restano da 2 P, 8 D, 8 C, 6 A a testa."},
+  {n:6,t:'Ultime modifiche',d:"Con le rose ormai definite, uno spazio per gli imprevisti: se tra i calciatori assegnati c'è un infortunio grave prima dell'inizio del campionato, l'admin può sostituirlo con un calciatore libero dello stesso ruolo, scelto da tutto il listone senza i vincoli di fascia delle fasi precedenti."}
+];
+function landing(){
+  const open=S.landingOpen;
+  return `<div class="shell shell--wide" style="padding-top:40px">
+    <span class="eyebrow">Fantabun 26/27</span>
+    <h1 class="title">Come funziona la lega</h1>
+    <p class="lede">Sette fasi, in ordine. Clicca su una fase per leggerne le regole in breve.</p>
+    <div class="card" style="margin-top:22px;padding:0;overflow:hidden">
+      ${FASI.map(f=>`<div style="border-bottom:1px solid var(--crema-2)">
+        <button class="pick" style="padding:16px 19px" onclick="S.landingOpen=S.landingOpen===${f.n}?null:${f.n};render()">
+          <span class="fa">${f.n}</span><span class="row__n" style="font-family:var(--display);font-size:17px">${esc(f.t)}</span>
+          <span class="row__sp"></span><span class="mut" style="font-size:18px">${open===f.n?'–':'+'}</span>
+        </button>
+        ${open===f.n?`<div class="note" style="padding:0 19px 17px;font-style:normal">${esc(f.d)}</div>`:''}
+      </div>`).join('')}
+    </div>
+    <div style="margin-top:24px"><button class="btn btn--oro" onclick="S.screen='game';S.landingOpen=null;render()">Inizia · vai alla Fase 0</button></div>
+  </div>`;
+}
+
+/* --- listone completo --- */
+function listoneRow(key){
+  const e=ent(key);
+  const o=owner(key);
+  let right;
+  if(o===undefined){
+    right=`<span class="row__m mut">libero</span>`;
+  } else {
+    const pl=G.pl[o];
+    const a=ros(o).find(x=>x.key===key);
+    const prov=a?(a.cap?'Capitano':(a.liv?'Livellamento':(FASE_LBL[a.fase]||''))):'';
+    right=`${gonf(pl.contrada)}<span class="row__n">${esc(pl.nome)}</span><span class="row__m">${esc(prov)}${a&&a.prezzo?' · '+a.prezzo+' cr':''}</span>`;
+  }
+  const pos=ROLE_RANK[key]?`<span class="num mut" style="width:34px">${ROLE_RANK[key]}°</span>`:'';
+  return `<div class="row">${pos}${e.ruolo?ru(e.ruolo):''}<span class="row__n">${esc(e.nome)}</span><span class="row__m">${esc(e.sub)}</span><span class="row__sp"></span><span class="num mut" style="width:30px">${e.q}</span>${right}</div>`;
+}
+function listone(){
+  const rf=S.lsRole||'Tutti',teamF=S.lsTeam||'Tutte',statF=S.lsStatus||'Tutti',q=(S.q||'').toLowerCase();
+  const base=rf==='Tutti'?LISTONE_ALL_KEYS:LISTONE_ALL_KEYS.filter(k=>ent(k).ruolo===rf);
+  const teams=[...new Set(base.map(k=>teamOf(ent(k))))].sort((a,b)=>a.localeCompare(b));
+  const rows=base.filter(k=>{
+    const e=ent(k);
+    if(teamF!=='Tutte'&&teamOf(e)!==teamF)return false;
+    if(q&&!(e.nome.toLowerCase().includes(q)||e.sub.toLowerCase().includes(q)))return false;
+    const assigned=owner(k)!==undefined;
+    if(statF==='Liberi'&&assigned)return false;
+    if(statF==='Assegnati'&&!assigned)return false;
+    return true;
+  });
+  const nAss=base.filter(k=>owner(k)!==undefined).length;
+  return `<div class="shell shell--wide">
+    <span class="eyebrow">Listone completo</span><h1 class="title">Chi ha preso chi</h1>
+    <p class="lede">Tutti i calciatori del listone, in ordine di valore d'acquisto (Qt.A): chi è ancora libero e chi è già stato assegnato, a chi e come.</p>
+    <div class="card" style="margin-top:20px">
+    ${searchBox('Cerca un calciatore…')}
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:4px 0 12px">
+      ${teamSelect(teamF,"S.lsTeam=this.value;render()",teams)}
+      ${roleTabs(rf,'setLsRole',['P','D','C','A'])}
+      <div style="display:flex;gap:5px;flex-wrap:wrap">${['Tutti','Liberi','Assegnati'].map(s=>`<button class="chip" aria-pressed="${s===statF}" onclick="S.lsStatus='${s}';render()">${s}</button>`).join('')}</div>
+    </div>
+    <div class="scroll scroll--tall">${rows.map(listoneRow).join('')||'<div class="note">Nessun risultato con questi filtri.</div>'}</div>
+    <div class="note">${rows.length} di ${base.length} calciatori mostrati · ${nAss} già assegnati, ${base.length-nAss} liberi in totale su questo filtro ruolo.</div></div>
+  </div>`;
+}
+
+/* ---------------- render ---------------- */
+function setWho(v){if(v==='admin'){S.view='admin';}else if(v==='tv'){S.view='tv';}else{S.view='player';S.who=+v;}S.q='';render();}
+function setF2role(v){S.f2role=v;render();}
+function setF2band(v){S.f2band=v;render();}
+function setF3role(v){S.f3role=v;render();}
+function setLsRole(v){S.lsRole=v;S.lsTeam='Tutte';render();}
+function setNome(id,v){const val=(v||'').trim();if(!val)return;G.pl[+id].nome=val;save();render();}
+function setContrada(id,v){id=+id;const mine=G.pl.find(p=>p.id===id);const other=G.pl.find(p=>p.contrada===v&&p.id!==id);if(other)other.contrada=mine.contrada;mine.contrada=v;save();render();}
+function mescolaContrade(){const shuf=[...Object.keys(CONTRADE)].sort(()=>Math.random()-.5);G.pl.forEach((p,i)=>p.contrada=shuf[i]);save();render();}
+function teamPanelHTML(){
+  if(!S.teamPanel)return'';
+  return `<div class="tvModal" onclick="if(event.target===this){S.teamPanel=false;render();}">
+    <div class="tvModal__card">
+      <div class="card__hd"><h2 class="sub" style="margin:0">Squadre</h2><button class="btn btn--sm btn--ghost" onclick="S.teamPanel=false;render()">Chiudi</button></div>
+      <p class="note" style="margin:0 0 12px">Modifica il nome di ogni fanta allenatore e la contrada (usata nel tabellone e nell'estrazione di Fase 4). Non tocca rose o crediti già assegnati.</p>
+      ${G.pl.map(p=>`<div class="row" style="gap:8px">
+        <span style="width:13px;height:18px;flex:none;background:${CONTRADE[p.contrada]};display:block;clip-path:polygon(0 0,100% 0,100% 76%,50% 100%,0 76%)"></span>
+        <input class="inp" style="width:auto;flex:1;min-width:90px" value="${esc(p.nome)}" onchange="setNome(${p.id},this.value)">
+        <select class="selbox" onchange="setContrada(${p.id},this.value)">
+          ${Object.keys(CONTRADE).map(c=>`<option value="${c}" ${c===p.contrada?'selected':''}>${c}</option>`).join('')}
+        </select>
+      </div>`).join('')}
+      <button class="btn btn--sm btn--ghost" style="margin-top:12px" onclick="mescolaContrade()">Mescola contrade</button>
+    </div>
+  </div>`;
+}
+function linkPanelHTML(){
+  if(!S.linkPanel)return'';
+  const base=location.href.split('?')[0];
+  const rowLink=(label,code)=>`<div class="row" style="gap:8px"><span class="row__n" style="flex:none;width:88px">${esc(label)}</span><span class="row__m" style="user-select:all;word-break:break-all">${base}?chi=${code}</span></div>`;
+  return `<div class="tvModal" onclick="if(event.target===this){S.linkPanel=false;render();}">
+    <div class="tvModal__card">
+      <div class="card__hd"><h2 class="sub" style="margin:0">Link</h2><button class="btn btn--sm btn--ghost" onclick="S.linkPanel=false;render()">Chiudi</button></div>
+      <p class="note" style="margin:0 0 12px">Ogni link giocatore/admin è personale e non contiene il nome: seleziona e copia il testo. Tabellone e Listone restano link pubblici, uguali per tutti.</p>
+      ${rowLink('Admin',CODES.admin)}
+      ${G.pl.map(p=>rowLink(p.nome,CODES.teams[p.id])).join('')}
+      ${rowLink('Tabellone','tv')}
+      ${rowLink('Listone','listone')}
+      <button class="btn btn--sm btn--dark" style="margin-top:12px" onclick="rigeneraCodici()">Rigenera tutti i codici</button>
+    </div>
+  </div>`;
+}
+/* raccoglie sotto un unico pulsante "Impostazioni" tutti gli strumenti di
+   sola pertinenza admin (Squadre, Link, Annulla, Salva, Carica, Azzera):
+   ai giocatori (link personale, toolbar bloccata) resta visibile solo
+   "Regole". Da qui Squadre e Link aprono i rispettivi pannelli esistenti;
+   le altre azioni si eseguono subito. */
+/* conferme a rischio (Azzera, Rigenera link, Salta calciatore) non usano più
+   il confirm() nativo del browser: in alcune finestre/iframe (es. un'app che
+   incorpora questa pagina) i dialog nativi restano bloccati e il click non
+   fa apparentemente nulla. Si usa quindi una piccola conferma dentro la
+   pagina stessa, sempre visibile e cliccabile. */
+const CONFIRM_MSG={
+  azzera:'Ricominciare da zero? Tutte le rose e le scelte fatte finora andranno perse.',
+  rigenera:'Rigenerare tutti i link personali? Quelli già condivisi smetteranno subito di funzionare.',
+  escludi:"Escludere questo calciatore dall'estrazione? Non verrà assegnato a nessuna squadra (es. infortunio grave).",
+  listone:'Caricare il nuovo listone? La lega ripartirà da zero.'
+};
+function askConfirm(action,msg){S.confirmAction=action;S.confirmMsg=msg||CONFIRM_MSG[action]||'Confermare?';render();}
+function cancelConfirm(){if(S.confirmAction==='listone')PENDING_LISTONE=null;S.confirmAction=null;render();}
+function doConfirm(){
+  const a=S.confirmAction;S.confirmAction=null;
+  if(a==='azzera'){S.settingsPanel=false;reset();}
+  else if(a==='rigenera'){CODES=nuoviCodici();salvaCodici(CODES);render();}
+  else if(a==='escludi'){escludiCorrente();}
+  else if(a==='listone'){if(PENDING_LISTONE){applicaListone(PENDING_LISTONE);PENDING_LISTONE=null;}}
+}
+function confirmModalHTML(){
+  if(!S.confirmAction)return'';
+  return `<div class="tvModal" style="z-index:200" onclick="if(event.target===this)cancelConfirm()">
+    <div class="tvModal__card" style="max-width:380px">
+      <p style="margin:0 0 16px">${esc(S.confirmMsg||CONFIRM_MSG[S.confirmAction]||'Confermare?')}</p>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button class="btn btn--sm btn--ghost" onclick="cancelConfirm()">Annulla</button>
+        <button class="btn btn--sm btn--oro" onclick="doConfirm()">Conferma</button>
+      </div>
+    </div>
+  </div>`;
+}
+function settingsPanelHTML(){
+  if(!S.settingsPanel)return'';
+  const voce=(titolo,sotto,onclick,danger)=>`<button class="pick" style="border:1px solid ${danger?'var(--rosso)':'var(--crema-2)'};border-radius:4px;padding:10px 12px;margin-bottom:8px" onclick="${onclick}">
+    <span class="row__n" style="${danger?'color:var(--rosso)':''}">${titolo}</span><span class="row__sp"></span><span class="row__m" style="${danger?'color:var(--rosso)':''}">${sotto}</span></button>`;
+  return `<div class="tvModal" onclick="if(event.target===this){S.settingsPanel=false;render();}">
+    <div class="tvModal__card">
+      <div class="card__hd"><h2 class="sub" style="margin:0">Impostazioni</h2><button class="btn btn--sm btn--ghost" onclick="S.settingsPanel=false;render()">Chiudi</button></div>
+      <div style="display:flex;flex-direction:column">
+        ${voce('Squadre','nomi e contrade',"S.settingsPanel=false;S.teamPanel=true;render()")}
+        ${voce('Link','link personali e pubblici',"S.settingsPanel=false;S.linkPanel=true;render()")}
+        ${voce('Annulla','ultima operazione',"S.settingsPanel=false;undo()")}
+        ${voce('Salva','sessione .json + rose .csv',"S.settingsPanel=false;render();exportG()")}
+        ${voce('Carica','ripristina da un file .json',"S.settingsPanel=false;render();document.getElementById('imp').click()")}
+        ${voce('Carica listone','aggiorna quotazioni e nomi da un .csv',"S.settingsPanel=false;render();document.getElementById('impListone').click()",true)}
+        ${voce('Azzera','ricomincia tutta la lega da capo',"askConfirm('azzera')",true)}
+      </div>
+    </div>
+  </div>`;
+}
+function render(){
+  save();
+  document.querySelector('.proto').style.display=S.screen==='game'?'flex':'none';
+  const app=document.getElementById('app');
+  if(S.screen!=='game'){app.innerHTML=landing()+msg();return;}
+  document.getElementById('whoLbl').style.display=S.locked?'none':'';
+  document.getElementById('who').style.display=S.locked?'none':'';
+  document.getElementById('viewLbl').style.display=S.locked?'none':'';
+  document.getElementById('adminCtrls').style.display=(S.locked||S.view!=='admin')?'none':'contents';
+  document.getElementById('who').innerHTML=
+    P().map(p=>`<option value="${p.id}" ${S.view==='player'&&S.who===p.id?'selected':''}>${p.nome}</option>`).join('')
+    +`<option value="admin" ${S.view==='admin'?'selected':''}>Admin</option><option value="tv" ${S.view==='tv'?'selected':''}>Tabellone</option>`;
+  document.getElementById('segView').innerHTML=(S.locked
+    ?[['player','La mia vista'],['tv','Tabellone'],['listone','Listone']]
+    :[['player','Giocatore'],['admin','Admin'],['tv','Tabellone'],['listone','Listone']])
+    .map(([k,l])=>`<button aria-pressed="${S.view===k}" onclick="S.view='${k}';S.q='';render()">${l}</button>`).join('');
+  document.getElementById('phaseLbl').textContent='fase '+G.phase;
+  const overlay=((S.locked||S.view!=='admin')?'':(teamPanelHTML()+linkPanelHTML()+settingsPanelHTML()))+confirmModalHTML();
+  if(S.view==='tv'){app.innerHTML=tv()+overlay+msg();return;}
+  if(S.view==='listone'){app.innerHTML=listone()+overlay+msg();return;}
+  if(S.locked&&S.view==='admin')S.view='player';
+  const V={0:[v0,v0],1:[v1p,v1a],2:[v2p,v2a],3:[v3p,v3a],4:[v4p,v4a],5:[v5p,v5a],6:[v6p,v6a]}[G.phase];
+  const admin=S.view==='admin';
+  const main=admin?V[1]():V[0]();
+  const showRail=!admin&&G.phase>=1;
+  app.innerHTML=`<div class="shell ${showRail?'':'shell--wide'}"><div>${main}</div>${showRail?rail():''}</div>`+overlay+msg();
+  if(S.focus){const i=document.getElementById('sq');if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length);}S.focus=false;}
+}
+const msg=()=>S.msg?`<div class="toast">${esc(S.msg)}</div>`:'';
+/* "Salva" scarica DUE file: il .json di sessione (serve per "Carica" e riprendere
+   la partita) e un .csv con la lista delle rose in quel momento, apribile
+   direttamente in Excel — una rete di sicurezza leggibile da chiunque anche
+   se il .json dovesse risultare corrotto o inutilizzabile per un qualsiasi
+   malfunzionamento. */
+function csvCell(v){v=String(v??'');return /[";\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}
+function exportRoseCSV(){
+  const rows=[['Squadra','Contrada','Ruolo','Calciatore','Squadra Serie A','Fase','Capitano','Prezzo']];
+  P().forEach(p=>{
+    const arr=ros(p.id).slice().sort((a,b)=>'PDCA'.indexOf(a.ruolo)-'PDCA'.indexOf(b.ruolo)||b.prezzo-a.prezzo);
+    if(!arr.length)rows.push([p.nome,p.contrada,'','(rosa vuota)','','','','']);
+    arr.forEach(a=>{const e=ent(a.key);
+      rows.push([p.nome,p.contrada,a.ruolo,e.nome,e.sub||'',a.liv?'Livellamento':(FASE_LBL[a.fase]||a.fase),a.cap?'sì':'no',a.prezzo||0]);});
+  });
+  const csv='﻿'+rows.map(r=>r.map(csvCell).join(';')).join('\r\n');
+  const b=new Blob([csv],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');
+  a.href=URL.createObjectURL(b);a.download='fantabun-rose.csv';a.click();
+}
+function exportG(){const b=new Blob([JSON.stringify(G)],{type:'application/json'});const a=document.createElement('a');
+  a.href=URL.createObjectURL(b);a.download='fantabun-sessione.json';a.click();
+  setTimeout(exportRoseCSV,150);}
+/* ripara uno stato (caricato da file o da localStorage) salvato da una
+   versione dell'app precedente al meccanismo a fasce/ruolo di Fase 4:
+   non basta riempire i campi mancanti con dei default, perché altrimenti
+   il calciatore "in palio" (cur) resta quello di un ruolo magari già
+   completo, e l'estrazione si blocca per sempre senza mai avanzare.
+   Va chiamata SOLO dopo aver assegnato lo stato a G (P()/gotTot()/
+   fillBand() leggono tutte la G globale), e ricostruisce da zero ruolo,
+   fascia e candidato corrente in base a cosa manca davvero alle squadre. */
+function normalizzaF4(g){
+  if(!g.f4)g.f4={cur:null,skip:null,last:null,esclusi:[]};
+  if(!g.f4.esclusi)g.f4.esclusi=[];
+  if(g.f4.band===undefined){
+    g.f4.role=RUOLI_F4.find(r=>P().some(p=>gotTot(p.id,r)<TOT[r]))||null;
+    g.f4.bandIdx=0;g.f4.band=[];g.f4.cur=null;
+    if(g.phase===4&&g.f4.role){fillBand();g.f4.cur=g.f4.band.length?g.f4.band[0]:null;}
+  }
+  if(g.f4.role===undefined)g.f4.role='D';
+  if(g.f4.bandIdx===undefined)g.f4.bandIdx=0;
+  if(!g.f4.band)g.f4.band=[];
+  if(!g.f4.bandDrawn)g.f4.bandDrawn=[];
+  return g;
+}
+function importG(inp){const f=inp.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{G=JSON.parse(r.result);normalizzaF4(G);HIST=[];render();toast('Sessione caricata');}catch(e){toast('File non valido');}};r.readAsText(f);}
+
+/* ---------------- caricamento di un nuovo listone ----------------
+   Il listone (LISTONE/PL/byId/KITS/FASCE/ROLE_RANK) è incorporato nel file
+   al momento della creazione: per "recepire un aggiornamento" senza dover
+   rigenerare tutto il file, l'admin può caricare da Impostazioni un .csv
+   con le nuove quotazioni — lo stesso export "Quotazioni" che si scarica
+   da fantacalcio.it, o un csv equivalente con almeno le colonne Id, R,
+   Nome (Qt.A e FVM se presenti). Caricare un nuovo listone comporta per
+   forza un Azzera: le rose già fatte fanno riferimento ai calciatori del
+   listone precedente e non avrebbero più senso con quello nuovo. */
+let PENDING_LISTONE=null;
+const RUOLO_ALIAS={P:'P',D:'D',C:'C',A:'A',POR:'P',DIF:'D',CEN:'C',ATT:'A',GK:'P'};
+function parseCSVLine(line,delim){
+  const out=[];let cur='',inQ=false;
+  for(let i=0;i<line.length;i++){
+    const c=line[i];
+    if(inQ){
+      if(c==='"'){if(line[i+1]==='"'){cur+='"';i++;}else inQ=false;}
+      else cur+=c;
+    }else{
+      if(c==='"')inQ=true;
+      else if(c===delim){out.push(cur);cur='';}
+      else cur+=c;
+    }
+  }
+  out.push(cur);
+  return out;
+}
+function parseListoneCSV(text){
+  const lines=text.split(/\r\n|\r|\n/).filter(l=>l.trim().length);
+  if(lines.length<2)return{error:'File vuoto o senza righe di dati.'};
+  const headerLine=lines[0];
+  const semi=(headerLine.match(/;/g)||[]).length,comma=(headerLine.match(/,/g)||[]).length;
+  const delim=semi>=comma?';':',';
+  const norm=h=>h.toLowerCase().trim().replace(/[^a-z0-9]/g,'');
+  const headers=parseCSVLine(headerLine,delim).map(norm);
+  const idx=name=>headers.indexOf(name);
+  const iId=idx('id'),iR=idx('r'),iNome=idx('nome'),iSquadra=idx('squadra'),iQta=idx('qta'),iFvm=idx('fvm');
+  if(iId<0||iR<0||iNome<0||iQta<0)
+    return{error:'Colonne non riconosciute: servono almeno Id, R, Nome e Qt.A (va bene l\'export "Quotazioni" di Fantacalcio.it così com\'è).'};
+  const rows=[];let skipped=0;
+  for(let i=1;i<lines.length;i++){
+    const cells=parseCSVLine(lines[i],delim);
+    const id=parseInt(cells[iId],10);
+    const ruolo=RUOLO_ALIAS[(cells[iR]||'').trim().toUpperCase()];
+    const nome=(cells[iNome]||'').trim();
+    if(!id||!ruolo||!nome){skipped++;continue;}
+    const squadra=iSquadra>=0?(cells[iSquadra]||'').trim():'';
+    const qta=Number((cells[iQta]||'0').replace(',','.'))||0;
+    const fvm=iFvm>=0?(Number((cells[iFvm]||'').replace(',','.'))||qta):qta;
+    rows.push([id,ruolo,nome,squadra,qta,fvm]);
+  }
+  if(rows.length<50)return{error:`Solo ${rows.length} righe valide trovate: il file non sembra un listone completo.`};
+  return{rows,skipped};
+}
+function applicaListone(tuples){
+  LISTONE=tuples;
+  buildDerived();
+  reset();
+  logit(`Listone aggiornato · ${PL.length} calciatori (${PL.filter(p=>p.r==='P').length} P, ${PL.filter(p=>p.r==='D').length} D, ${PL.filter(p=>p.r==='C').length} C, ${PL.filter(p=>p.r==='A').length} A)`);
+  render();
+  toast('Nuovo listone caricato · lega azzerata');
+}
+function importListone(inp){
+  const f=inp.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    inp.value='';
+    const res=parseListoneCSV(String(r.result));
+    if(res.error)return toast(res.error);
+    PENDING_LISTONE=res.rows;
+    const c={P:0,D:0,C:0,A:0};res.rows.forEach(x=>c[x[1]]++);
+    askConfirm('listone',`Caricare questo listone? ${res.rows.length} calciatori (${c.P} P, ${c.D} D, ${c.C} C, ${c.A} A)${res.skipped?`, ${res.skipped} righe scartate`:''}. La lega ripartirà da zero: rose e scelte fatte finora andranno perse.`);
+  };
+  r.readAsText(f,'utf-8');
+}
+
+/* ---------------- persistenza locale + sincronizzazione tra tab ---------------- */
+/* Lo stato di gioco (G) viene salvato in localStorage a ogni render e ricaricato
+   all'apertura. Quando un'altra tab dello STESSO browser (stesso dispositivo)
+   lo modifica, l'evento 'storage' lo ricarica qui: più tab aperte sullo stesso
+   computer (una per l'admin, una per ogni giocatore, una per il tabellone)
+   restano quindi allineate in tempo reale. Non sincronizza fra dispositivi
+   diversi: per quello serve il backend descritto in fantabun-architettura.md. */
+function save(){try{localStorage.setItem('fantabun_state',JSON.stringify(G));}catch(e){}}
+window.addEventListener('storage',e=>{
+  if(e.key==='fantabun_state'&&e.newValue){
+    try{G=JSON.parse(e.newValue);render();}catch(err){}
+  }
+});
+(function boot(){
+  let saved=null;
+  try{saved=localStorage.getItem('fantabun_state');}catch(e){}
+  if(saved){try{G=JSON.parse(saved);}catch(e){G=null;}}
+  if(!G)G=freshG();
+  normalizzaF4(G);
+  HIST=[];
+  /* ?chi=<codice> apre direttamente la vista di quella squadra o dell'admin
+     (codici opachi, non i nomi: vedi 'Link' nella toolbar admin), ?chi=tv
+     il tabellone, ?chi=listone il listone — e salta la landing. */
+  try{
+    const chi=new URLSearchParams(location.search).get('chi');
+    if(chi){
+      S.screen='game';
+      const low=chi.toLowerCase();
+      if(low==='tv')S.view='tv';
+      else if(low==='listone')S.view='listone';
+      else if(chi===CODES.admin)S.view='admin';
+      else{
+        const idx=Object.keys(CODES.teams).find(k=>CODES.teams[k]===chi);
+        if(idx!==undefined){S.view='player';S.who=+idx;S.locked=true;}
+      }
+    }
+  }catch(e){}
+  render();
+})();
+</script>
