@@ -354,9 +354,12 @@ function removeRoster(pid,key){
 const capOk=k=>k[0]==='c'&&!isTop20(k)&&free(k)&&byId.get(+k.slice(2)).r!=='P';
 function scegliCap(key){
   if(!capOk(key))return toast('Non ammesso come capitano');
+  if(IDENTITA && !IDENTITA.is_admin) return scegliCapitanoSulServer(key);
   snap();G.f1.sel[me().id]=key;render();
 }
 function chiudiScelte(){
+  /* Le scelte vere le conosce solo il server: e' lui a scioglierle. */
+  if(IDENTITA) return azioneSulServer('chiudi_scelte', null, 'la chiusura');
   const sel=G.f1.sel;
   if(Object.keys(sel).length<10)return toast('Non tutti hanno scelto');
   snap();
@@ -956,7 +959,7 @@ function v0(){
 
 /* --- fase 1 --- */
 function v1p(){
-  const p=me(),st=G.f1.stato,sel=G.f1.sel[p.id],c=cap(p.id);
+  const p=me(),st=G.f1.stato,sel=(IDENTITA&&!IDENTITA.is_admin)?MIA_SCELTA:G.f1.sel[p.id],c=cap(p.id);
   if(st==='rivelato'||(c&&st!=='riscelta')){
     return `<span class="eyebrow">Fase 1 — capitano</span><h1 class="title">${c?esc(ent(c.key).nome):'In attesa'}</h1>
       <p class="lede">${c?'È tuo per sempre. Nessuna carta potrà rubartelo.':'L\'admin sta sciogliendo i doppioni.'}</p>
@@ -1839,6 +1842,7 @@ function importListone(inp){
    restano quindi allineate in tempo reale. Non sincronizza fra dispositivi
    diversi: per quello serve il backend descritto in fantabun-architettura.md. */
 let VERSIONE = 0;
+let MIA_SCELTA = null;   /* la propria scelta di Fase 1, mai nello stato condiviso */
 let STATO_SERVER = null;      /* ultima copia buona ricevuta dal server */
 let TOKEN = null;
 let inviando = null, avvisato = false, erroriDiFila = 0;
@@ -1875,7 +1879,7 @@ async function azioneSulServer(tipo, key, etichetta){
     const r = await fetch(SB_URL + '/functions/v1/azione', {
       method:'POST',
       headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},
-      body: JSON.stringify({token:TOKEN, tipo, key})
+      body: JSON.stringify(key===null?{token:TOKEN,tipo}:{token:TOKEN,tipo,key})
     });
     const risp = await r.json();
     if(!r.ok){
@@ -1883,7 +1887,7 @@ async function azioneSulServer(tipo, key, etichetta){
       return toast(risp.errore || 'Rifiutata dal server');
     }
     stato(etichetta + ' inviata', 'var(--verde)');
-    /* lo stato aggiornato arriva dal canale in tempo reale */
+    return risp;   /* lo stato aggiornato arriva dal canale in tempo reale */
   }catch(e){
     console.error(e);
     stato('rete non raggiungibile', 'var(--rosso)');
@@ -1892,6 +1896,19 @@ async function azioneSulServer(tipo, key, etichetta){
 }
 
 const chiamaSulServer = key => azioneSulServer('chiama', key, 'la chiamata');
+
+async function scegliCapitanoSulServer(key){
+  const esito = await azioneSulServer('scegli_capitano', key, 'la scelta');
+  if(esito && esito.chiave){ MIA_SCELTA = esito.chiave; render(); }
+}
+
+/* Rilegge la propria scelta segreta dal server: serve dopo un ricaricamento,
+   perche' non e' salvata da nessuna parte nel browser. */
+async function caricaMiaScelta(){
+  if(!TOKEN || !IDENTITA || IDENTITA.is_admin) return;
+  const esito = await azioneSulServer('mia_scelta', null, 'la lettura');
+  if(esito) MIA_SCELTA = esito.chiave;
+}
 
 async function inviaStato(){
   const daInviare = JSON.stringify(G);
@@ -1968,7 +1985,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f7';
+const VERSIONE_FILE = 'f8';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
@@ -2084,6 +2101,7 @@ function schermataErrore(msg){
        salvataggio viene scartato perche' sembra gia' inviato. */
     STATO_SERVER = LEGA.stato_gioco ? JSON.stringify(G) : null;
     if(IDENTITA && IDENTITA.is_admin && !LEGA.stato_gioco) inviaStato();
+    caricaMiaScelta().then(render);
     ascoltaRealtime();
   }catch(e){
     console.error(e);
