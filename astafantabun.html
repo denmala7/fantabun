@@ -461,6 +461,10 @@ function avviaFase2(){
   render();
 }
 function chiama2(key){
+  /* I giocatori non applicano la chiamata da soli: la chiedono al server,
+     che verifica turno, fascia e disponibilita' e poi la propaga a tutti.
+     L'admin mantiene la via diretta, che resta il piano B della serata. */
+  if(IDENTITA && !IDENTITA.is_admin) return chiamaSulServer(key);
   const c=caller2();if(c===null)return;
   if(!free(key))return toast('Già preso');
   const e=ent(key);
@@ -1863,6 +1867,28 @@ function save(){
   inviando = setTimeout(inviaStato, 200);   /* raggruppa raffiche di modifiche */
 }
 
+async function chiamaSulServer(key){
+  try{
+    stato('invio la chiamata\u2026');
+    const r = await fetch(SB_URL + '/functions/v1/azione', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},
+      body: JSON.stringify({token:TOKEN, tipo:'chiama', key})
+    });
+    const risp = await r.json();
+    if(!r.ok){
+      stato('chiamata rifiutata', 'var(--rosso)');
+      return toast(risp.errore || 'Chiamata rifiutata');
+    }
+    stato('chiamata inviata', 'var(--verde)');
+    /* lo stato aggiornato arriva dal canale in tempo reale */
+  }catch(e){
+    console.error(e);
+    stato('rete non raggiungibile', 'var(--rosso)');
+    toast('Errore di rete: riprova');
+  }
+}
+
 async function inviaStato(){
   const daInviare = JSON.stringify(G);
   if(daInviare === STATO_SERVER) return;   /* niente di nuovo da mandare */
@@ -1938,7 +1964,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f5';
+const VERSIONE_FILE = 'f6';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
