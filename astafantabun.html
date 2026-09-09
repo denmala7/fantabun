@@ -1581,9 +1581,10 @@ function setF2role(v){S.f2role=v;render();}
 function setF2band(v){S.f2band=v;render();}
 function setF3role(v){S.f3role=v;render();}
 function setLsRole(v){S.lsRole=v;S.lsTeam='Tutte';render();}
-function setNome(id,v){const val=(v||'').trim();if(!val)return;G.pl[+id].nome=val;save();render();}
-function setContrada(id,v){id=+id;const mine=G.pl.find(p=>p.id===id);const other=G.pl.find(p=>p.contrada===v&&p.id!==id);if(other)other.contrada=mine.contrada;mine.contrada=v;save();render();}
-function mescolaContrade(){const shuf=[...Object.keys(CONTRADE)].sort(()=>Math.random()-.5);G.pl.forEach((p,i)=>p.contrada=shuf[i]);save();render();}
+function setNome(){alert('I nomi si cambiano sul database, non da qui: cosi\u0300 valgono per tutti.');render();}
+function setContrada(){alert('Le contrade si cambiano sul database, non da qui: cosi\u0300 valgono per tutti.');render();}
+function _setContradaVecchia(id,v){id=+id;const mine=G.pl.find(p=>p.id===id);const other=G.pl.find(p=>p.contrada===v&&p.id!==id);if(other)other.contrada=mine.contrada;mine.contrada=v;save();render();}
+function mescolaContrade(){alert('Le contrade si cambiano sul database, non da qui: cosi\u0300 valgono per tutti.');render();}
 function teamPanelHTML(){
   if(!S.teamPanel)return'';
   return `<div class="tvModal" onclick="if(event.target===this){S.teamPanel=false;render();}">
@@ -1660,7 +1661,7 @@ function settingsPanelHTML(){
     <div class="tvModal__card">
       <div class="card__hd"><h2 class="sub" style="margin:0">Impostazioni</h2><button class="btn btn--sm btn--ghost" onclick="S.settingsPanel=false;render()">Chiudi</button></div>
       <div style="display:flex;flex-direction:column">
-        ${voce('Squadre','nomi e contrade',"S.settingsPanel=false;S.teamPanel=true;render()")}
+        ${voce('Squadre','solo lettura: nomi e contrade si cambiano sul database',"S.settingsPanel=false;S.teamPanel=true;render()")}
         ${voce('Link','link personali e pubblici',"S.settingsPanel=false;S.linkPanel=true;render()")}
         ${voce('Annulla','ultima operazione',"S.settingsPanel=false;undo()")}
         ${voce('Salva','sessione .json + rose .csv',"S.settingsPanel=false;render();exportG()")}
@@ -1846,6 +1847,7 @@ function boot(){
   /* L'identita' e' gia' stata risolta dal server in avvia(): qui si
      applica soltanto. Chi ha un token valido finisce bloccato sulla
      propria vista; tabellone e listone restano pubblici. */
+  allineaPartecipanti();
   const vista=(new URLSearchParams(location.search).get('vista')||'').toLowerCase();
   if(vista==='tv'||vista==='listone'){S.screen='game';S.view=vista;S.locked=true;}
   else if(IDENTITA){
@@ -1927,6 +1929,22 @@ async function chiSono(token){
   });
   if(!r.ok) return null;
   return await r.json();
+}
+
+/* Il database e' l'autorita' su nomi e contrade. Lo stato di gioco salvato
+   nel browser ne conserva una copia, che qui viene riallineata a ogni
+   apertura: cambiare un nome con una query si vede su tutti i dispositivi
+   al primo ricaricamento, senza azzerare la partita.
+   Rose, crediti e mosse non vengono toccati. */
+function allineaPartecipanti(){
+  if(!G || !Array.isArray(G.pl) || !PARTECIPANTI.length) return;
+  if(G.pl.length !== PARTECIPANTI.length) return;  /* partita di un'altra lega: non tocco nulla */
+  let cambiato = false;
+  PARTECIPANTI.forEach((p,i)=>{
+    if(G.pl[i].nome !== p.nome){ G.pl[i].nome = p.nome; cambiato = true; }
+    if(p.berbero && G.pl[i].contrada !== p.berbero){ G.pl[i].contrada = p.berbero; cambiato = true; }
+  });
+  if(cambiato) save();
 }
 
 function schermataErrore(msg){
