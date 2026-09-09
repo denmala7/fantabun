@@ -180,6 +180,7 @@ h2.sub{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 12px
 
 <div class="proto">
   <span class="proto__tag">Fantabun</span>
+  <span class="proto__lbl" id="verFile" style="opacity:.6"></span>
   <span class="proto__lbl" id="whoLbl">sei</span>
   <select id="who" onchange="setWho(this.value)"></select>
   <span class="proto__lbl" id="viewLbl">vista</span>
@@ -1834,7 +1835,7 @@ function importListone(inp){
 let VERSIONE = 0;
 let STATO_SERVER = null;      /* ultima copia buona ricevuta dal server */
 let TOKEN = null;
-let inviando = null, avvisato = false;
+let inviando = null, avvisato = false, erroriDiFila = 0;
 
 /* Ogni mutazione del gioco finisce qui. Se sei l'admin, lo stato nuovo
    parte verso il server; se non lo sei, la modifica viene annullata e
@@ -1876,16 +1877,24 @@ async function inviaStato(){
     if(r.status === 409){
       /* Qualcun altro ha scritto per primo: vince il server, non io. */
       G = risp.stato; VERSIONE = risp.versione; STATO_SERVER = JSON.stringify(G);
-      stato('riallineato', 'var(--rosso)');
+      erroriDiFila++;
+      stato('riallineato \u2014 altra scheda aperta?', 'var(--rosso)');
       return render();
     }
     if(!r.ok) throw new Error(risp.errore || ('HTTP ' + r.status));
     VERSIONE = risp.versione;
     STATO_SERVER = daInviare;
+    erroriDiFila = 0;
     stato('salvato \u00b7 v' + VERSIONE, 'var(--verde)');
   }catch(e){
     console.error(e);
-    stato('NON salvato', 'var(--rosso)');
+    erroriDiFila++;
+    if(erroriDiFila >= 3){
+      stato('SALVATAGGIO FERMO \u2014 ricarica', 'var(--rosso)');
+      alert('Il salvataggio non riesce. Ricarica la pagina e controlla di non avere altre schede aperte.');
+    }else{
+      stato('NON salvato', 'var(--rosso)');
+    }
   }
 }
 /* la sincronia fra dispositivi la fa Supabase Realtime, vedi ascoltaRealtime() */
@@ -1929,10 +1938,15 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
+const VERSIONE_FILE = 'f5';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
 
+function mostraVersioneFile(){
+  const el = document.getElementById('verFile');
+  if(el) el.textContent = VERSIONE_FILE;
+}
 function stato(txt, colore){
   const el = document.getElementById('sbStat');
   if(el){ el.textContent = txt; el.style.color = colore || ''; }
@@ -1979,7 +1993,7 @@ function ascoltaRealtime(){
           render();
         })
     .subscribe(s => {
-      if(s === 'SUBSCRIBED') stato('collegato · ' + (LEGA ? LEGA.stato : ''), 'var(--verde)');
+      if(s === 'SUBSCRIBED' && !VERSIONE) stato('collegato', 'var(--verde)');
       if(s === 'CHANNEL_ERROR' || s === 'TIMED_OUT') stato('sincronia interrotta', 'var(--rosso)');
     });
 }
@@ -2023,6 +2037,7 @@ function schermataErrore(msg){
 
 (async function avvia(){
   try{
+    mostraVersioneFile();
     sb = window.supabase.createClient(SB_URL, SB_KEY);
     await caricaDati();
     const t = new URLSearchParams(location.search).get('t');
@@ -2034,8 +2049,10 @@ function schermataErrore(msg){
     }
     stato((IDENTITA ? IDENTITA.nome + ' · ' : '') + LEGA.stato, 'var(--verde)');
     boot();
-    STATO_SERVER = JSON.stringify(G);
-    /* Partita mai salvata sul server: la creo io, se sono l'admin. */
+    /* STATO_SERVER rappresenta cio' che il server ha davvero.
+       Se non ha nulla deve restare vuoto, altrimenti il primo
+       salvataggio viene scartato perche' sembra gia' inviato. */
+    STATO_SERVER = LEGA.stato_gioco ? JSON.stringify(G) : null;
     if(IDENTITA && IDENTITA.is_admin && !LEGA.stato_gioco) inviaStato();
     ascoltaRealtime();
   }catch(e){
