@@ -604,6 +604,8 @@ function ok3(pid,key){
   return true;
 }
 function pick3(key){
+  /* come per la chiamata di Fase 2: il giocatore chiede, il server decide */
+  if(IDENTITA && !IDENTITA.is_admin) return azioneSulServer('scegli', key, 'la scelta');
   const c=caller3();if(c===null)return;
   if(!ok3(c,key))return toast('Scelta non valida');
   snap();give(c,key,3,0);
@@ -1867,20 +1869,20 @@ function save(){
   inviando = setTimeout(inviaStato, 200);   /* raggruppa raffiche di modifiche */
 }
 
-async function chiamaSulServer(key){
+async function azioneSulServer(tipo, key, etichetta){
   try{
-    stato('invio la chiamata\u2026');
+    stato('invio ' + etichetta + '\u2026');
     const r = await fetch(SB_URL + '/functions/v1/azione', {
       method:'POST',
       headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},
-      body: JSON.stringify({token:TOKEN, tipo:'chiama', key})
+      body: JSON.stringify({token:TOKEN, tipo, key})
     });
     const risp = await r.json();
     if(!r.ok){
-      stato('chiamata rifiutata', 'var(--rosso)');
-      return toast(risp.errore || 'Chiamata rifiutata');
+      stato(etichetta + ' rifiutata', 'var(--rosso)');
+      return toast(risp.errore || 'Rifiutata dal server');
     }
-    stato('chiamata inviata', 'var(--verde)');
+    stato(etichetta + ' inviata', 'var(--verde)');
     /* lo stato aggiornato arriva dal canale in tempo reale */
   }catch(e){
     console.error(e);
@@ -1888,6 +1890,8 @@ async function chiamaSulServer(key){
     toast('Errore di rete: riprova');
   }
 }
+
+const chiamaSulServer = key => azioneSulServer('chiama', key, 'la chiamata');
 
 async function inviaStato(){
   const daInviare = JSON.stringify(G);
@@ -1964,7 +1968,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f6';
+const VERSIONE_FILE = 'f7';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
