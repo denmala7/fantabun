@@ -373,9 +373,18 @@ function chiudiScelte(){
   render();
 }
 const duel=()=>G.f1.duels[G.f1.di]||null;
-function punta(v){const d=duel();if(!d)return;snap();G.f1.bids[me().id]=Math.max(0,Math.min(v,me().crediti));render();}
+function punta(v){
+  const d=duel();if(!d)return;
+  if(IDENTITA && !IDENTITA.is_admin) return puntaSulServer(v);
+  snap();G.f1.bids[me().id]=Math.max(0,Math.min(v,me().crediti));render();
+}
+async function puntaSulServer(v){
+  const esito = await azioneSulServer('punta', null, "l'offerta", {valore:v});
+  if(esito && esito.offerta!==undefined){ MIA_OFFERTA = esito.offerta; render(); }
+}
 function risolviDuel(wid){
   const d=duel();if(!d)return;
+  if(IDENTITA) return azioneSulServer('risolvi_duel', null, "l'assegnazione", {wid});
   const b=G.f1.bids,prezzo=b[wid]||0;
   if(d.pids.some(p=>b[p]===undefined))return toast('Mancano delle offerte');
   snap();
@@ -972,7 +981,7 @@ function v1p(){
   if(st==='duelli'){
     const d=duel();
     if(!d.pids.includes(p.id))return `<span class="eyebrow">Fase 1</span><h1 class="title">Asta in corso</h1><p class="lede">Si sta decidendo ${esc(ent(d.key).nome)}. Non ti riguarda.</p>`;
-    const b=G.f1.bids[p.id];
+    const b=(IDENTITA&&!IDENTITA.is_admin)?MIA_OFFERTA:G.f1.bids[p.id];
     return `<span class="eyebrow" style="color:var(--rosso)">Fase 1 — doppione</span><h1 class="title">${esc(ent(d.key).nome)}</h1>
       <p class="lede">Anche ${d.pids.filter(x=>x!==p.id).map(x=>G.pl[x].nome).join(' e ')} ha scritto questo nome. Punta a busta chiusa: chi vince paga, chi perde incassa e riscegli.</p>
       <div class="card" style="margin-top:20px"><div class="card__hd"><h2 class="sub" style="margin:0">La tua offerta</h2><span class="row__m">massimo ${p.crediti}</span></div>
@@ -1013,7 +1022,7 @@ function v1a(){
   } else if(st==='duelli'){
     const d=duel();
     body=`<div class="card warn"><div class="card__hd"><h2 class="sub" style="margin:0;color:var(--rosso)">${esc(ent(d.key).nome)} — ${d.pids.length} squadre</h2><span class="row__m">duello ${G.f1.di+1} di ${G.f1.duels.length}</span></div>
-      <div class="grid2">${d.pids.map(pid=>{const b=G.f1.bids[pid];
+      <div class="grid2">${d.pids.map(pid=>{const b=IDENTITA?OFFERTE[pid]:G.f1.bids[pid];
         return `<button class="pick" style="border:1px solid var(--crema-2);border-radius:4px" onclick="risolviDuel(${pid})">
         <span class="row__n">${G.pl[pid].nome}</span><span class="row__sp"></span><span class="num">${b!==undefined?b:'—'}</span></button>`;}).join('')}</div>
       <div class="note">Le offerte arrivano dagli schermi dei giocatori. Clicca su chi ha vinto per assegnare e rimborsare.</div></div>`;
@@ -1845,7 +1854,9 @@ function importListone(inp){
    restano quindi allineate in tempo reale. Non sincronizza fra dispositivi
    diversi: per quello serve il backend descritto in fantabun-architettura.md. */
 let VERSIONE = 0;
-let MIA_SCELTA = null;   /* la propria scelta di Fase 1, mai nello stato condiviso */
+let MIA_SCELTA = null;
+let OFFERTE = {};        /* offerte del duello: le vede solo l'admin */
+let MIA_OFFERTA;         /* la propria, per rivederla dopo un ricaricamento */   /* la propria scelta di Fase 1, mai nello stato condiviso */
 let STATO_SERVER = null;      /* ultima copia buona ricevuta dal server */
 let TOKEN = null;
 let inviando = null, avvisato = false, erroriDiFila = 0;
@@ -1876,13 +1887,13 @@ function save(){
   inviando = setTimeout(inviaStato, 200);   /* raggruppa raffiche di modifiche */
 }
 
-async function azioneSulServer(tipo, key, etichetta){
+async function azioneSulServer(tipo, key, etichetta, extra){
   try{
     stato('invio ' + etichetta + '\u2026');
     const r = await fetch(SB_URL + '/functions/v1/azione', {
       method:'POST',
       headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},
-      body: JSON.stringify(key===null?{token:TOKEN,tipo}:{token:TOKEN,tipo,key})
+      body: JSON.stringify(Object.assign({token:TOKEN,tipo}, key===null?{}:{key}, extra||{}))
     });
     const risp = await r.json();
     if(!r.ok){
@@ -1908,6 +1919,15 @@ async function scegliCapitanoSulServer(key){
 
 /* Rilegge la propria scelta segreta dal server: serve dopo un ricaricamento,
    perche' non e' salvata da nessuna parte nel browser. */
+/* Le offerte non stanno nello stato condiviso: l'admin le richiede al
+   server ogni volta che qualcosa cambia. */
+async function aggiornaOfferte(){
+  if(!IDENTITA || !IDENTITA.is_admin) return;
+  if(!G || G.phase!==1 || G.f1.stato!=='duelli') return;
+  const esito = await azioneSulServer('offerte_duello', null, 'le offerte');
+  if(esito && esito.offerte){ OFFERTE = esito.offerte; render(); }
+}
+
 async function caricaMiaScelta(){
   if(!TOKEN || !IDENTITA || IDENTITA.is_admin) return;
   const esito = await azioneSulServer('mia_scelta', null, 'la lettura');
@@ -1989,7 +2009,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f9';
+const VERSIONE_FILE = 'f10';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
@@ -2039,6 +2059,7 @@ function ascoltaRealtime(){
             VERSIONE = v;
             STATO_SERVER = JSON.stringify(G);
             allineaPartecipanti();
+            aggiornaOfferte();
             stato('aggiornato \u00b7 v' + v, 'var(--verde)');
           }
           render();
@@ -2106,6 +2127,7 @@ function schermataErrore(msg){
     STATO_SERVER = LEGA.stato_gioco ? JSON.stringify(G) : null;
     if(IDENTITA && IDENTITA.is_admin && !LEGA.stato_gioco) inviaStato();
     caricaMiaScelta().then(render);
+    aggiornaOfferte();
     ascoltaRealtime();
   }catch(e){
     console.error(e);
