@@ -401,6 +401,7 @@ function risolviDuel(wid){
 }
 const chiRiscegli=()=>P().filter(p=>!cap(p.id)).map(p=>p.id);
 function risceglie(key){
+  if(IDENTITA && !IDENTITA.is_admin) return azioneSulServer('riscegli', key, 'la riscelta');
   if(!capOk(key))return toast('Non ammesso');
   snap();give(me().id,key,1,0,true);
   logit(`${me().nome} riscegli ${ent(key).nome} come capitano`);
@@ -2009,7 +2010,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f10';
+const VERSIONE_FILE = 'f11';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
