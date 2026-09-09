@@ -1841,7 +1841,14 @@ let inviando = null, avvisato = false;
    ti riallineo a quello che dice il server. Nessuno puo' giocare per
    conto proprio in una copia locale che gli altri non vedono. */
 function save(){
-  try{localStorage.setItem('fantabun_state',JSON.stringify(G));}catch(e){}
+  const ora = JSON.stringify(G);
+  try{localStorage.setItem('fantabun_state',ora);}catch(e){}
+
+  /* render() chiama save() a ogni disegno. Senza questo confronto ogni
+     aggiornamento ricevuto dal server ne provocherebbe uno nuovo, e il
+     contatore di versione salirebbe da solo all'infinito. */
+  if(ora === STATO_SERVER) return;
+
   if(!IDENTITA || !IDENTITA.is_admin){
     if(STATO_SERVER){
       G = JSON.parse(STATO_SERVER);
@@ -1857,6 +1864,7 @@ function save(){
 
 async function inviaStato(){
   const daInviare = JSON.stringify(G);
+  if(daInviare === STATO_SERVER) return;   /* niente di nuovo da mandare */
   try{
     stato('salvo\u2026');
     const r = await fetch(SB_URL + '/functions/v1/azione', {
