@@ -1831,16 +1831,67 @@ function importListone(inp){
    computer (una per l'admin, una per ogni giocatore, una per il tabellone)
    restano quindi allineate in tempo reale. Non sincronizza fra dispositivi
    diversi: per quello serve il backend descritto in fantabun-architettura.md. */
-function save(){try{localStorage.setItem('fantabun_state',JSON.stringify(G));}catch(e){}}
-window.addEventListener('storage',e=>{
-  if(e.key==='fantabun_state'&&e.newValue){
-    try{G=JSON.parse(e.newValue);render();}catch(err){}
+let VERSIONE = 0;
+let STATO_SERVER = null;      /* ultima copia buona ricevuta dal server */
+let TOKEN = null;
+let inviando = null, avvisato = false;
+
+/* Ogni mutazione del gioco finisce qui. Se sei l'admin, lo stato nuovo
+   parte verso il server; se non lo sei, la modifica viene annullata e
+   ti riallineo a quello che dice il server. Nessuno puo' giocare per
+   conto proprio in una copia locale che gli altri non vedono. */
+function save(){
+  try{localStorage.setItem('fantabun_state',JSON.stringify(G));}catch(e){}
+  if(!IDENTITA || !IDENTITA.is_admin){
+    if(STATO_SERVER){
+      G = JSON.parse(STATO_SERVER);
+      if(!avvisato){ avvisato = true;
+        alert('L\u2019asta la guida chi organizza: da qui puoi solo seguirla.'); }
+      setTimeout(render, 0);
+    }
+    return;
   }
-});
+  clearTimeout(inviando);
+  inviando = setTimeout(inviaStato, 200);   /* raggruppa raffiche di modifiche */
+}
+
+async function inviaStato(){
+  const daInviare = JSON.stringify(G);
+  try{
+    stato('salvo\u2026');
+    const r = await fetch(SB_URL + '/functions/v1/azione', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},
+      body: JSON.stringify({token:TOKEN, tipo:'salva_stato', stato:JSON.parse(daInviare), versione:VERSIONE})
+    });
+    const risp = await r.json();
+    if(r.status === 409){
+      /* Qualcun altro ha scritto per primo: vince il server, non io. */
+      G = risp.stato; VERSIONE = risp.versione; STATO_SERVER = JSON.stringify(G);
+      stato('riallineato', 'var(--rosso)');
+      return render();
+    }
+    if(!r.ok) throw new Error(risp.errore || ('HTTP ' + r.status));
+    VERSIONE = risp.versione;
+    STATO_SERVER = daInviare;
+    stato('salvato \u00b7 v' + VERSIONE, 'var(--verde)');
+  }catch(e){
+    console.error(e);
+    stato('NON salvato', 'var(--rosso)');
+  }
+}
+/* la sincronia fra dispositivi la fa Supabase Realtime, vedi ascoltaRealtime() */
 function boot(){
-  let saved=null;
-  try{saved=localStorage.getItem('fantabun_state');}catch(e){}
-  if(saved){try{G=JSON.parse(saved);}catch(e){G=null;}}
+  /* La partita vive sul server. localStorage non e' piu' la fonte:
+     resta solo come copia di emergenza se il server non risponde. */
+  if(LEGA && LEGA.stato_gioco){
+    G = LEGA.stato_gioco;
+    VERSIONE = LEGA.versione || 0;
+  }else{
+    let saved=null;
+    try{saved=localStorage.getItem('fantabun_state');}catch(e){}
+    if(saved){try{G=JSON.parse(saved);}catch(e){G=null;}}
+  }
   if(!G)G=freshG();
   normalizzaF4(G);
   HIST=[];
@@ -1909,7 +1960,14 @@ function ascoltaRealtime(){
         {event:'UPDATE', schema:'public', table:'lega', filter:'id=eq.'+LEGA_ID},
         payload => {
           LEGA = payload.new;
-          stato('aggiornato · ' + LEGA.stato, 'var(--verde)');
+          const v = LEGA.versione || 0;
+          if(LEGA.stato_gioco && v > VERSIONE){
+            G = LEGA.stato_gioco;
+            VERSIONE = v;
+            STATO_SERVER = JSON.stringify(G);
+            allineaPartecipanti();
+            stato('aggiornato \u00b7 v' + v, 'var(--verde)');
+          }
           render();
         })
     .subscribe(s => {
@@ -1961,12 +2019,16 @@ function schermataErrore(msg){
     await caricaDati();
     const t = new URLSearchParams(location.search).get('t');
     if(t){
+      TOKEN = t;
       IDENTITA = await chiSono(t);
       if(!IDENTITA){ stato('link non valido', 'var(--rosso)');
         return schermataErrore('Questo link non è valido. Chiedi a chi organizza di rimandarti il tuo.'); }
     }
     stato((IDENTITA ? IDENTITA.nome + ' · ' : '') + LEGA.stato, 'var(--verde)');
     boot();
+    STATO_SERVER = JSON.stringify(G);
+    /* Partita mai salvata sul server: la creo io, se sono l'admin. */
+    if(IDENTITA && IDENTITA.is_admin && !LEGA.stato_gioco) inviaStato();
     ascoltaRealtime();
   }catch(e){
     console.error(e);
