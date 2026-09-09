@@ -831,6 +831,9 @@ function auto(n){
   render();
 }
 function autoCapitani(){
+  /* Deve passare dal server come le scelte vere, altrimenti riempirebbe
+     solo lo stato locale e la tabella protetta resterebbe vuota. */
+  if(IDENTITA) return azioneSulServer('simula_capitani', null, 'la simulazione');
   let guard=0;
   while(G.phase===1&&G.f1.stato!=='rivelato'&&guard<500){
     guard++;
@@ -1896,6 +1899,7 @@ async function azioneSulServer(tipo, key, etichetta){
 }
 
 const chiamaSulServer = key => azioneSulServer('chiama', key, 'la chiamata');
+const simulaCapitaniSulServer = () => azioneSulServer('simula_capitani', null, 'la simulazione');
 
 async function scegliCapitanoSulServer(key){
   const esito = await azioneSulServer('scegli_capitano', key, 'la scelta');
@@ -1985,7 +1989,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f8';
+const VERSIONE_FILE = 'f9';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
