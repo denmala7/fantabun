@@ -156,7 +156,7 @@ h2.sub{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 12px
 .cop__mono{font-family:var(--display);font-weight:700;color:var(--crema);line-height:1;font-size:min(4.2vw,26px)}
 .cop__disc--hub .cop__mono{font-size:min(9vw,54px);color:var(--oro-2)}
 .cop__flag{position:absolute;left:0;top:0;width:100%;height:100%;border-radius:50%;opacity:.9;mask:radial-gradient(circle at 50% 50%,transparent 0 62%,#000 62%);-webkit-mask:radial-gradient(circle at 50% 50%,transparent 0 62%,#000 62%)}
-.cop__nm{font-family:var(--mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:rgba(243,241,232,.7);line-height:1.25;width:112%;margin:0 -6%;transition:.16s;overflow-wrap:break-word;hyphens:auto}
+.cop__nm{font-family:var(--mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:rgba(243,241,232,.7);line-height:1.2;width:112%;margin:0 -6%;min-width:0;transition:.16s;white-space:normal;overflow-wrap:anywhere;word-break:break-word}
 .cop__cta{margin-top:34px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .cop__note{margin-top:18px;font-size:11.5px;color:rgba(243,241,232,.38);font-family:var(--mono);letter-spacing:.05em}
 .copModal{position:fixed;inset:0;background:rgba(6,20,12,.82);z-index:140;display:flex;align-items:center;justify-content:center;padding:20px;text-align:left}
@@ -1439,10 +1439,20 @@ function iniziali(s){
   if(!w.length)return '?';
   return (w.length===1?w[0].slice(0,2):w[0][0]+w[1][0]).toUpperCase();
 }
+/* Il file del logo si chiama come la squadra: minuscolo, spazi in underscore.
+   "Willwaukee Bucks FC" -> img/willwaukee_bucks_fc.jpeg */
+function fileLogo(club){
+  if(!club) return null;
+  return 'img/' + club.toLowerCase().trim().replace(/\s+/g,'_') + '.jpeg';
+}
+
 function discoLogo(src,alt,extra,fallback,fit){
   const cl=(extra||'')+(src?' cop__disc--img':'')+(src&&fit==='contain'?' cop__disc--fit':'');
+  /* Se l'immagine non c'e' ancora, il disco torna alle iniziali invece di
+     mostrare l'icona di immagine rotta. */
+  const rip=`this.parentNode.classList.remove('cop__disc--img','cop__disc--fit');this.outerHTML=this.dataset.fb;`;
   return `<div class="cop__disc ${cl}">${
-    src?`<img src="${esc(src)}" alt="${esc(alt)}" loading="lazy">`:fallback
+    src?`<img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" data-fb="${esc(fallback||'')}" onerror="${rip}">`:fallback
   }</div>`;
 }
 /* scheda squadra: accetta sia la forma estesa {club,logo,foto,bio} sia una semplice stringa-URL */
@@ -1501,7 +1511,7 @@ function copertina(){
     const s=schedaSq(p);
     const fb=`<span class="cop__flag" style="background:conic-gradient(from 180deg,${col},rgba(255,255,255,.22),${col})"></span><span class="cop__mono">${esc(iniziali(p.nome))}</span>`;
     return `<button class="cop__sq" style="left:${x.toFixed(3)}%;top:${y.toFixed(3)}%" onclick="copOpen(${p.id})" title="${esc(s.club||p.nome)} — apri la scheda">
-      ${discoLogo(s.logo,p.nome,'',fb,s.fit)}
+      ${discoLogo(s.logo||fileLogo(s.club),p.nome,'',fb,s.fit)}
       <span class="cop__nm">${esc(s.club||p.nome)}</span></button>`;
   }).join('');
   const hubFb=`<span class="cop__mono">FB</span>`;
@@ -2009,7 +2019,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f15';
+const VERSIONE_FILE = 'f16';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
