@@ -1446,6 +1446,10 @@ function fileLogo(club){
   return 'img/' + club.toLowerCase().trim().replace(/\s+/g,'_') + '.jpeg';
 }
 
+function fileRitratto(club){
+  return club ? 'img/' + club.toLowerCase().trim().replace(/\s+/g,'_') + '_ritratto.jpeg' : null;
+}
+
 function discoLogo(src,alt,extra,fallback,fit){
   const cl=(extra||'')+(src?' cop__disc--img':'')+(src&&fit==='contain'?' cop__disc--fit':'');
   /* Se l'immagine non c'e' ancora, il disco torna alle iniziali invece di
@@ -1489,7 +1493,10 @@ function copModal(){
   return `<div class="copModal" onclick="if(event.target===this)copClose()">
     <div class="copModal__card">
       <button class="copModal__x" onclick="copClose()" aria-label="Chiudi">×</button>
-      ${s.foto?`<img class="copModal__foto" src="${esc(s.foto)}" alt="Fanta allenatore ${esc(p.nome)}">`:ritrattoSegnaposto(col,ini)}
+      ${(()=>{const f=s.foto||fileRitratto(s.club);
+        if(!f) return ritrattoSegnaposto(col,ini);
+        const seg=ritrattoSegnaposto(col,ini).replace(/"/g,'&quot;');
+        return `<img class="copModal__foto" src="${esc(f)}" alt="Fanta allenatore ${esc(p.nome)}" onerror="this.outerHTML=&quot;${seg}&quot;">`;})()}
       <div class="copModal__hd">
         <div style="width:64px;flex:none">${discoLogo(s.logo,p.nome,'',fb,s.fit)}</div>
         <div style="min-width:0">
@@ -2019,7 +2026,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f17';
+const VERSIONE_FILE = 'f18';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
