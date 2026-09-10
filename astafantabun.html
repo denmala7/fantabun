@@ -142,9 +142,9 @@ h2.sub{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 12px
 .cop__t{font-family:var(--display);font-size:clamp(34px,7vw,62px);font-weight:700;line-height:1;margin:9px 0 0;letter-spacing:-.015em}
 .cop__s{color:rgba(243,241,232,.62);font-size:16px;margin:12px 0 0}
 .cop__rule{width:54px;height:1px;background:rgba(214,163,26,.55);margin:20px auto 0}
-.cop__ring{position:relative;width:min(90vw,640px);aspect-ratio:1;margin:30px auto 0}
+.cop__ring{position:relative;width:min(92vw,680px);aspect-ratio:1;margin:30px auto 0}
 .cop__hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:44%;z-index:2}
-.cop__sq{position:absolute;transform:translate(-50%,-50%);width:21%;display:flex;flex-direction:column;align-items:center;gap:6px;padding:0;transition:.16s}
+.cop__sq{position:absolute;transform:translate(-50%,-50%);width:19%;display:flex;flex-direction:column;align-items:center;gap:6px;padding:0;transition:.16s}
 .cop__sq:hover{filter:brightness(1.12)}
 .cop__sq:hover .cop__disc{border-color:rgba(214,163,26,.7);box-shadow:0 0 0 4px rgba(214,163,26,.14),0 6px 20px rgba(0,0,0,.34)}
 .cop__sq:hover .cop__nm{color:var(--oro-2)}
@@ -156,7 +156,7 @@ h2.sub{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 12px
 .cop__mono{font-family:var(--display);font-weight:700;color:var(--crema);line-height:1;font-size:min(4.2vw,26px)}
 .cop__disc--hub .cop__mono{font-size:min(9vw,54px);color:var(--oro-2)}
 .cop__flag{position:absolute;left:0;top:0;width:100%;height:100%;border-radius:50%;opacity:.9;mask:radial-gradient(circle at 50% 50%,transparent 0 62%,#000 62%);-webkit-mask:radial-gradient(circle at 50% 50%,transparent 0 62%,#000 62%)}
-.cop__nm{font-family:var(--mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:rgba(243,241,232,.7);line-height:1.2;width:112%;margin:0 -6%;min-width:0;transition:.16s;white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+.cop__nm{font-family:var(--mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:rgba(243,241,232,.7);line-height:1.18;width:100%;max-width:130px;margin:0;min-width:0;transition:.16s;white-space:normal;overflow-wrap:anywhere;word-break:break-word}
 .cop__cta{margin-top:34px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .cop__note{margin-top:18px;font-size:11.5px;color:rgba(243,241,232,.38);font-family:var(--mono);letter-spacing:.05em}
 .copModal{position:fixed;inset:0;background:rgba(6,20,12,.82);z-index:140;display:flex;align-items:center;justify-content:center;padding:20px;text-align:left}
@@ -2019,7 +2019,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f16';
+const VERSIONE_FILE = 'f17';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
