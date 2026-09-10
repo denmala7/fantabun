@@ -160,14 +160,14 @@ h2.sub{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 12px
 .cop__cta{margin-top:34px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .cop__note{margin-top:18px;font-size:11.5px;color:rgba(243,241,232,.38);font-family:var(--mono);letter-spacing:.05em}
 .copModal{position:fixed;inset:0;background:rgba(6,20,12,.82);z-index:140;display:flex;align-items:center;justify-content:center;padding:20px;text-align:left}
-.copModal__card{position:relative;width:100%;max-width:440px;max-height:86vh;overflow:auto;background:var(--bosco-2);border:1px solid rgba(214,163,26,.34);border-radius:9px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.copModal__card{position:relative;width:100%;max-width:560px;max-height:92vh;overflow:auto;background:var(--bosco-2);border:1px solid rgba(214,163,26,.34);border-radius:9px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
 .copModal__x{position:absolute;right:9px;top:7px;width:30px;height:30px;border-radius:50%;font-size:20px;line-height:1;color:rgba(243,241,232,.72);background:rgba(0,0,0,.35);z-index:2}
 .copModal__x:hover{color:var(--crema);background:rgba(0,0,0,.55)}
-.copModal__foto{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;background:var(--bosco-2);border-bottom:1px solid rgba(214,163,26,.3)}
+.copModal__foto{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;background:var(--bosco-2);border-bottom:1px solid rgba(214,163,26,.3)}
 .copModal__hd{display:flex;gap:14px;align-items:center;padding:16px 18px 0}
-.copModal__t{font-family:var(--display);font-size:24px;font-weight:700;margin:3px 0 4px;line-height:1.05;color:var(--crema)}
+.copModal__t{font-family:var(--display);font-size:27px;font-weight:700;margin:3px 0 4px;line-height:1.05;color:var(--crema)}
 .copModal__c{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(243,241,232,.55)}
-.copModal__b{padding:12px 18px 20px;margin:0;font-size:14px;line-height:1.6;color:rgba(243,241,232,.78)}
+.copModal__b{padding:12px 20px 22px;margin:0;font-size:15px;line-height:1.6;color:rgba(243,241,232,.78)}
 @media(max-width:700px){
   .cop__ring{width:100%;aspect-ratio:auto;display:grid;grid-template-columns:repeat(5,1fr);gap:16px 9px;place-items:start center;margin-top:22px}
   .cop__hub{position:static!important;left:auto!important;top:auto!important;transform:none!important;width:min(56vw,210px);grid-column:1/-1;margin-bottom:14px}
@@ -2026,7 +2026,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f18';
+const VERSIONE_FILE = 'f19';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
