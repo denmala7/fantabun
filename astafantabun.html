@@ -1565,7 +1565,7 @@ function landing(){
         ${open===f.n?`<div class="note" style="padding:0 19px 17px;font-style:normal">${f.d.split(String.fromCharCode(10)).map(esc).join('<br>')}</div>`:''}
       </div>`).join('')}
     </div>
-    <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap"><button class="btn btn--oro" onclick="S.screen='game';S.landingOpen=null;render()">Inizia · vai alla Fase 0</button><button class="btn btn--oro" onclick="S.screen='cover';render()">Home</button></div>
+    <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap"><button class="btn btn--oro" onclick="S.screen='cover';render()">Home</button><button class="btn btn--oro" onclick="S.screen='game';S.landingOpen=null;render()">Inizia · vai alla Fase 0</button></div>
   </div>`;
 }
 
@@ -2027,7 +2027,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f22';
+const VERSIONE_FILE = 'f23';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
