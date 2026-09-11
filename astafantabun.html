@@ -2024,12 +2024,16 @@ function boot(){
   const vista=(new URLSearchParams(location.search).get('vista')||'').toLowerCase();
   if(vista==='tv'||vista==='listone'){S.screen='game';S.view=vista;S.locked=true;}
   else if(IDENTITA){
-    S.screen='game';
+    /* La vista personale e' gia' pronta, ma a partita non ancora iniziata
+       si atterra sulla copertina: e' il momento in cui ha senso guardare
+       squadre, allenatori e regole. A partita in corso si entra diretti,
+       cosi' chi ricarica alle undici di sera torna dove stava. */
     if(IDENTITA.is_admin)S.view='admin';
     else{
       const idx=PARTECIPANTI.findIndex(p=>p.id===IDENTITA.id);
       if(idx>=0){S.view='player';S.who=idx;S.locked=true;}
     }
+    S.screen = partitaIniziata() ? 'game' : 'cover';
   }
   render();
 }
@@ -2043,7 +2047,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f24';
+const VERSIONE_FILE = 'f25';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
@@ -2129,6 +2133,16 @@ async function chiSono(token){
    apertura: cambiare un nome con una query si vede su tutti i dispositivi
    al primo ricaricamento, senza azzerare la partita.
    Rose, crediti e mosse non vengono toccati. */
+/* La partita e' iniziata se qualcuno ha gia' fatto qualcosa: una scelta
+   di capitano, una rosa, o una fase oltre la preparazione. */
+function partitaIniziata(){
+  if(!G) return false;
+  if(G.phase > 1) return true;
+  if(G.phase === 1 && G.f1 && G.f1.stato && G.f1.stato !== 'scelta') return true;
+  if(G.f1 && G.f1.sel && Object.keys(G.f1.sel).length) return true;
+  return Object.keys(G.own || {}).length > 0;
+}
+
 function allineaPartecipanti(){
   if(!G || !Array.isArray(G.pl) || !PARTECIPANTI.length) return;
   if(G.pl.length !== PARTECIPANTI.length) return;  /* partita di un'altra lega: non tocco nulla */
