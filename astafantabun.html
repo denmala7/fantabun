@@ -1677,7 +1677,11 @@ function askConfirm(action,msg){S.confirmAction=action;S.confirmMsg=msg||CONFIRM
 function cancelConfirm(){if(S.confirmAction==='listone')PENDING_LISTONE=null;S.confirmAction=null;render();}
 function doConfirm(){
   const a=S.confirmAction;S.confirmAction=null;
-  if(a==='azzera'){S.settingsPanel=false;reset();}
+  if(a==='azzera'){
+    S.settingsPanel=false;
+    if(IDENTITA) return azzeraSulServer();
+    reset();
+  }
   else if(a==='escludi'){escludiCorrente();}
   else if(a==='listone'){if(PENDING_LISTONE){applicaListone(PENDING_LISTONE);PENDING_LISTONE=null;}}
 }
@@ -1928,6 +1932,18 @@ async function azioneSulServer(tipo, key, etichetta, extra){
 }
 
 const chiamaSulServer = key => azioneSulServer('chiama', key, 'la chiamata');
+
+/* Azzera la partita per tutti insieme, non solo su questo browser. */
+async function azzeraSulServer(){
+  const esito = await azioneSulServer('azzera', null, "l'azzeramento");
+  if(!esito || !esito.azzerata) return;
+  try{localStorage.removeItem('fantabun_state');}catch(e){}
+  MIA_SCELTA = null; MIA_OFFERTA = undefined; OFFERTE = {};
+  VERSIONE = 0; STATO_SERVER = null;
+  G = freshG();
+  await inviaStato();          /* ricrea subito la partita vuota */
+  render();
+}
 const simulaCapitaniSulServer = () => azioneSulServer('simula_capitani', null, 'la simulazione');
 
 async function scegliCapitanoSulServer(key){
@@ -2027,7 +2043,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f23';
+const VERSIONE_FILE = 'f24';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
@@ -2072,6 +2088,13 @@ function ascoltaRealtime(){
         payload => {
           LEGA = payload.new;
           const v = LEGA.versione || 0;
+          if(!LEGA.stato_gioco){          /* partita azzerata da chi organizza */
+            VERSIONE = 0; STATO_SERVER = null;
+            MIA_SCELTA = null; MIA_OFFERTA = undefined; OFFERTE = {};
+            try{localStorage.removeItem('fantabun_state');}catch(e){}
+            stato('partita azzerata', 'var(--rosso)');
+            return render();
+          }
           if(LEGA.stato_gioco && v > VERSIONE){
             G = LEGA.stato_gioco;
             VERSIONE = v;
