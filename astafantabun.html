@@ -180,7 +180,7 @@ h2.sub{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 12px
 
 <div class="proto">
   <span class="proto__tag">Fantabun</span>
-  <span class="proto__lbl" id="verFile" style="opacity:.6"></span>
+  <span class="proto__lbl" id="verFile" style="opacity:.6;display:none"></span>
   <span class="proto__lbl" id="whoLbl">sei</span>
   <select id="who" onchange="setWho(this.value)"></select>
   <span class="proto__lbl" id="viewLbl">vista</span>
@@ -188,7 +188,7 @@ h2.sub{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 12px
   <div class="proto__spacer"></div>
   <span class="proto__lbl" id="phaseLbl"></span>
   <button class="btn btn--sm btn--dark" onclick="S.screen='landing';S.landingOpen=null;render()">Regole</button>
-  <span class="proto__lbl" id="sbStat">collegamento…</span>
+  <span class="proto__lbl" id="sbStat" style="display:none">collegamento…</span>
   <span id="adminCtrls" style="display:contents">
   <button class="btn btn--sm btn--dark" onclick="S.settingsPanel=!S.settingsPanel;S.teamPanel=false;S.linkPanel=false;render()">Impostazioni</button>
   <input id="imp" type="file" accept=".json" style="display:none" onchange="importG(this)">
@@ -2047,16 +2047,27 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f26';
+const VERSIONE_FILE = 'f27';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
 
+/* I due indicatori tecnici (versione file, stato del salvataggio) servono
+   solo a chi guida l'asta per capire se qualcosa non ha funzionato. Per i
+   giocatori sono rumore, quindi restano nascosti finche' non sappiamo che
+   chi e' entrato e' l'admin. */
+function mostraDiagnosticaSeAdmin(){
+  if(!IDENTITA || !IDENTITA.is_admin) return;
+  const a=document.getElementById('verFile'), b=document.getElementById('sbStat');
+  if(a) a.style.display='';
+  if(b) b.style.display='';
+}
 function mostraVersioneFile(){
   const el = document.getElementById('verFile');
   if(el) el.textContent = VERSIONE_FILE;
 }
 function stato(txt, colore){
+  if(!IDENTITA || !IDENTITA.is_admin) return;   /* rumore per chi gioca */
   const el = document.getElementById('sbStat');
   if(el){ el.textContent = txt; el.style.color = colore || ''; }
 }
@@ -2182,6 +2193,7 @@ function schermataErrore(msg){
       if(!IDENTITA){ stato('link non valido', 'var(--rosso)');
         return schermataErrore('Questo link non è valido. Chiedi a chi organizza di rimandarti il tuo.'); }
     }
+    mostraDiagnosticaSeAdmin();
     stato((IDENTITA ? IDENTITA.nome + ' · ' : '') + LEGA.stato, 'var(--verde)');
     boot();
     /* STATO_SERVER rappresenta cio' che il server ha davvero.
