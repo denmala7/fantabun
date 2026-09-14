@@ -1267,9 +1267,9 @@ function f4Riepilogo(){
 function v4p(){
   const p=me(),k=G.f4.cur;
   const mie=ros(p.id).filter(a=>a.fase===4);
-  return `<span class="eyebrow" style="color:var(--rosso)">Fase 4 — i Figli dei Berberi</span>
+  return `<span class="eyebrow" style="color:var(--rosso)">Fase 4 — i Figli dei Barberi</span>
     <h1 class="title">${k?'Estrazione in corso':'Rose complete'}</h1>
-    <p class="lede">${k?`Si tira il berbero un ruolo alla volta — prima ${ROLE.D.toLowerCase()}, poi ${ROLE.C.toLowerCase()}, poi ${ROLE.A.toLowerCase()} — a fasce da 10 seguendo il listone (si mette in palio sempre il calciatore di valore più alto rimasto nella fascia). A sorte è solo quale squadra lo riceve, tra quelle che hanno ancora un buco in quel reparto e non hanno già ricevuto un calciatore in questa stessa fascia.`:'Tutte le squadre sono al completo. Da qui in poi si entra nella Fase 5 — le carte.'}</p>
+    <p class="lede">${k?`Si tira il barbero un ruolo alla volta — prima ${ROLE.D.toLowerCase()}, poi ${ROLE.C.toLowerCase()}, poi ${ROLE.A.toLowerCase()} — a fasce da 10 seguendo il listone (si mette in palio sempre il calciatore di valore più alto rimasto nella fascia). A sorte è solo quale squadra lo riceve, tra quelle che hanno ancora un buco in quel reparto e non hanno già ricevuto un calciatore in questa stessa fascia.`:'Tutte le squadre sono al completo. Da qui in poi si entra nella Fase 5 — le carte.'}</p>
     ${f4SumToggle()}
     ${f4LastCard()}
     ${k?`<div class="card" style="margin-top:18px;text-align:center;padding:30px 18px">
@@ -1280,7 +1280,7 @@ function v4p(){
         ${P().map(x=>`<span class="gonf" style="opacity:${urna().some(u=>u.id===x.id)?1:.25};border:1px solid var(--crema-2);padding:5px 10px;border-radius:3px">
           <i style="background:${CONTRADE[x.contrada]}"></i>${x.nome}</span>`).join('')}</div>
       <div class="note">${10-urna().length} squadre fuori dall'urna: hanno già completato ${ent(k).ruolo==='A'?'gli':'i'} ${ROLE[ent(k).ruolo].toLowerCase()}, oppure ne hanno già ricevuto uno in questa fascia.</div></div>`:''}
-    <div class="card"><div class="card__hd"><h2 class="sub" style="margin:0">I tuoi Figli dei Berberi</h2><span class="num mut">${mie.length}</span></div>
+    <div class="card"><div class="card__hd"><h2 class="sub" style="margin:0">I tuoi Figli dei Barberi</h2><span class="num mut">${mie.length}</span></div>
     ${mie.map(a=>`<div class="row">${ru(a.ruolo)}<span class="row__n">${esc(ent(a.key).nome)}</span><span class="row__m">${esc(ent(a.key).sub)}</span></div>`).join('')||'<div class="note">Ancora nessuno.</div>'}</div>`;
 }
 function v4a(){
@@ -1410,7 +1410,7 @@ function tvModal(){
     </div></div>`;
 }
 function tv(){
-  const st={0:'Preparazione delle fasce',1:'Scelta dei capitani',2:'Asta libera degli Intoccabili',3:`Draft dei Rockies · giro ${G.f3.round+1} di 9`,4:'I Figli dei Berberi',5:'Le carte',6:'Ultime modifiche'}[G.phase];
+  const st={0:'Preparazione delle fasce',1:'Scelta dei capitani',2:'Asta libera degli Intoccabili',3:`Draft dei Rockies · giro ${G.f3.round+1} di 9`,4:'I Figli dei Barberi',5:'Le carte',6:'Ultime modifiche'}[G.phase];
   let live=-1,head='',sub='';
   if(G.phase===2&&G.f2.open){live=G.f2.open.caller;head=ent(G.f2.open.key).nome;sub='in asta adesso';}
   else if(G.phase===2){live=caller2();head=live!==null?G.pl[live].nome:'—';sub='chiama';}
@@ -1552,7 +1552,7 @@ const FASI=[
   {n:1,t:'Scelta del capitano',d:"Ogni squadra sceglie in segreto un capitano: un calciatore fuori dai primi 20 del proprio ruolo, portieri esclusi. Il capitano resta per sempre in rosa, nessuno può rubarlo. Se due o più squadre scelgono lo stesso nome, si va a un'asta a buste chiuse fra loro: chi vince paga in crediti, gli altri sono rimborsati e riscelgono un altro nome."},
   {n:2,t:'Asta libera degli Intoccabili',d:"Si assegnano gli Intoccabili — 1 portiere (kit), 2 difensori, 2 centrocampisti, 2 attaccanti a testa — tutti dalle fasce A1/A2/B1/B2 (1-2 per i portieri).\nGIRO 1 — OBBLIGATORIO: tutte le squadre chiamano un calciatore di fascia A1 oppure A2 (portieri: 1 sola squadra, fascia 1 o 2), base d'asta 1 credito. Nessuno passa al giro 2 finché tutti non hanno chiamato.\nGIRO 2 — COMPLEMENTARE: chi ha preso A1 chiama un B2, chi ha preso A2 chiama un B1. Solo per D/C/A — i portieri completano in Fase 3.\nGli Intoccabili non potranno mai essere rubati."},
   {n:3,t:'Draft dei Rockies',d:"In questa fase si acquisiscono i calciatori liberi (fuori dai top 20), con il metodo del Draft: si chiama semplicemente il nome di un giocatore tra quelli rimasti. Ogni squadra dovrà prendere 1 squadra portieri e 7 calciatori. La suddivisione dei 7 dipende dal ruolo del capitano scelto in Fase 1:\nCapitano difensore → 2 difensori, 3 centrocampisti, 2 attaccanti.\nCapitano centrocampista → 3 difensori, 2 centrocampisti, 2 attaccanti.\nCapitano attaccante → 3 difensori, 3 centrocampisti, 1 attaccante.\nOgni giro si chiama SEMPRE nello stesso senso: si inizia dalla squadra con il valore più basso e si prosegue in ordine crescente fino a quella con il valore più alto. Il valore complessivo delle squadre, e quindi l'ordine di chiamata, viene ricalcolato al termine di ogni giro completo (quando tutte e 10 le squadre hanno chiamato). Il giro successivo riparte comunque, sempre, dal valore più basso al più alto."},
-  {n:4,t:'I Figli dei Berberi',d:"Ogni giocatore sceglie un barbero di una contrada. I calciatori rimasti vengono chiamati in ordine di valore per ruolo: si estrae un barbero e chi viene estratto si aggiudica il calciatore. La fase si chiude quando tutte le squadre hanno la rosa al completo: 2 squadre portiere, 8 difensori, 8 centrocampisti, 6 attaccanti."},
+  {n:4,t:'I Figli dei Barberi',d:"Ogni giocatore sceglie un barbero di una contrada. I calciatori rimasti vengono chiamati in ordine di valore per ruolo: si estrae un barbero e chi viene estratto si aggiudica il calciatore. La fase si chiude quando tutte le squadre hanno la rosa al completo: 2 squadre portiere, 8 difensori, 8 centrocampisti, 6 attaccanti."},
   {n:5,t:'Le carte',d:"Si gioca offline, fuori dall'app: una squadra può usare una carta per rubare un calciatore a un'altra. L'app serve solo a registrare l'esito — l'admin indica chi ruba, a chi, e quale calciatore; in cambio, la squadra derubata riceve sempre un calciatore dello stesso ruolo dalla squadra ladra, cosi lo scambio è sempre alla pari e le rose restano da 2 P, 8 D, 8 C, 6 A a testa."},
   {n:6,t:'Ultime modifiche',d:"Con le rose ormai definite, uno spazio per gli imprevisti: se tra i calciatori assegnati c'è un infortunio grave prima dell'inizio del campionato, l'admin può sostituirlo con un calciatore libero dello stesso ruolo, scelto da tutto il listone senza i vincoli di fascia delle fasi precedenti."}
 ];
