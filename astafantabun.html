@@ -2060,7 +2060,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f27';
+const VERSIONE_FILE = 'f28';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
@@ -2161,7 +2161,7 @@ async function chiSono(token){
    di capitano, una rosa, o una fase oltre la preparazione. */
 function partitaIniziata(){
   if(!G) return false;
-  if(G.phase > 1) return true;
+  if(G.phase > 0) return true;   /* fuori dalla preparazione = partita avviata: chi ricarica torna dove stava */
   if(G.phase === 1 && G.f1 && G.f1.stato && G.f1.stato !== 'scelta') return true;
   if(G.f1 && G.f1.sel && Object.keys(G.f1.sel).length) return true;
   return Object.keys(G.own || {}).length > 0;
