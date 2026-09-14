@@ -292,6 +292,12 @@ const bandaOf=k=>FASCE[k]?FASCE[k].banda:null;
 const isTop20=k=>!!FASCE[k];
 
 /* ---------------- stato ---------------- */
+/* Vetrina: link pubblico di sola presentazione (?vista=vetrina). Mostra
+   soltanto Copertina e Regole, senza alcuna via d'ingresso al gioco.
+   E' una limitazione dell'interfaccia, non una barriera: la sicurezza
+   vera resta il token, senza il quale la Edge Function rifiuta ogni
+   scrittura. */
+let VETRINA=false;
 let G,HIST=[],S={screen:'cover',landingOpen:null,view:'player',who:0,tab:'D',capTab:'Tutti',v0team:'Tutte',v0band:'Tutte',
   f2team:'Tutte',f2role:'Tutti',f2band:'Tutte',f3team:'Tutte',f3role:'Tutti',tvSel:null,
   lsRole:'Tutti',lsTeam:'Tutte',lsStatus:'Tutti',locked:false,f2Sum:false,f3Sum:false,f4Sum:false,
@@ -1565,7 +1571,7 @@ function landing(){
         ${open===f.n?`<div class="note" style="padding:0 19px 17px;font-style:normal">${f.d.split(String.fromCharCode(10)).map(esc).join('<br>')}</div>`:''}
       </div>`).join('')}
     </div>
-    <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap"><button class="btn btn--oro" onclick="S.screen='cover';render()">Home</button><button class="btn btn--oro" onclick="S.screen='game';S.landingOpen=null;render()">Inizia · vai alla Fase 0</button></div>
+    <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap"><button class="btn btn--oro" onclick="S.screen='cover';render()">Home</button>${VETRINA?'':`<button class="btn btn--oro" onclick="S.screen='game';S.landingOpen=null;render()">Inizia · vai alla Fase 0</button>`}</div>
   </div>`;
 }
 
@@ -1718,6 +1724,8 @@ function settingsPanelHTML(){
 }
 function render(){
   save();
+  /* rete di sicurezza: in vetrina nessun percorso residuo porta al gioco */
+  if(VETRINA&&S.screen==='game')S.screen='cover';
   document.querySelector('.proto').style.display=S.screen==='game'?'flex':'none';
   const app=document.getElementById('app');
   if(S.screen==='cover'){app.innerHTML=copertina()+msg();return;}
@@ -2022,7 +2030,12 @@ function boot(){
      propria vista; tabellone e listone restano pubblici. */
   allineaPartecipanti();
   const vista=(new URLSearchParams(location.search).get('vista')||'').toLowerCase();
-  if(vista==='tv'||vista==='listone'){S.screen='game';S.view=vista;S.locked=true;}
+  if(vista==='vetrina'){
+    /* Link pubblico di presentazione, condiviso prima dell'asta: si entra
+       dalla copertina e si arriva al massimo alle regole. */
+    VETRINA=true;S.screen='cover';S.locked=true;
+  }
+  else if(vista==='tv'||vista==='listone'){S.screen='game';S.view=vista;S.locked=true;}
   else if(IDENTITA){
     /* La vista personale e' gia' pronta, ma a partita non ancora iniziata
        si atterra sulla copertina: e' il momento in cui ha senso guardare
