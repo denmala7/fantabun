@@ -2054,7 +2054,7 @@ function boot(){
   if(LEGA && LEGA.stato_gioco){
     G = LEGA.stato_gioco;
     VERSIONE = LEGA.versione || 0;
-  }else{
+  }else if(!LEGA){
     let saved=null;
     try{saved=localStorage.getItem('fantabun_state');}catch(e){}
     if(saved){try{G=JSON.parse(saved);}catch(e){G=null;}}
@@ -2092,7 +2092,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f30';
+const VERSIONE_FILE = 'f31';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
@@ -2152,6 +2152,9 @@ function ascoltaRealtime(){
             VERSIONE = 0; STATO_SERVER = null;
             MIA_SCELTA = null; MIA_OFFERTA = undefined; OFFERTE = {};
             try{localStorage.removeItem('fantabun_state');}catch(e){}
+            /* senza questo le altre schede aperte tenevano la partita
+               vecchia in memoria e, se admin, la rimandavano al server */
+            G = freshG(); HIST = [];
             stato('partita azzerata', 'var(--rosso)');
             return render();
           }
@@ -2199,7 +2202,19 @@ function partitaIniziata(){
   return Object.keys(G.own || {}).length > 0;
 }
 
+/* In Fase 0 nessuno ha ancora speso nulla: se lo stato salvato ha crediti
+   diversi da CREDITI_INIZIALI (partita creata con la versione precedente)
+   li riallineo. Dalla Fase 1 in poi non tocco niente. */
+function allineaCrediti(){
+  /* solo l'admin scrive: chi segue riceve lo stato corretto dal server */
+  if(!IDENTITA || !IDENTITA.is_admin) return false;
+  if(!G || G.phase!==0 || !Array.isArray(G.pl)) return false;
+  let cambiato=false;
+  G.pl.forEach(p=>{ if(p.crediti!==CREDITI_INIZIALI){ p.crediti=CREDITI_INIZIALI; cambiato=true; } });
+  return cambiato;
+}
 function allineaPartecipanti(){
+  if(allineaCrediti()) save();
   if(!G || !Array.isArray(G.pl) || !PARTECIPANTI.length) return;
   if(G.pl.length !== PARTECIPANTI.length) return;  /* partita di un'altra lega: non tocco nulla */
   let cambiato = false;
