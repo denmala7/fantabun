@@ -237,11 +237,11 @@ const SQUADRE={
   "Oca": {"club": "Newkirk Plaza", "allenatore": "Andre", "bio": "Il maestro della confusione.\nSince 21/22, Andre detiene un record difficilmente battibile: il maggior numero di formazioni NON schierate nella storia del Fantabun. Eppure, nonostante tutto, l'anno scorso ha chiuso a metà classifica. Strategia? Nessuno lo sa. Non mette la formazione, confonde gli avversari e poi, puntualmente, dice la sua. Un metodo incomprensibile. Forse proprio per questo funziona."},
   "Onda": {"club": "Willwaukee Bucks FC", "allenatore": "Chry", "bio": "Dal canguro al cervo, passando per BUN.\nSocio onorario della prima ora e soprattutto colui che ha portato con sé BUN, lo sponsor che ha dato il nome alla nostra gloriosa lega. Un legame ormai indissolubile, nonostante ai tempi BUN sponsorizzasse decisamente di più. Partito come SeaKangaroos FC, con tanto di canguro surfista, Chry ha vissuto una sorprendente evoluzione zoologica trasformandosi in un cervo. E proprio da cervo è arrivata, lo scorso anno, la sua prima vittoria: individuale e di coppia. La metamorfosi è completa."},
   "Tartuca": {"club": "Los Caninos", "allenatore": "Nico", "bio": "L'uomo dei record.\nNato come opinionista e ospite nel 21/22, diventa membro ufficiale nel 23/24. E decide di non perdere tempo: entra e vince. L'anno dopo? Vince ancora. Primo nella storia del Fantabun a conquistare due stelle e due competizioni consecutive. Studioso, appassionato e maniaco delle aste, sembrava inarrestabile. Poi qualcosa si è rotto. Ma attenzione: i campioni veri sanno sempre tornare. E Nico ha ancora fame."},
-  "Istrice": {"club": "Notthingatto Forest", "allenatore": "Sean", "bio": "Crisi d'identità, ma con ambizioni.\nArrivato nel 23/24, Sean ha già cambiato più nomi di squadra di quanti alcuni abbiano cambiato portieri. Prima LeBaguette, poi Paris-Sean Germain per due stagioni e ora… Notthingatto Forest. Una vera crisi d'identità calcistica. Ma forse è proprio questo il cambio di marcia che serviva: nuovo nome, nuova stagione, nuovo Sean. L'obiettivo è chiaro: finalmente entrare in Top 5."},
+  "Istrice": {"club": "Notthingatto Forest", "allenatore": "Sean", "bio": "Crisi d'identità, ma con ambizioni.\nArrivato nel 23/24, Sean ha già cambiato più nomi di squadra di quanti alcuni abbiano cambiato portieri. Prima LeBaguette, poi Paris-Sean Germain per due stagioni e ora… Nottingham Forest. Una vera crisi d'identità calcistica. Ma forse è proprio questo il cambio di marcia che serviva: nuovo nome, nuova stagione, nuovo Sean. L'obiettivo è chiaro: finalmente entrare in Top 5."},
   "Selva": {"club": "Los Miedosos", "allenatore": "Edo", "bio": "Da spalla a protagonista.\nArrivato in aiuto a Denis nel 25/26, più che trascinarlo alla vittoria ha finito per accompagnarlo fino all'ultimo posto. Ma quest'anno Edo ha deciso di mettersi in proprio e prendersi finalmente il ruolo di primo allenatore. Una nuova veste, una nuova sfida e soprattutto una domanda: e se la vera vittima fosse sempre stata lui? Quest'anno lo scopriremo."},
   "Giraffa": {"club": "Manzester City", "allenatore": "Zino", "bio": "Il nuovo che avanza.\nNew entry del Fantabun, Zino arriva direttamente dalla pediatria neonatale, dove evidentemente serve una mano chirurgicamente precisa. E di precisione, a quanto pare, ne ha già mostrata parecchia: idee nuove, innovazione e voglia di lasciare il segno. Nessuno sa ancora cosa aspettarsi da lui. Ed è probabilmente questo il suo primo vantaggio."},
   "Bruco": {"club": "I Bagassi", "allenatore": "Lori Fadda", "bio": "È arrivato con le idee molto chiare.\nNew entry del Fantabun, Lori Fadda non ha perso tempo a dichiarare il suo vero obiettivo: una cena al mese offerta dallo sponsor BUN. Ambizione? Certamente. Strategia? Ancora da verificare. Sicurezza in sé? Assoluta. A dimostrarlo, un logo già pronto e curato nei minimi dettagli. Ora manca solo una cosa: costruire una squadra all'altezza del brand."},
-  "Leocorno": {"club": "Da Rio", "allenatore": "Dario", "bio": "Arrivo Tardi, ma forse non troppo.\nQuarto socio onorario della prima ora, Dario si presenta nel 21/22 con un nome che non lasciava spazio a interpretazioni: Arrivo Tardi. Dal 23/24 cambia identità e diventa Da Rio, e negli ultimi anni ha iniziato a tirar fuori qualche colpo in più. Quest'anno avrà molto da dimostrare: da tenere d'occhio. Da Rio è pronto a dare spettacolo…\nLogo e nome della squadra? Ovviamente, per ultimi. La tradizione va rispettata."}
+  "Leocorno": {"club": "Da Rio", "allenatore": "Dario", "bio": "Arrivo Tardi, ma forse non troppo.\nQuarto socio onorario della prima ora, Dario si presenta nel 21/22 con un nome che non lasciava spazio a interpretazioni: Arrivo Tardi. Dal 23/24 cambia identità e diventa RIO, e negli ultimi anni ha iniziato a tirar fuori qualche colpo in più. Quest'anno avrà molto da dimostrare: da tenere d'occhio. RIO è pronto a dare spettacolo…\nLogo e nome della squadra? Ovviamente, per ultimi. La tradizione va rispettata."}
 };
 const RCOL={P:'oro',D:'verde',C:'blu',A:'rosso'};
 
@@ -292,12 +292,6 @@ const bandaOf=k=>FASCE[k]?FASCE[k].banda:null;
 const isTop20=k=>!!FASCE[k];
 
 /* ---------------- stato ---------------- */
-/* Vetrina: link pubblico di sola presentazione (?vista=vetrina). Mostra
-   soltanto Copertina e Regole, senza alcuna via d'ingresso al gioco.
-   E' una limitazione dell'interfaccia, non una barriera: la sicurezza
-   vera resta il token, senza il quale la Edge Function rifiuta ogni
-   scrittura. */
-let VETRINA=false;
 let G,HIST=[],S={screen:'cover',landingOpen:null,view:'player',who:0,tab:'D',capTab:'Tutti',v0team:'Tutte',v0band:'Tutte',
   f2team:'Tutte',f2role:'Tutti',f2band:'Tutte',f3team:'Tutte',f3role:'Tutti',tvSel:null,
   lsRole:'Tutti',lsTeam:'Tutte',lsStatus:'Tutti',locked:false,f2Sum:false,f3Sum:false,f4Sum:false,
@@ -691,6 +685,16 @@ function fillBand(){
   G.f4.bandDrawn=[];
 }
 function nextF4(){
+  /* La fascia e' salvata nello stato di gioco al momento in cui si apre.
+     Se nel frattempo il listone e' stato ricaricato (quotazioni diverse)
+     o lo stato arriva da un salvataggio precedente, l'ordine salvato non
+     corrisponde piu' alla Qt.A attuale: qui la ripulisco da chi non e' piu'
+     libero e la riordino sempre sui valori correnti del listone. */
+  if(G.f4.band&&G.f4.band.length){
+    const esclusi=G.f4.esclusi||[];
+    G.f4.band=G.f4.band.filter(k=>k[0]==='c'&&byId.has(+k.slice(2))&&free(k)&&!esclusi.includes(k))
+      .sort((ka,kb)=>{const a=byId.get(+ka.slice(2)),b=byId.get(+kb.slice(2));return b.q-a.q||b.v-a.v||a.id-b.id;});
+  }
   if(!G.f4.band||!G.f4.band.length)fillBand();
   G.phase=4;G.f4.cur=(G.f4.band&&G.f4.band.length)?G.f4.band[0]:null;G.f4.skip=null;
   render();
@@ -732,7 +736,7 @@ function estrai(pid){
   G.f4.bandDrawn=G.f4.bandDrawn||[];
   if(!G.f4.bandDrawn.includes(pid))G.f4.bandDrawn.push(pid);
   logit(`${e.nome} → ${G.pl[pid].nome} (${G.pl[pid].contrada})`);
-  if(G.f4.band&&G.f4.band[0]===k)G.f4.band.shift();
+  if(G.f4.band)G.f4.band=G.f4.band.filter(x=>x!==k);
   nextF4();
 }
 /* l'admin può escludere il calciatore in palio (es. infortunio grave) prima
@@ -746,7 +750,7 @@ function escludiCorrente(){
   G.f4.skip=null;
   G.f4.last={esito:'escluso',nome:e.nome,sub:e.sub,ruolo:e.ruolo};
   logit(`${e.nome} escluso dall'estrazione dall'admin (non assegnato a nessuna squadra)`);
-  if(G.f4.band&&G.f4.band[0]===k)G.f4.band.shift();
+  if(G.f4.band)G.f4.band=G.f4.band.filter(x=>x!==k);
   nextF4();
 }
 
@@ -1267,9 +1271,9 @@ function f4Riepilogo(){
 function v4p(){
   const p=me(),k=G.f4.cur;
   const mie=ros(p.id).filter(a=>a.fase===4);
-  return `<span class="eyebrow" style="color:var(--rosso)">Fase 4 — i Figli dei Barberi</span>
+  return `<span class="eyebrow" style="color:var(--rosso)">Fase 4 — i Figli dei Berberi</span>
     <h1 class="title">${k?'Estrazione in corso':'Rose complete'}</h1>
-    <p class="lede">${k?`Si tira il barbero un ruolo alla volta — prima ${ROLE.D.toLowerCase()}, poi ${ROLE.C.toLowerCase()}, poi ${ROLE.A.toLowerCase()} — a fasce da 10 seguendo il listone (si mette in palio sempre il calciatore di valore più alto rimasto nella fascia). A sorte è solo quale squadra lo riceve, tra quelle che hanno ancora un buco in quel reparto e non hanno già ricevuto un calciatore in questa stessa fascia.`:'Tutte le squadre sono al completo. Da qui in poi si entra nella Fase 5 — le carte.'}</p>
+    <p class="lede">${k?`Si tira il berbero un ruolo alla volta — prima ${ROLE.D.toLowerCase()}, poi ${ROLE.C.toLowerCase()}, poi ${ROLE.A.toLowerCase()} — a fasce da 10 seguendo il listone (si mette in palio sempre il calciatore di valore più alto rimasto nella fascia). A sorte è solo quale squadra lo riceve, tra quelle che hanno ancora un buco in quel reparto e non hanno già ricevuto un calciatore in questa stessa fascia.`:'Tutte le squadre sono al completo. Da qui in poi si entra nella Fase 5 — le carte.'}</p>
     ${f4SumToggle()}
     ${f4LastCard()}
     ${k?`<div class="card" style="margin-top:18px;text-align:center;padding:30px 18px">
@@ -1280,7 +1284,7 @@ function v4p(){
         ${P().map(x=>`<span class="gonf" style="opacity:${urna().some(u=>u.id===x.id)?1:.25};border:1px solid var(--crema-2);padding:5px 10px;border-radius:3px">
           <i style="background:${CONTRADE[x.contrada]}"></i>${x.nome}</span>`).join('')}</div>
       <div class="note">${10-urna().length} squadre fuori dall'urna: hanno già completato ${ent(k).ruolo==='A'?'gli':'i'} ${ROLE[ent(k).ruolo].toLowerCase()}, oppure ne hanno già ricevuto uno in questa fascia.</div></div>`:''}
-    <div class="card"><div class="card__hd"><h2 class="sub" style="margin:0">I tuoi Figli dei Barberi</h2><span class="num mut">${mie.length}</span></div>
+    <div class="card"><div class="card__hd"><h2 class="sub" style="margin:0">I tuoi Figli dei Berberi</h2><span class="num mut">${mie.length}</span></div>
     ${mie.map(a=>`<div class="row">${ru(a.ruolo)}<span class="row__n">${esc(ent(a.key).nome)}</span><span class="row__m">${esc(ent(a.key).sub)}</span></div>`).join('')||'<div class="note">Ancora nessuno.</div>'}</div>`;
 }
 function v4a(){
@@ -1368,12 +1372,43 @@ function v6a(){
 }
 function f6PickIn(key){sostituisci(S.f6Team,S.f6KeyOut,key);}
 
+/* Alcune voci del registro arrivano gia' scritte dal server (Edge Function
+   'azione'), che non conosce i nomi e scrive le chiavi grezze: 'c:<id>' per
+   i calciatori, 'k:<squadra>' per i kit, l'uuid o 'pl:<n>' per le squadre.
+   Qui le traduco al volo in nomi leggibili, cosi' vale anche per le voci
+   gia' salvate. Una chiave che non riconosco resta com'e'. */
+function nomeSquadraDaUuid(u){
+  const i=PARTECIPANTI.findIndex(p=>p.id===u);
+  return i>=0&&G.pl[i]?G.pl[i].nome:(i>=0?PARTECIPANTI[i].nome:null);
+}
+function leggibile(t){
+  return String(t==null?'':t)
+    .replace(/\bc:(\d+)\b/g,(m,id)=>{const p=byId.get(+id);return p?p.n:m;})
+    .replace(/\bk:([A-Za-zÀ-ÿ'.]+(?: [A-Z][A-Za-zÀ-ÿ'.]+)*)/g,(m,sq)=>{const k=KITS.find(x=>x.s===sq);return k?'kit '+k.s:m;})
+    .replace(/\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b/gi,m=>nomeSquadraDaUuid(m)||m)
+    .replace(/\bpl:(\d+)\b/g,(m,i)=>G.pl[+i]?G.pl[+i].nome:m);
+}
 function logCard(){
   return `<div class="card"><div class="card__hd"><h2 class="sub" style="margin:0">Registro</h2></div>
-    ${G.log.slice(0,12).map(l=>`<div class="row"><span class="row__m">${esc(l.t)}</span></div>`).join('')||'<div class="note">Vuoto.</div>'}</div>`;
+    ${G.log.slice(0,12).map(l=>`<div class="row"><span class="row__m">${esc(leggibile(l.t))}</span></div>`).join('')||'<div class="note">Vuoto.</div>'}</div>`;
 }
 
 /* --- tv --- */
+/* tutte le rose aperte insieme, ruolo per ruolo, con la Qt.A del listone */
+function tvTutte(){
+  return `<div class="tv__grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">${P().map(p=>{
+    const rows=ros(p.id).slice().sort((a,b)=>'PDCA'.indexOf(a.ruolo)-'PDCA'.indexOf(b.ruolo)||ent(b.key).q-ent(a.key).q);
+    return `<div class="tvc" style="cursor:default">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="width:11px;height:15px;background:${CONTRADE[p.contrada]};display:block;clip-path:polygon(0 0,100% 0,100% 76%,50% 100%,0 76%)"></span>
+        <p class="tvc__n">${esc(p.nome)}</p></div>
+      <div class="tvc__v">${p.crediti} crediti · valore ${valore(p.id)} · ${rows.length}/24</div>
+      <div style="margin-top:8px">${rows.length?rows.map(a=>{const e=ent(a.key);
+        return `<div style="display:flex;align-items:center;gap:6px;padding:3px 0;border-top:1px solid rgba(255,255,255,.07);font-size:13px">
+          ${ru(a.ruolo)}<span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(e.nome)}${a.cap?' <span style="color:var(--oro-2)">(C)</span>':''}</span>
+          <span class="num" style="opacity:.75">${e.q}</span></div>`;}).join(''):'<div class="tvc__v">Ancora nessun calciatore.</div>'}</div>
+    </div>`;}).join('')}</div>`;
+}
 function tvSlots(pid){
   const arr=ros(pid);
   return ['P','D','C','A'].map(r=>{
@@ -1397,7 +1432,7 @@ function tvClose(){S.tvSel=null;render();}
 function tvModal(){
   if(S.tvSel==null)return'';
   const p=G.pl[S.tvSel];
-  const rows=ros(p.id).slice().sort((a,b)=>'PDCA'.indexOf(a.ruolo)-'PDCA'.indexOf(b.ruolo)||b.prezzo-a.prezzo);
+  const rows=ros(p.id).slice().sort((a,b)=>'PDCA'.indexOf(a.ruolo)-'PDCA'.indexOf(b.ruolo)||ent(b.key).q-ent(a.key).q);
   return `<div class="tvModal" onclick="if(event.target===this)tvClose()">
     <div class="tvModal__card">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
@@ -1406,11 +1441,11 @@ function tvModal(){
         <span class="row__sp"></span><button class="btn btn--sm btn--ghost" onclick="tvClose()">Chiudi</button>
       </div>
       ${rows.length?rows.map(a=>{const e=ent(a.key);return `<div class="row">${ru(a.ruolo)}<span class="row__n">${esc(e.nome)}</span><span class="row__m">${esc(e.sub)}</span><span class="row__sp"></span>
-        <span class="row__m">${a.liv?'Livellamento':FASE_LBL[a.fase]}${a.cap?' · Capitano':''}</span><span class="num mut" style="width:44px;text-align:right">${a.prezzo?a.prezzo+' cr':'—'}</span></div>`;}).join(''):'<div class="note">Ancora nessun calciatore.</div>'}
+        <span class="row__m">${a.liv?'Livellamento':FASE_LBL[a.fase]}${a.cap?' · Capitano':''}</span><span class="num" style="width:52px;text-align:right" title="Qt.A dal listone">${e.q} <span class="mut" style="font-size:10px">Qt.A</span></span><span class="num mut" style="width:44px;text-align:right">${a.prezzo?a.prezzo+' cr':'—'}</span></div>`;}).join(''):'<div class="note">Ancora nessun calciatore.</div>'}
     </div></div>`;
 }
 function tv(){
-  const st={0:'Preparazione delle fasce',1:'Scelta dei capitani',2:'Asta libera degli Intoccabili',3:`Draft dei Rockies · giro ${G.f3.round+1} di 9`,4:'I Figli dei Barberi',5:'Le carte',6:'Ultime modifiche'}[G.phase];
+  const st={0:'Preparazione delle fasce',1:'Scelta dei capitani',2:'Asta libera degli Intoccabili',3:`Draft dei Rockies · giro ${G.f3.round+1} di 9`,4:'I Figli dei Berberi',5:'Le carte',6:'Ultime modifiche'}[G.phase];
   let live=-1,head='',sub='';
   if(G.phase===2&&G.f2.open){live=G.f2.open.caller;head=ent(G.f2.open.key).nome;sub='in asta adesso';}
   else if(G.phase===2){live=caller2();head=live!==null?G.pl[live].nome:'—';sub='chiama';}
@@ -1431,7 +1466,10 @@ function tv(){
     <div style="text-align:right"><div class="crediti__k">${sub}</div>
       <div style="font-family:var(--display);font-size:36px;font-weight:700;color:var(--oro-2);line-height:1">${esc(head)}</div></div></div>
     ${lastBanner}
-    <div class="tv__grid">${P().map(p=>{
+    <div style="display:flex;justify-content:flex-end;margin:-8px 0 12px">
+      <button class="btn btn--sm btn--dark" onclick="S.tvAll=!S.tvAll;S.tvSel=null;render()">${S.tvAll?'Nascondi le rose':'Mostra tutte le rose'}</button></div>
+    ${S.tvAll?tvTutte():''}
+    <div class="tv__grid" style="${S.tvAll?'display:none':''}">${P().map(p=>{
       return `<button class="tvc ${p.id===live?'tvc--live':''}" onclick="tvOpen(${p.id})" style="text-align:left;cursor:pointer">
         <div style="display:flex;align-items:center;gap:8px">
           <span style="width:11px;height:15px;background:${CONTRADE[p.contrada]};display:block;clip-path:polygon(0 0,100% 0,100% 76%,50% 100%,0 76%)"></span>
@@ -1552,7 +1590,7 @@ const FASI=[
   {n:1,t:'Scelta del capitano',d:"Ogni squadra sceglie in segreto un capitano: un calciatore fuori dai primi 20 del proprio ruolo, portieri esclusi. Il capitano resta per sempre in rosa, nessuno può rubarlo. Se due o più squadre scelgono lo stesso nome, si va a un'asta a buste chiuse fra loro: chi vince paga in crediti, gli altri sono rimborsati e riscelgono un altro nome."},
   {n:2,t:'Asta libera degli Intoccabili',d:"Si assegnano gli Intoccabili — 1 portiere (kit), 2 difensori, 2 centrocampisti, 2 attaccanti a testa — tutti dalle fasce A1/A2/B1/B2 (1-2 per i portieri).\nGIRO 1 — OBBLIGATORIO: tutte le squadre chiamano un calciatore di fascia A1 oppure A2 (portieri: 1 sola squadra, fascia 1 o 2), base d'asta 1 credito. Nessuno passa al giro 2 finché tutti non hanno chiamato.\nGIRO 2 — COMPLEMENTARE: chi ha preso A1 chiama un B2, chi ha preso A2 chiama un B1. Solo per D/C/A — i portieri completano in Fase 3.\nGli Intoccabili non potranno mai essere rubati."},
   {n:3,t:'Draft dei Rockies',d:"In questa fase si acquisiscono i calciatori liberi (fuori dai top 20), con il metodo del Draft: si chiama semplicemente il nome di un giocatore tra quelli rimasti. Ogni squadra dovrà prendere 1 squadra portieri e 7 calciatori. La suddivisione dei 7 dipende dal ruolo del capitano scelto in Fase 1:\nCapitano difensore → 2 difensori, 3 centrocampisti, 2 attaccanti.\nCapitano centrocampista → 3 difensori, 2 centrocampisti, 2 attaccanti.\nCapitano attaccante → 3 difensori, 3 centrocampisti, 1 attaccante.\nOgni giro si chiama SEMPRE nello stesso senso: si inizia dalla squadra con il valore più basso e si prosegue in ordine crescente fino a quella con il valore più alto. Il valore complessivo delle squadre, e quindi l'ordine di chiamata, viene ricalcolato al termine di ogni giro completo (quando tutte e 10 le squadre hanno chiamato). Il giro successivo riparte comunque, sempre, dal valore più basso al più alto."},
-  {n:4,t:'I Figli dei Barberi',d:"Ogni giocatore sceglie un barbero di una contrada. I calciatori rimasti vengono chiamati in ordine di valore per ruolo: si estrae un barbero e chi viene estratto si aggiudica il calciatore. La fase si chiude quando tutte le squadre hanno la rosa al completo: 2 squadre portiere, 8 difensori, 8 centrocampisti, 6 attaccanti."},
+  {n:4,t:'I Figli dei Berberi',d:"Ogni giocatore sceglie un barbero di una contrada. I calciatori rimasti vengono chiamati in ordine di valore per ruolo: si estrae un barbero e chi viene estratto si aggiudica il calciatore. La fase si chiude quando tutte le squadre hanno la rosa al completo: 2 squadre portiere, 8 difensori, 8 centrocampisti, 6 attaccanti."},
   {n:5,t:'Le carte',d:"Si gioca offline, fuori dall'app: una squadra può usare una carta per rubare un calciatore a un'altra. L'app serve solo a registrare l'esito — l'admin indica chi ruba, a chi, e quale calciatore; in cambio, la squadra derubata riceve sempre un calciatore dello stesso ruolo dalla squadra ladra, cosi lo scambio è sempre alla pari e le rose restano da 2 P, 8 D, 8 C, 6 A a testa."},
   {n:6,t:'Ultime modifiche',d:"Con le rose ormai definite, uno spazio per gli imprevisti: se tra i calciatori assegnati c'è un infortunio grave prima dell'inizio del campionato, l'admin può sostituirlo con un calciatore libero dello stesso ruolo, scelto da tutto il listone senza i vincoli di fascia delle fasi precedenti."}
 ];
@@ -1571,7 +1609,7 @@ function landing(){
         ${open===f.n?`<div class="note" style="padding:0 19px 17px;font-style:normal">${f.d.split(String.fromCharCode(10)).map(esc).join('<br>')}</div>`:''}
       </div>`).join('')}
     </div>
-    <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap"><button class="btn btn--oro" onclick="S.screen='cover';render()">Home</button>${VETRINA?'':`<button class="btn btn--oro" onclick="S.screen='game';S.landingOpen=null;render()">Inizia · vai alla Fase 0</button>`}</div>
+    <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap"><button class="btn btn--oro" onclick="S.screen='cover';render()">Home</button><button class="btn btn--oro" onclick="S.screen='game';S.landingOpen=null;render()">Inizia · vai alla Fase 0</button></div>
   </div>`;
 }
 
@@ -1724,8 +1762,6 @@ function settingsPanelHTML(){
 }
 function render(){
   save();
-  /* rete di sicurezza: in vetrina nessun percorso residuo porta al gioco */
-  if(VETRINA&&S.screen==='game')S.screen='cover';
   document.querySelector('.proto').style.display=S.screen==='game'?'flex':'none';
   const app=document.getElementById('app');
   if(S.screen==='cover'){app.innerHTML=copertina()+msg();return;}
@@ -2030,12 +2066,7 @@ function boot(){
      propria vista; tabellone e listone restano pubblici. */
   allineaPartecipanti();
   const vista=(new URLSearchParams(location.search).get('vista')||'').toLowerCase();
-  if(vista==='vetrina'){
-    /* Link pubblico di presentazione, condiviso prima dell'asta: si entra
-       dalla copertina e si arriva al massimo alle regole. */
-    VETRINA=true;S.screen='cover';S.locked=true;
-  }
-  else if(vista==='tv'||vista==='listone'){S.screen='game';S.view=vista;S.locked=true;}
+  if(vista==='tv'||vista==='listone'){S.screen='game';S.view=vista;S.locked=true;}
   else if(IDENTITA){
     /* La vista personale e' gia' pronta, ma a partita non ancora iniziata
        si atterra sulla copertina: e' il momento in cui ha senso guardare
@@ -2161,7 +2192,7 @@ async function chiSono(token){
    di capitano, una rosa, o una fase oltre la preparazione. */
 function partitaIniziata(){
   if(!G) return false;
-  if(G.phase > 0) return true;   /* fuori dalla preparazione = partita avviata: chi ricarica torna dove stava */
+  if(G.phase > 1) return true;
   if(G.phase === 1 && G.f1 && G.f1.stato && G.f1.stato !== 'scelta') return true;
   if(G.f1 && G.f1.sel && Object.keys(G.f1.sel).length) return true;
   return Object.keys(G.own || {}).length > 0;
