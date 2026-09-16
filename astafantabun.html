@@ -300,9 +300,10 @@ let G,HIST=[],S={screen:'cover',landingOpen:null,view:'player',who:0,tab:'D',cap
   f6Team:null,f6KeyOut:null,
   q:'',focus:false,msg:''};
 
+const CREDITI_INIZIALI=150;   /* crediti di partenza di ogni squadra */
 function freshG(){
   const g={phase:0,
-    pl:PARTECIPANTI.map((p,i)=>({id:i,nome:p.nome,crediti:80,contrada:p.berbero})),
+    pl:PARTECIPANTI.map((p,i)=>({id:i,nome:p.nome,crediti:CREDITI_INIZIALI,contrada:p.berbero})),
     own:{},ros:{},
     f1:{stato:'scelta',sel:{},bids:{},duels:[],di:0},
     f2:{open:null,q:[],pos:0},
@@ -2091,7 +2092,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f29';
+const VERSIONE_FILE = 'f30';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
