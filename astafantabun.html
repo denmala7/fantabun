@@ -2091,7 +2091,7 @@ function boot(){
 
 const SB_URL  = 'https://kwkqaacdbyttcaipheds.supabase.co';
 const SB_KEY  = 'sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
-const VERSIONE_FILE = 'f28';
+const VERSIONE_FILE = 'f29';
 const LEGA_ID = '11111111-2222-4333-8444-555555555555';
 
 let sb = null, LEGA = null;
@@ -2120,7 +2120,7 @@ async function caricaDati(){
   const [cal, par, leg] = await Promise.all([
     sb.from('calciatore')
       .select('ext_id,ruolo,nome,squadra,qta,fvm')
-      .eq('lega_id', LEGA_ID).limit(2000),
+      .eq('lega_id', LEGA_ID).eq('attivo', true).limit(2000),
     sb.from('v_partecipante')
       .select('id,nome,berbero,crediti,is_admin')
       .eq('lega_id', LEGA_ID).order('created_at'),
