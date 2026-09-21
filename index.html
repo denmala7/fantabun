@@ -217,6 +217,58 @@ h2.sub{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 12px
 .vuoto__s{color:rgba(243,241,232,.7);margin:0 auto;max-width:430px}
 
 .disclaimer{font-size:13px;font-style:italic;line-height:1.55;color:var(--grigio);border-left:2px solid var(--oro);padding:2px 0 2px 12px;margin:16px 0 0;max-width:640px}
+/* --- tabellino --- */
+.ml{width:28px;height:28px;border-radius:50%;overflow:hidden;flex:none;display:inline-flex;background:var(--crema-2);box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+.ml img{width:100%;height:100%;object-fit:cover;display:block}
+.ml__fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--display);font-weight:700;font-size:11px}
+.ml--l{width:58px;height:58px;box-shadow:0 0 0 2px rgba(243,241,232,.18)}
+.ml--l .ml__fb{font-size:20px}
+.pdg{background:var(--bosco);color:var(--crema);border-radius:6px;padding:16px 16px 18px;margin:2px 0 18px;text-align:center;position:relative;overflow:hidden}
+.pdg::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(135deg,rgba(214,163,26,.05) 0 1px,transparent 1px 13px)}
+.pdg>*{position:relative}
+.pdg__row{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-top:14px}
+.pdg__sq{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.pdg__club{font-family:var(--display);font-size:17px;font-weight:600;line-height:1.15;overflow-wrap:anywhere}
+.pdg__all{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.6}
+.pdg__sq--win .pdg__club{color:var(--oro-2)}
+.pdg__gol{font-family:var(--display);font-size:46px;font-weight:700;line-height:1;white-space:nowrap}
+.pdg__gol i{font-style:normal;opacity:.45;margin:0 8px}
+.pdg__pt{font-family:var(--mono);font-size:12px;margin-top:7px;opacity:.85;line-height:1.5}
+.pdg__pt span{font-size:9px;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
+.pdg__chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.pdg__chip{font-size:12.5px;padding:5px 12px;border-radius:20px;background:rgba(214,163,26,.16);border:1px solid rgba(214,163,26,.45)}
+.pdg__chip b{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--oro-2);margin-right:5px}
+.pdg__chip--flop{background:rgba(175,58,44,.22);border-color:rgba(175,58,44,.6)}
+.pdg__chip--flop b{color:#f0a89d}
+@media(max-width:480px){.pdg__gol{font-size:34px}.pdg__gol i{margin:0 5px}.ml--l{width:46px;height:46px}.pdg__club{font-size:14.5px}}
+.gio__sub{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--oro);font-weight:500;margin:24px 0 12px;padding-top:18px;border-top:1px solid var(--crema-2)}
+.sfide{display:grid;gap:10px}
+.sf{border:1px solid var(--crema-2);border-radius:5px;padding:12px 14px;background:var(--crema)}
+.sf__row{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.sf__sq{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:500;min-width:0;line-height:1.2}
+.sf__sq--r{flex-direction:row-reverse;text-align:right}
+.sf__sq--win{font-weight:700;color:var(--bosco)}
+.sf__mid{text-align:center}
+.sf__gol{font-family:var(--display);font-size:22px;font-weight:700;line-height:1;white-space:nowrap}
+.sf__pt{font-family:var(--mono);font-size:10.5px;color:var(--grigio);margin-top:4px;white-space:nowrap}
+.sf__nota{font-size:14px;line-height:1.55;margin:10px 0 0;padding-top:10px;border-top:1px dashed #d8d3c0}
+@media(max-width:480px){.sf__sq,.sf__sq--r{flex-direction:column;text-align:center;font-size:12.5px;gap:5px}}
+/* --- modulo sfide --- */
+.sez{margin-top:16px}
+.sez .sub{margin-bottom:14px}
+.duello{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}
+.duello select{width:100%;min-width:0;padding:9px 6px;border:1px solid var(--crema-2);border-radius:4px;background:var(--crema);color:var(--inch);font:inherit;font-size:13.5px}
+.duello__n{display:flex;align-items:center;gap:6px;color:var(--grigio)}
+.duello__n input{width:62px;padding:9px 4px;text-align:center;border:1px solid var(--crema-2);border-radius:4px;background:var(--crema);color:var(--inch);font:inherit}
+.duello select:focus,.duello__n input:focus{outline:2px solid var(--oro);outline-offset:0;border-color:transparent}
+.duello--pt{margin-top:8px}
+.duello__lbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--grigio);text-align:right}
+@media(max-width:480px){.duello:not(.duello--pt){grid-template-columns:1fr 1fr;grid-template-areas:'c o' 'g g';gap:8px}.duello__c{grid-area:c}.duello__o{grid-area:o}.duello__g{grid-area:g;justify-content:center}.duello select{font-size:13px}}
+.fld textarea.breve{min-height:90px}
+.sfEd{border:1px solid var(--crema-2);border-radius:5px;padding:12px;margin-bottom:12px}
+.sfEd__hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.fldrow--2{grid-template-columns:1fr 1fr}
+@media(max-width:480px){.fldrow--2{grid-template-columns:1fr 1fr}}
 /* --- redazione --- */
 .nav__tab .nc{display:none}
 @media(max-width:480px){.nav__tab .nl{display:none}.nav__tab .nc{display:inline}}
@@ -283,7 +335,7 @@ const LEGA_ID='11111111-2222-4333-8444-555555555555';
 let GIORNATE=null;      /* null = sto caricando */
 let ERR_G=false;
 let TOKEN=null, RED=null;   /* RED = {nome} se il link di redazione è valido */
-let F={n:'',data:'',titolo:'',testo:''}, INVIO=false, CONF=null, MSG='';
+let F, INVIO=false, CONF=null, MSG='';
 
 
 /* ---------------- utilità ---------------- */
@@ -369,24 +421,68 @@ function home(){
 /* ---------------- commento giornate: lettura ---------------- */
 async function caricaGiornate(){
   try{
-    const r=await fetch(`${SB_URL}/rest/v1/commento?select=giornata,data,titolo,testo&lega_id=eq.${LEGA_ID}&order=giornata.desc`,
+    const r=await fetch(`${SB_URL}/rest/v1/commento?select=giornata,data,titolo,testo,contenuto&lega_id=eq.${LEGA_ID}&order=giornata.desc`,
       {headers:{apikey:SB_KEY}});
     if(!r.ok)throw new Error('HTTP '+r.status);
-    GIORNATE=(await r.json()).map(c=>({n:c.giornata,data:c.data,titolo:c.titolo,testo:c.testo}));
+    GIORNATE=(await r.json()).map(daRiga);
     ERR_G=false;
   }catch(e){console.error(e);ERR_G=true;if(!GIORNATE)GIORNATE=[];}
   render();
 }
+const daRiga=c=>({n:c.giornata,data:c.data,titolo:c.titolo,testo:c.testo||'',contenuto:c.contenuto||null});
+
 function testoHTML(t){
-  return String(t||'').trim().split(/\n\s*\n/).map(p=>
+  return String(t||'').trim().split(/\n\s*\n/).filter(Boolean).map(p=>
     `<p>${esc(p.trim()).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')}</p>`).join('');
 }
+const fmt=v=>v===null||v===undefined||v===''?'–':String(v).replace('.',',');
+/* squadra per contrada → {club, allenatore, contrada, colore} */
+function sq(contrada){
+  const s=SQUADRE[contrada];
+  return s?{contrada,club:s.club,allenatore:s.allenatore,col:CONTRADE[contrada]||'#6E6B5E'}
+          :{contrada:contrada||'',club:contrada||'—',allenatore:'',col:'#6E6B5E'};
+}
+function miniLogo(contrada,cls){
+  const s=sq(contrada);
+  const fb=`<span class="ml__fb" style="background:${s.col}">${esc(iniziali(s.allenatore||s.club))}</span>`;
+  return `<span class="ml ${cls||''}">${SQUADRE[contrada]
+    ?`<img src="${esc(fileLogo(s.club))}" alt="" loading="lazy" data-fb="${esc(fb)}" onerror="this.outerHTML=this.dataset.fb">`:fb}</span>`;
+}
+const vince=(g,i)=>g&&g[0]!=null&&g[1]!=null&&g[i]>g[1-i];
+
+function partitaDelGiorno(p){
+  if(!p||(!p.casa&&!p.ospite))return'';
+  const lato=i=>{const c=i?p.ospite:p.casa,s=sq(c);
+    return `<div class="pdg__sq ${vince(p.gol,i)?'pdg__sq--win':''}">${miniLogo(c,'ml--l')}
+      <span class="pdg__club">${esc(s.club)}</span><span class="pdg__all">${esc(s.allenatore||'')}</span></div>`;};
+  const chip=(k,v,cl)=>v?`<span class="pdg__chip ${cl}"><b>${k}</b> ${esc(v)}</span>`:'';
+  return `<div class="pdg"><span class="eyebrow">Partita del giorno</span>
+    <div class="pdg__row">${lato(0)}
+      <div class="pdg__mid"><div class="pdg__gol">${fmt(p.gol&&p.gol[0])}<i>–</i>${fmt(p.gol&&p.gol[1])}</div>
+        <div class="pdg__pt">${fmt(p.punti&&p.punti[0])} · ${fmt(p.punti&&p.punti[1])}<br><span>fantapunti</span></div></div>
+      ${lato(1)}</div>
+    ${(p.mvp||p.flop)?`<div class="pdg__chips">${chip('MVP',p.mvp,'')}${chip('Flop',p.flop,'pdg__chip--flop')}</div>`:''}
+  </div>`;
+}
+function altraSfida(s){
+  const lato=i=>{const c=i?s.ospite:s.casa;
+    return `<div class="sf__sq sf__sq--${i?'r':'l'} ${vince(s.gol,i)?'sf__sq--win':''}">${miniLogo(c)}<span>${esc(sq(c).club)}</span></div>`;};
+  return `<div class="sf"><div class="sf__row">${lato(0)}
+      <div class="sf__mid"><div class="sf__gol">${fmt(s.gol&&s.gol[0])} – ${fmt(s.gol&&s.gol[1])}</div>
+      <div class="sf__pt">${fmt(s.punti&&s.punti[0])} · ${fmt(s.punti&&s.punti[1])}</div></div>
+      ${lato(1)}</div>
+    ${s.nota?`<p class="sf__nota">${esc(s.nota).replace(/\n/g,'<br>')}</p>`:''}</div>`;
+}
 function articolo(g){
+  const c=g.contenuto||{};
+  const altre=(c.altre||[]).filter(s=>s.casa||s.ospite||s.nota);
   return `<article class="gio" id="g${g.n}">
     <div class="gio__hd"><div class="gio__n">${g.n}<sup>a</sup></div>
       <div style="min-width:0"><span class="eyebrow">Giornata ${g.n}${g.data?' · '+esc(g.data):''}</span>
       ${g.titolo?`<h2 class="gio__t">${esc(g.titolo)}</h2>`:''}</div></div>
-    <div class="gio__b">${testoHTML(g.testo)}</div>
+    ${partitaDelGiorno(c.partita)}
+    ${g.testo&&g.testo.trim()?`<div class="gio__b">${testoHTML(g.testo)}</div>`:''}
+    ${altre.length?`<h3 class="gio__sub">Le altre sfide</h3><div class="sfide">${altre.map(altraSfida).join('')}</div>`:''}
   </article>`;
 }
 function giornate(){
@@ -417,8 +513,7 @@ async function chiamaFunzione(corpo){
   return risp;
 }
 /* Il token arriva dal link (?t=...) la prima volta e poi resta su questo
-   dispositivo, cosi' la persona non deve riaprire ogni volta il link.
-   Lo tolgo subito dalla barra degli indirizzi per non condividerlo per errore. */
+   dispositivo. Lo tolgo subito dalla barra degli indirizzi. */
 async function verificaRedattore(){
   const q=new URLSearchParams(location.search);
   const daLink=q.get('t');
@@ -432,7 +527,7 @@ async function verificaRedattore(){
     RED=await chiamaFunzione({tipo:'chi_sono'});
     lsSet('fantabun_redazione',TOKEN);
     const bozza=lsGet('fantabun_bozza');
-    if(bozza){try{F=Object.assign(F,JSON.parse(bozza));}catch(e){}}
+    if(bozza){try{F=normF(JSON.parse(bozza));}catch(e){}}
     if(daLink&&!location.hash)location.hash='scrivi';
     render();
   }catch(e){
@@ -444,45 +539,91 @@ async function verificaRedattore(){
 function prossimaGiornata(){return Math.min(38,(GIORNATE&&GIORNATE.length?Math.max(...GIORNATE.map(g=>g.n)):0)+1);}
 function esistente(n){return (GIORNATE||[]).find(g=>g.n===+n);}
 
-function leggiForm(){
-  const g=id=>document.getElementById(id);
-  if(!g('f-testo'))return;
-  F={n:g('f-n').value,data:g('f-data').value,titolo:g('f-titolo').value,testo:g('f-testo').value};
+/* --- stato del modulo ---
+   F.p = partita del giorno, F.a = altre sfide. Numeri tenuti come testo
+   finché non si salva, così l'utente può scrivere "75,5" senza sorprese. */
+const sfidaVuota=()=>({casa:'',ospite:'',g1:'',g2:'',p1:'',p2:'',nota:''});
+const fVuoto=()=>({n:'',data:'',titolo:'',testo:'',
+  p:{casa:'',ospite:'',g1:'',g2:'',p1:'',p2:'',mvp:'',flop:''},
+  a:[sfidaVuota(),sfidaVuota(),sfidaVuota(),sfidaVuota()]});
+F=fVuoto();
+function normF(o){
+  const v=fVuoto();o=o||{};
+  return {n:o.n??'',data:o.data??'',titolo:o.titolo??'',testo:o.testo??'',
+    p:Object.assign(v.p,o.p||{}),
+    a:Array.isArray(o.a)&&o.a.length?o.a.map(s=>Object.assign(sfidaVuota(),s)):v.a};
 }
-/* aggiorna anteprima, pulsante e avviso senza ridisegnare il form
+const sv=v=>v===null||v===undefined?'':String(v).replace('.',',');
+function daGiornataAF(g){
+  const c=g.contenuto||{},p=c.partita||{};
+  const toS=s=>({casa:s.casa||'',ospite:s.ospite||'',g1:sv(s.gol&&s.gol[0]),g2:sv(s.gol&&s.gol[1]),
+    p1:sv(s.punti&&s.punti[0]),p2:sv(s.punti&&s.punti[1]),nota:s.nota||''});
+  const a=(c.altre||[]).map(toS);
+  while(a.length<4)a.push(sfidaVuota());
+  return {n:String(g.n),data:g.data||'',titolo:g.titolo||'',testo:g.testo||'',
+    p:Object.assign(toS(p),{mvp:p.mvp||'',flop:p.flop||''}),a};
+}
+const num=v=>{const s=String(v??'').trim().replace(',','.');if(!s)return null;const n=Number(s);return Number.isFinite(n)?n:null;};
+function contenutoDaF(){
+  const toC=s=>({casa:s.casa||null,ospite:s.ospite||null,gol:[num(s.g1),num(s.g2)],punti:[num(s.p1),num(s.p2)]});
+  return {partita:Object.assign(toC(F.p),{mvp:F.p.mvp.trim()||null,flop:F.p.flop.trim()||null}),
+    altre:F.a.filter(s=>s.casa||s.ospite||s.nota.trim()).map(s=>Object.assign(toC(s),{nota:s.nota.trim()||null}))};
+}
+function leggiForm(){
+  const g=id=>{const e=document.getElementById(id);return e?e.value:'';};
+  if(!document.getElementById('f-testo'))return;
+  F.n=g('f-n');F.data=g('f-data');F.titolo=g('f-titolo');F.testo=g('f-testo');
+  ['casa','ospite','g1','g2','p1','p2','mvp','flop'].forEach(k=>F.p[k]=g('p-'+k));
+  F.a=[...document.querySelectorAll('[data-sfida]')].map((el,i)=>{
+    const s={};['casa','ospite','g1','g2','p1','p2','nota'].forEach(k=>s[k]=g(`a${i}-${k}`));return s;});
+}
+/* aggiorna anteprima e pulsante senza ridisegnare il modulo
    (ridisegnarlo farebbe perdere il cursore mentre si scrive) */
 function suInput(){
   leggiForm();
   lsSet('fantabun_bozza',JSON.stringify(F));
   const ex=esistente(F.n);
   const b=document.getElementById('f-pubblica');
-  if(b)b.textContent=ex?`Aggiorna giornata ${F.n}`:'Pubblica';
+  if(b&&!INVIO)b.textContent=ex?`Aggiorna giornata ${F.n}`:'Pubblica';
   const av=document.getElementById('f-avviso');
   if(av)av.style.display=ex?'':'none';
   const an=document.getElementById('f-anteprima');
-  if(an)an.innerHTML=F.testo.trim()?articolo({n:+F.n||'?',data:F.data.trim(),titolo:F.titolo.trim(),testo:F.testo}):'<div class="note">L\'anteprima compare qui mentre scrivi.</div>';
+  if(an){
+    const c=contenutoDaF();
+    const pieno=F.testo.trim()||c.partita.casa||c.partita.ospite||c.altre.length;
+    an.innerHTML=pieno?articolo({n:+F.n||'?',data:F.data.trim(),titolo:F.titolo.trim(),testo:F.testo,contenuto:c})
+      :'<div class="note">L\'anteprima compare qui mentre scrivi.</div>';
+  }
 }
+function aggiungiSfida(){leggiForm();F.a.push(sfidaVuota());render();}
+function togliSfida(i){leggiForm();F.a.splice(i,1);if(!F.a.length)F.a.push(sfidaVuota());render();}
+function usate(){return [F.p.casa,F.p.ospite,...F.a.flatMap(s=>[s.casa,s.ospite])].filter(Boolean);}
+
 async function pubblica(){
   leggiForm();
   const n=+F.n;
   if(!Number.isInteger(n)||n<1||n>38)return toast('Scegli una giornata da 1 a 38');
-  if(!F.testo.trim())return toast('Il commento è vuoto');
+  const contenuto=contenutoDaF();
+  const vuotaP=!contenuto.partita.casa&&!contenuto.partita.ospite;
+  if(!F.testo.trim()&&vuotaP&&!contenuto.altre.length)return toast('Il commento è vuoto');
+  const dup=usate().filter((c,i,a)=>a.indexOf(c)!==i);
+  if(dup.length)return toast(`${sq(dup[0]).club} compare in due sfide`);
   INVIO=true;render();
   try{
-    const r=await chiamaFunzione({tipo:'salva',giornata:n,data:F.data,titolo:F.titolo,testo:F.testo});
-    const c=r.commento,nuova={n:c.giornata,data:c.data,titolo:c.titolo,testo:c.testo};
+    const r=await chiamaFunzione({tipo:'salva',giornata:n,data:F.data,titolo:F.titolo,testo:F.testo,contenuto});
+    const nuova=daRiga(r.commento);
     GIORNATE=(GIORNATE||[]).filter(g=>g.n!==nuova.n).concat(nuova);
-    F={n:'',data:'',titolo:'',testo:''};lsSet('fantabun_bozza',null);
+    F=fVuoto();lsSet('fantabun_bozza',null);
     INVIO=false;toast(`Giornata ${n} pubblicata`);
   }catch(e){INVIO=false;toast(e.message);}
 }
 function modifica(n){
   const g=esistente(n);if(!g)return;
-  F={n:String(g.n),data:g.data||'',titolo:g.titolo||'',testo:g.testo||''};
+  F=daGiornataAF(g);
   lsSet('fantabun_bozza',JSON.stringify(F));
   render();window.scrollTo({top:0,behavior:'smooth'});
 }
-function svuota(){F={n:'',data:'',titolo:'',testo:''};lsSet('fantabun_bozza',null);render();}
+function svuota(){F=fVuoto();lsSet('fantabun_bozza',null);render();}
 async function elimina(){
   const n=CONF;CONF=null;INVIO=true;render();
   try{
@@ -493,35 +634,82 @@ async function elimina(){
 }
 function esci(){lsSet('fantabun_redazione',null);lsSet('fantabun_bozza',null);TOKEN=null;RED=null;location.hash='giornate';render();}
 
+function selSquadra(id,val){
+  const opz=Object.entries(SQUADRE).map(([k,s])=>({k,club:s.club,all:s.allenatore}))
+    .sort((a,b)=>a.club.localeCompare(b.club));
+  return `<select id="${id}" onchange="suInput()">
+    <option value="">— squadra —</option>
+    ${opz.map(o=>`<option value="${o.k}" ${o.k===val?'selected':''}>${esc(o.club)} · ${esc(o.all)}</option>`).join('')}
+  </select>`;
+}
+const inp=(id,val,ph,extra)=>`<input id="${id}" value="${esc(val)}" placeholder="${ph||''}" oninput="suInput()" ${extra||''}>`;
+const numInp=(id,val,ph)=>inp(id,val,ph,'inputmode="decimal" class="corto"');
+function righeSfida(pre,s){
+  return `<div class="duello">
+    <div class="duello__sq duello__c">${selSquadra(pre+'-casa',s.casa)}</div>
+    <div class="duello__n duello__g">${numInp(pre+'-g1',s.g1,'gol')}<span>–</span>${numInp(pre+'-g2',s.g2,'gol')}</div>
+    <div class="duello__sq duello__o">${selSquadra(pre+'-ospite',s.ospite)}</div>
+  </div>
+  <div class="duello duello--pt">
+    <span class="duello__lbl">fantapunti</span>
+    <div class="duello__n">${numInp(pre+'-p1',s.p1,'pt')}<span>·</span>${numInp(pre+'-p2',s.p2,'pt')}</div>
+    <span></span>
+  </div>`;
+}
+
 function scrivi(){
   if(!RED)return giornate();
-  const n=F.n!==''?F.n:String(prossimaGiornata());
-  if(F.n==='')F.n=n;
-  const ex=esistente(n);
+  if(F.n==='')F.n=String(prossimaGiornata());
+  const n=F.n,ex=esistente(n);
   const pubb=(GIORNATE||[]).slice().sort((a,b)=>b.n-a.n);
   return `<div class="page">
     <span class="eyebrow">Redazione · ${esc(RED.nome)}</span><h1 class="title">Scrivi un commento</h1>
-    <p class="lede">Quello che pubblichi compare subito nel tab Commento giornate, per tutti.</p>
+    <p class="lede">Quello che pubblichi compare subito nel tab Commento giornate, per tutti. La bozza si salva da sola su questo dispositivo.</p>
+
     <div class="card" style="margin-top:22px">
       <div class="fldrow">
         <label class="fld"><span>Giornata</span><input id="f-n" type="number" min="1" max="38" value="${esc(n)}" oninput="suInput()"></label>
-        <label class="fld"><span>Data (facoltativa)</span><input id="f-data" maxlength="60" placeholder="es. 21 settembre" value="${esc(F.data)}" oninput="suInput()"></label>
+        <label class="fld"><span>Data (facoltativa)</span>${inp('f-data',F.data,'es. 21 settembre','maxlength="60"')}</label>
       </div>
-      <label class="fld"><span>Titolo</span><input id="f-titolo" maxlength="200" placeholder="Il titolo del commento" value="${esc(F.titolo)}" oninput="suInput()"></label>
-      <label class="fld"><span>Commento</span><textarea id="f-testo" placeholder="Com'è andata questa giornata?" oninput="suInput()">${esc(F.testo)}</textarea></label>
-      <p class="hint">Riga vuota = nuovo paragrafo · <code>**parola**</code> = <b>grassetto</b> · la bozza si salva da sola su questo dispositivo.</p>
-      <div class="avviso" id="f-avviso" style="${ex?'':'display:none'}">Questa giornata è già pubblicata: salvando sostituisci il commento esistente.</div>
-      <div class="azioni">
-        <button class="btn btn--oro" id="f-pubblica" onclick="pubblica()" ${INVIO?'disabled':''}>${INVIO?'Invio…':ex?`Aggiorna giornata ${esc(n)}`:'Pubblica'}</button>
-        <button class="btn btn--ghost" onclick="svuota()" ${INVIO?'disabled':''}>Svuota</button>
+      <label class="fld" style="margin-bottom:0"><span>Titolo (facoltativo)</span>${inp('f-titolo',F.titolo,'Il titolo della giornata','maxlength="200"')}</label>
+    </div>
+
+    <div class="card sez">
+      <h2 class="sub">Partita del giorno</h2>
+      ${righeSfida('p',F.p)}
+      <label class="fld" style="margin-top:14px"><span>Commento</span><textarea id="f-testo" placeholder="Com'è andata?" oninput="suInput()">${esc(F.testo)}</textarea></label>
+      <p class="hint">Riga vuota = nuovo paragrafo · <code>**parola**</code> = <b>grassetto</b></p>
+      <div class="fldrow fldrow--2">
+        <label class="fld"><span>MVP</span>${inp('p-mvp',F.p.mvp,'facoltativo','maxlength="80"')}</label>
+        <label class="fld"><span>Flop</span>${inp('p-flop',F.p.flop,'facoltativo','maxlength="80"')}</label>
       </div>
     </div>
-    <h2 class="sub" style="margin:28px 0 0">Anteprima</h2>
+
+    <div class="card sez">
+      <h2 class="sub">Le altre sfide</h2>
+      ${F.a.map((s,i)=>`<div class="sfEd" data-sfida>
+        <div class="sfEd__hd"><span class="eyebrow" style="color:var(--grigio)">Sfida ${i+2}</span>
+          <button class="btn btn--sm btn--ghost" onclick="togliSfida(${i})" title="Rimuovi questa sfida">Rimuovi</button></div>
+        ${righeSfida('a'+i,s)}
+        <label class="fld" style="margin:12px 0 0"><span>Nota</span><textarea id="a${i}-nota" class="breve" placeholder="Due righe su com'è andata" oninput="suInput()">${esc(s.nota)}</textarea></label>
+      </div>`).join('')}
+      <button class="btn btn--sm btn--ghost" onclick="aggiungiSfida()" style="margin-top:4px">+ Aggiungi una sfida</button>
+      <p class="hint" style="margin:10px 0 0">Le sfide lasciate senza squadre non vengono pubblicate.</p>
+    </div>
+
+    <div class="avviso" id="f-avviso" style="margin-top:18px;${ex?'':'display:none'}">Questa giornata è già pubblicata: salvando sostituisci il commento esistente.</div>
+    <div class="azioni" style="margin-top:16px">
+      <button class="btn btn--oro" id="f-pubblica" onclick="pubblica()" ${INVIO?'disabled':''}>${INVIO?'Invio…':ex?`Aggiorna giornata ${esc(n)}`:'Pubblica'}</button>
+      <button class="btn btn--ghost" onclick="svuota()" ${INVIO?'disabled':''}>Svuota</button>
+    </div>
+
+    <h2 class="sub" style="margin:32px 0 0">Anteprima</h2>
     <div id="f-anteprima"></div>
+
     <div class="card" style="margin-top:28px">
       <div class="card__hd"><h2 class="sub" style="margin:0">Già pubblicati</h2><span class="num mut">${pubb.length}</span></div>
       ${pubb.length?pubb.map(g=>`<div class="pubbl"><span class="pubbl__n">${g.n}</span>
-        <span class="pubbl__t">${esc(g.titolo||'(senza titolo)')}</span>
+        <span class="pubbl__t">${esc(g.titolo||((g.contenuto&&g.contenuto.partita)?sq(g.contenuto.partita.casa).club+' – '+sq(g.contenuto.partita.ospite).club:'Giornata '+g.n))}</span>
         <button class="btn btn--sm btn--ghost" onclick="modifica(${g.n})">Modifica</button>
         <button class="btn btn--sm btn--rosso" onclick="CONF=${g.n};render()">Elimina</button></div>`).join('')
         :'<div class="note">Ancora nessun commento pubblicato.</div>'}
