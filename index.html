@@ -202,6 +202,8 @@ button.gio__hd{cursor:pointer;transition:background .15s}
 button.gio__hd:hover{background:rgba(214,163,26,.06)}
 .gio--open .gio__hd{border-bottom:1px solid var(--crema-2)}
 .gio__tt{flex:1;min-width:0}
+.gio__hd .gio__n{min-width:0}
+.gio__hd{gap:12px}
 .gio__ris{font-family:var(--display);font-weight:700;color:var(--oro);white-space:nowrap;margin:0 2px}
 .gio__chev{width:10px;height:10px;border-right:2px solid var(--grigio);border-bottom:2px solid var(--grigio);transform:rotate(45deg);flex:none;margin:0 6px 5px 0;transition:transform .2s}
 .gio--open .gio__chev{transform:rotate(-135deg);margin-bottom:-3px}
@@ -486,8 +488,7 @@ function articolo(g,sempreAperta){
   const altre=(c.altre||[]).filter(s=>s.casa||s.ospite||s.nota);
   const aperta=sempreAperta||APERTE.has(g.n);
   const hd=`<div class="gio__n">${g.n}<sup>a</sup></div>
-      <div class="gio__tt"><span class="eyebrow">Giornata ${g.n}${g.data?' · '+esc(g.data):''}</span>
-      <h2 class="gio__t">${sintesi(g)}</h2></div>`;
+      <div class="gio__tt"><h2 class="gio__t">Giornata</h2></div>`;
   return `<article class="gio ${aperta?'gio--open':''}" id="g${g.n}">
     ${sempreAperta?`<div class="gio__hd">${hd}</div>`
       :`<button class="gio__hd" onclick="apriChiudi(${g.n})" aria-expanded="${aperta}">${hd}<span class="gio__chev" aria-hidden="true"></span></button>`}
@@ -524,26 +525,23 @@ async function chiamaFunzione(corpo){
   if(!r.ok)throw new Error(risp.errore||('Errore '+r.status));
   return risp;
 }
-/* Il token arriva dal link (?t=...) la prima volta e poi resta su questo
-   dispositivo. Lo tolgo subito dalla barra degli indirizzi. */
+/* La redazione esiste solo aprendo il link personale (?t=...): il sito
+   normale, quello condiviso con tutti, non mostra mai il tab Scrivi,
+   nemmeno sul dispositivo di chi scrive. Il token resta nell'indirizzo
+   cosi' ricaricando la pagina si resta in redazione. */
 async function verificaRedattore(){
-  const q=new URLSearchParams(location.search);
-  const daLink=q.get('t');
-  if(daLink){
-    q.delete('t');
-    history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:'')+location.hash);
-  }
-  TOKEN=daLink||lsGet('fantabun_redazione');
+  lsSet('fantabun_redazione',null);   /* pulizia della versione precedente */
+  const daLink=new URLSearchParams(location.search).get('t');
+  TOKEN=daLink;
   if(!TOKEN)return;
   try{
     RED=await chiamaFunzione({tipo:'chi_sono'});
-    lsSet('fantabun_redazione',TOKEN);
     CODICE=lsGet('fantabun_bozza_codice')||'';
     if(daLink&&!location.hash)location.hash='scrivi';
     render();
   }catch(e){
     RED=null;
-    if(/non valido/i.test(e.message)){lsSet('fantabun_redazione',null);if(daLink)toast('Questo link non permette di scrivere i commenti.');}
+    if(/non valido/i.test(e.message))toast('Questo link non permette di scrivere i commenti.');
     TOKEN=null;
   }
 }
@@ -741,7 +739,7 @@ async function elimina(){
     INVIO=false;toast(`Giornata ${n} eliminata`);
   }catch(e){INVIO=false;toast(e.message);}
 }
-function esci(){lsSet('fantabun_redazione',null);lsSet('fantabun_bozza_codice',null);TOKEN=null;RED=null;location.hash='giornate';render();}
+function esci(){location.href=location.pathname+'#giornate';}
 
 function scrivi(){
   if(!RED)return giornate();
@@ -771,7 +769,7 @@ function scrivi(){
         <button class="btn btn--sm btn--rosso" onclick="CONF=${g.n};render()">Elimina</button></div>`).join('')
         :'<div class="note">Ancora nessun commento pubblicato.</div>'}
     </div>
-    <p class="note" style="margin-top:22px">Stai usando un link di redazione su questo dispositivo. <a href="#" onclick="event.preventDefault();esci()" style="color:var(--grigio)">Esci</a></p>
+    <p class="note" style="margin-top:22px">Sei in redazione perché hai aperto il tuo link personale: non condividerlo. <a href="#" onclick="event.preventDefault();esci()" style="color:var(--grigio)">Vai al sito pubblico</a></p>
     ${CONF!==null?`<div class="modal" onclick="if(event.target===this){CONF=null;render();}"><div class="modal__card">
       <p style="margin:0 0 16px">Eliminare il commento della giornata ${CONF}? Sparisce subito per tutti.</p>
       <div class="azioni" style="justify-content:flex-end">
