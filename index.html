@@ -216,6 +216,7 @@ h2.sub{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 12px
 .vuoto__t{font-family:var(--display);font-size:clamp(24px,4vw,32px);font-weight:700;margin:6px 0 8px;line-height:1.1}
 .vuoto__s{color:rgba(243,241,232,.7);margin:0 auto;max-width:430px}
 
+.disclaimer{font-size:13px;font-style:italic;line-height:1.55;color:var(--grigio);border-left:2px solid var(--oro);padding:2px 0 2px 12px;margin:16px 0 0;max-width:640px}
 /* --- redazione --- */
 .nav__tab .nc{display:none}
 @media(max-width:480px){.nav__tab .nl{display:none}.nav__tab .nc{display:inline}}
@@ -390,7 +391,8 @@ function articolo(g){
 }
 function giornate(){
   const testa=`<span class="eyebrow">Stagione 26/27</span><h1 class="title">Commento giornate</h1>
-    <p class="lede">Il racconto della lega, una giornata alla volta.</p>`;
+    <p class="lede">Il racconto della lega, una giornata alla volta.</p>
+    <p class="disclaimer">©️ Telecronache appositamente provocatorie, scritte con moderata malizia e abbondante ironia. Ogni riferimento a rosicate, morali flessibili e polemiche selettive è puramente voluto... ma non mina in alcun modo la vera amicizia che ci lega ❤️</p>`;
   if(GIORNATE===null) return `<div class="page">${testa}<div class="caric">Carico i commenti…</div></div>`;
   if(ERR_G&&!GIORNATE.length) return `<div class="page">${testa}<div class="errbox"><b>Non riesco a caricare i commenti.</b>
     <p class="mut" style="margin:6px 0 14px">Controlla la connessione e riprova tra poco.</p>
