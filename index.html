@@ -215,6 +215,32 @@ h2.sub{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 12px
 @keyframes grow{0%,100%{transform:scaleY(1);transform-origin:bottom}50%{transform:scaleY(.55);transform-origin:bottom}}
 .vuoto__t{font-family:var(--display);font-size:clamp(24px,4vw,32px);font-weight:700;margin:6px 0 8px;line-height:1.1}
 .vuoto__s{color:rgba(243,241,232,.7);margin:0 auto;max-width:430px}
+
+/* --- redazione --- */
+.nav__tab .nc{display:none}
+@media(max-width:480px){.nav__tab .nl{display:none}.nav__tab .nc{display:inline}}
+.nav__tab--red{color:var(--oro-2)}
+.nav__tab--red[aria-current=page]{color:var(--oro-2)}
+.fld{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;min-width:0}
+.fld>span{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--grigio)}
+.fld input,.fld textarea{width:100%;padding:10px 12px;border:1px solid var(--crema-2);border-radius:4px;background:var(--crema);color:var(--inch);font:inherit}
+.fld textarea{min-height:300px;resize:vertical;line-height:1.6}
+.fld input:focus,.fld textarea:focus{outline:2px solid var(--oro);outline-offset:0;border-color:transparent}
+.fldrow{display:grid;grid-template-columns:120px 1fr;gap:12px}
+@media(max-width:480px){.fldrow{grid-template-columns:1fr}}
+.hint{font-size:12.5px;color:var(--grigio);margin:-6px 0 16px}
+.hint code{font-family:var(--mono);font-size:11.5px;background:var(--crema);padding:1px 5px;border-radius:3px}
+.avviso{font-size:13px;background:rgba(214,163,26,.12);border:1px solid rgba(214,163,26,.4);border-radius:4px;padding:9px 12px;margin:0 0 14px}
+.azioni{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pubbl{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--crema-2)}
+.pubbl:last-child{border-bottom:0}
+.pubbl__n{font-family:var(--display);font-size:22px;font-weight:700;color:var(--bosco);min-width:34px}
+.pubbl__t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn--rosso{background:transparent;color:var(--rosso);border:1px solid rgba(175,58,44,.45)}.btn--rosso:hover{background:rgba(175,58,44,.07)}
+.caric{text-align:center;color:var(--grigio);padding:40px 0}
+.errbox{background:#fff;border:1px solid var(--rosso);border-radius:6px;padding:20px;margin-top:22px}
+.modal{position:fixed;inset:0;background:rgba(13,42,25,.72);z-index:120;display:flex;align-items:center;justify-content:center;padding:20px}
+.modal__card{background:var(--crema);border-radius:8px;padding:22px 24px;max-width:400px;width:100%}
 </style>
 
 <nav class="nav"><div class="nav__in">
@@ -244,21 +270,20 @@ const SQUADRE={
 
 /* ============================================================
    COMMENTO GIORNATE
-   Una voce per giornata. Per aggiungerne una, copia un blocco e cambia i campi:
-     n      → numero della giornata
-     data   → testo libero (es. "21 settembre 2026"), può restare vuoto
-     titolo → titolo del commento
-     testo  → il commento. Riga vuota = nuovo paragrafo. **parola** = grassetto.
-   L'ordine non conta: la pagina mostra sempre prima la giornata più recente.
+   I commenti vivono su Supabase (tabella "commento") e li scrive solo chi
+   ha un link personale di redazione: /?t=<token>. La scrittura passa dalla
+   Edge Function "commenti", che verifica il token: il browser non scrive
+   mai direttamente sul database, come per l'asta.
    ============================================================ */
-const GIORNATE=[
-  /* esempio:
-  {n:1, data:'24 agosto 2026', titolo:'Si parte!',
-   testo:`Primo paragrafo del commento.
+const SB_URL='https://kwkqaacdbyttcaipheds.supabase.co';
+const SB_KEY='sb_publishable_sPRk6-6qbnC5mXkYbKzy_w_VvwnYP6p';
+const LEGA_ID='11111111-2222-4333-8444-555555555555';
 
-Secondo paragrafo, con una **parola in grassetto**.`},
-  */
-];
+let GIORNATE=null;      /* null = sto caricando */
+let ERR_G=false;
+let TOKEN=null, RED=null;   /* RED = {nome} se il link di redazione è valido */
+let F={n:'',data:'',titolo:'',testo:''}, INVIO=false, CONF=null, MSG='';
+
 
 /* ---------------- utilità ---------------- */
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -340,26 +365,173 @@ function home(){
   </div>${copModal()}</div>`;
 }
 
-/* ---------------- commento giornate ---------------- */
+/* ---------------- commento giornate: lettura ---------------- */
+async function caricaGiornate(){
+  try{
+    const r=await fetch(`${SB_URL}/rest/v1/commento?select=giornata,data,titolo,testo&lega_id=eq.${LEGA_ID}&order=giornata.desc`,
+      {headers:{apikey:SB_KEY}});
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    GIORNATE=(await r.json()).map(c=>({n:c.giornata,data:c.data,titolo:c.titolo,testo:c.testo}));
+    ERR_G=false;
+  }catch(e){console.error(e);ERR_G=true;if(!GIORNATE)GIORNATE=[];}
+  render();
+}
 function testoHTML(t){
   return String(t||'').trim().split(/\n\s*\n/).map(p=>
     `<p>${esc(p.trim()).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')}</p>`).join('');
 }
+function articolo(g){
+  return `<article class="gio" id="g${g.n}">
+    <div class="gio__hd"><div class="gio__n">${g.n}<sup>a</sup></div>
+      <div style="min-width:0"><span class="eyebrow">Giornata ${g.n}${g.data?' · '+esc(g.data):''}</span>
+      ${g.titolo?`<h2 class="gio__t">${esc(g.titolo)}</h2>`:''}</div></div>
+    <div class="gio__b">${testoHTML(g.testo)}</div>
+  </article>`;
+}
 function giornate(){
-  const list=GIORNATE.slice().sort((a,b)=>b.n-a.n);
   const testa=`<span class="eyebrow">Stagione 26/27</span><h1 class="title">Commento giornate</h1>
     <p class="lede">Il racconto della lega, una giornata alla volta.</p>`;
+  if(GIORNATE===null) return `<div class="page">${testa}<div class="caric">Carico i commenti…</div></div>`;
+  if(ERR_G&&!GIORNATE.length) return `<div class="page">${testa}<div class="errbox"><b>Non riesco a caricare i commenti.</b>
+    <p class="mut" style="margin:6px 0 14px">Controlla la connessione e riprova tra poco.</p>
+    <button class="btn btn--sm" onclick="GIORNATE=null;render();caricaGiornate()">Riprova</button></div></div>`;
+  const list=GIORNATE.slice().sort((a,b)=>b.n-a.n);
   if(!list.length) return `<div class="page">${testa}${vuoto('Il primo commento arriva presto','Appena si chiude la prima giornata, qui trovi il racconto di com\'è andata.')}</div>`;
   const jump=list.length>3?`<div class="jump">${list.map(g=>`<a class="chip" href="#giornate/${g.n}" onclick="event.preventDefault();vaiA(${g.n})">G${g.n}</a>`).join('')}</div>`:'';
-  return `<div class="page">${testa}${jump}
-    ${list.map(g=>`<article class="gio" id="g${g.n}">
-      <div class="gio__hd"><div class="gio__n">${g.n}<sup>a</sup></div>
-        <div style="min-width:0"><span class="eyebrow">Giornata ${g.n}${g.data?' · '+esc(g.data):''}</span>
-        ${g.titolo?`<h2 class="gio__t">${esc(g.titolo)}</h2>`:''}</div></div>
-      <div class="gio__b">${testoHTML(g.testo)}</div>
-    </article>`).join('')}</div>`;
+  return `<div class="page">${testa}${jump}${list.map(articolo).join('')}</div>`;
 }
 function vaiA(n){const el=document.getElementById('g'+n);if(el)el.scrollIntoView({behavior:'smooth'});}
+
+/* ---------------- redazione ---------------- */
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function lsSet(k,v){try{v===null?localStorage.removeItem(k):localStorage.setItem(k,v);}catch(e){}}
+
+async function chiamaFunzione(corpo){
+  const r=await fetch(SB_URL+'/functions/v1/commenti',{method:'POST',
+    headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY},
+    body:JSON.stringify(Object.assign({token:TOKEN},corpo))});
+  let risp={};try{risp=await r.json();}catch(e){}
+  if(!r.ok)throw new Error(risp.errore||('Errore '+r.status));
+  return risp;
+}
+/* Il token arriva dal link (?t=...) la prima volta e poi resta su questo
+   dispositivo, cosi' la persona non deve riaprire ogni volta il link.
+   Lo tolgo subito dalla barra degli indirizzi per non condividerlo per errore. */
+async function verificaRedattore(){
+  const q=new URLSearchParams(location.search);
+  const daLink=q.get('t');
+  if(daLink){
+    q.delete('t');
+    history.replaceState(null,'',location.pathname+(q.toString()?'?'+q:'')+location.hash);
+  }
+  TOKEN=daLink||lsGet('fantabun_redazione');
+  if(!TOKEN)return;
+  try{
+    RED=await chiamaFunzione({tipo:'chi_sono'});
+    lsSet('fantabun_redazione',TOKEN);
+    const bozza=lsGet('fantabun_bozza');
+    if(bozza){try{F=Object.assign(F,JSON.parse(bozza));}catch(e){}}
+    if(daLink&&!location.hash)location.hash='scrivi';
+    render();
+  }catch(e){
+    RED=null;
+    if(/non valido/i.test(e.message)){lsSet('fantabun_redazione',null);if(daLink)toast('Questo link non permette di scrivere i commenti.');}
+    TOKEN=null;
+  }
+}
+function prossimaGiornata(){return Math.min(38,(GIORNATE&&GIORNATE.length?Math.max(...GIORNATE.map(g=>g.n)):0)+1);}
+function esistente(n){return (GIORNATE||[]).find(g=>g.n===+n);}
+
+function leggiForm(){
+  const g=id=>document.getElementById(id);
+  if(!g('f-testo'))return;
+  F={n:g('f-n').value,data:g('f-data').value,titolo:g('f-titolo').value,testo:g('f-testo').value};
+}
+/* aggiorna anteprima, pulsante e avviso senza ridisegnare il form
+   (ridisegnarlo farebbe perdere il cursore mentre si scrive) */
+function suInput(){
+  leggiForm();
+  lsSet('fantabun_bozza',JSON.stringify(F));
+  const ex=esistente(F.n);
+  const b=document.getElementById('f-pubblica');
+  if(b)b.textContent=ex?`Aggiorna giornata ${F.n}`:'Pubblica';
+  const av=document.getElementById('f-avviso');
+  if(av)av.style.display=ex?'':'none';
+  const an=document.getElementById('f-anteprima');
+  if(an)an.innerHTML=F.testo.trim()?articolo({n:+F.n||'?',data:F.data.trim(),titolo:F.titolo.trim(),testo:F.testo}):'<div class="note">L\'anteprima compare qui mentre scrivi.</div>';
+}
+async function pubblica(){
+  leggiForm();
+  const n=+F.n;
+  if(!Number.isInteger(n)||n<1||n>38)return toast('Scegli una giornata da 1 a 38');
+  if(!F.testo.trim())return toast('Il commento è vuoto');
+  INVIO=true;render();
+  try{
+    const r=await chiamaFunzione({tipo:'salva',giornata:n,data:F.data,titolo:F.titolo,testo:F.testo});
+    const c=r.commento,nuova={n:c.giornata,data:c.data,titolo:c.titolo,testo:c.testo};
+    GIORNATE=(GIORNATE||[]).filter(g=>g.n!==nuova.n).concat(nuova);
+    F={n:'',data:'',titolo:'',testo:''};lsSet('fantabun_bozza',null);
+    INVIO=false;toast(`Giornata ${n} pubblicata`);
+  }catch(e){INVIO=false;toast(e.message);}
+}
+function modifica(n){
+  const g=esistente(n);if(!g)return;
+  F={n:String(g.n),data:g.data||'',titolo:g.titolo||'',testo:g.testo||''};
+  lsSet('fantabun_bozza',JSON.stringify(F));
+  render();window.scrollTo({top:0,behavior:'smooth'});
+}
+function svuota(){F={n:'',data:'',titolo:'',testo:''};lsSet('fantabun_bozza',null);render();}
+async function elimina(){
+  const n=CONF;CONF=null;INVIO=true;render();
+  try{
+    await chiamaFunzione({tipo:'elimina',giornata:n});
+    GIORNATE=(GIORNATE||[]).filter(g=>g.n!==n);
+    INVIO=false;toast(`Giornata ${n} eliminata`);
+  }catch(e){INVIO=false;toast(e.message);}
+}
+function esci(){lsSet('fantabun_redazione',null);lsSet('fantabun_bozza',null);TOKEN=null;RED=null;location.hash='giornate';render();}
+
+function scrivi(){
+  if(!RED)return giornate();
+  const n=F.n!==''?F.n:String(prossimaGiornata());
+  if(F.n==='')F.n=n;
+  const ex=esistente(n);
+  const pubb=(GIORNATE||[]).slice().sort((a,b)=>b.n-a.n);
+  return `<div class="page">
+    <span class="eyebrow">Redazione · ${esc(RED.nome)}</span><h1 class="title">Scrivi un commento</h1>
+    <p class="lede">Quello che pubblichi compare subito nel tab Commento giornate, per tutti.</p>
+    <div class="card" style="margin-top:22px">
+      <div class="fldrow">
+        <label class="fld"><span>Giornata</span><input id="f-n" type="number" min="1" max="38" value="${esc(n)}" oninput="suInput()"></label>
+        <label class="fld"><span>Data (facoltativa)</span><input id="f-data" maxlength="60" placeholder="es. 21 settembre" value="${esc(F.data)}" oninput="suInput()"></label>
+      </div>
+      <label class="fld"><span>Titolo</span><input id="f-titolo" maxlength="200" placeholder="Il titolo del commento" value="${esc(F.titolo)}" oninput="suInput()"></label>
+      <label class="fld"><span>Commento</span><textarea id="f-testo" placeholder="Com'è andata questa giornata?" oninput="suInput()">${esc(F.testo)}</textarea></label>
+      <p class="hint">Riga vuota = nuovo paragrafo · <code>**parola**</code> = <b>grassetto</b> · la bozza si salva da sola su questo dispositivo.</p>
+      <div class="avviso" id="f-avviso" style="${ex?'':'display:none'}">Questa giornata è già pubblicata: salvando sostituisci il commento esistente.</div>
+      <div class="azioni">
+        <button class="btn btn--oro" id="f-pubblica" onclick="pubblica()" ${INVIO?'disabled':''}>${INVIO?'Invio…':ex?`Aggiorna giornata ${esc(n)}`:'Pubblica'}</button>
+        <button class="btn btn--ghost" onclick="svuota()" ${INVIO?'disabled':''}>Svuota</button>
+      </div>
+    </div>
+    <h2 class="sub" style="margin:28px 0 0">Anteprima</h2>
+    <div id="f-anteprima"></div>
+    <div class="card" style="margin-top:28px">
+      <div class="card__hd"><h2 class="sub" style="margin:0">Già pubblicati</h2><span class="num mut">${pubb.length}</span></div>
+      ${pubb.length?pubb.map(g=>`<div class="pubbl"><span class="pubbl__n">${g.n}</span>
+        <span class="pubbl__t">${esc(g.titolo||'(senza titolo)')}</span>
+        <button class="btn btn--sm btn--ghost" onclick="modifica(${g.n})">Modifica</button>
+        <button class="btn btn--sm btn--rosso" onclick="CONF=${g.n};render()">Elimina</button></div>`).join('')
+        :'<div class="note">Ancora nessun commento pubblicato.</div>'}
+    </div>
+    <p class="note" style="margin-top:22px">Stai usando un link di redazione su questo dispositivo. <a href="#" onclick="event.preventDefault();esci()" style="color:var(--grigio)">Esci</a></p>
+    ${CONF!==null?`<div class="modal" onclick="if(event.target===this){CONF=null;render();}"><div class="modal__card">
+      <p style="margin:0 0 16px">Eliminare il commento della giornata ${CONF}? Sparisce subito per tutti.</p>
+      <div class="azioni" style="justify-content:flex-end">
+        <button class="btn btn--sm btn--ghost" onclick="CONF=null;render()">Annulla</button>
+        <button class="btn btn--sm btn--oro" onclick="elimina()">Elimina</button></div></div></div>`:''}
+  </div>`;
+}
 
 /* ---------------- statistiche ---------------- */
 function vuoto(t,s){
@@ -372,25 +544,31 @@ function statistiche(){
 }
 
 /* ---------------- navigazione ----------------
-   Per aggiungere un tab: una riga qui sotto e una funzione che restituisce l'HTML. */
+   Per aggiungere un tab: una riga qui sotto e una funzione che restituisce l'HTML.
+   "Scrivi" compare solo a chi ha un link di redazione valido. */
 const TABS=[
   {id:'home',nome:'Home',vista:home},
-  {id:'giornate',nome:'Commento giornate',vista:giornate},
-  {id:'statistiche',nome:'Statistiche',vista:statistiche}
+  {id:'giornate',nome:'Commento giornate',corto:'Giornate',vista:giornate},
+  {id:'statistiche',nome:'Statistiche',vista:statistiche},
+  {id:'scrivi',nome:'✎ Scrivi',vista:scrivi,solo:()=>!!RED,cls:'nav__tab--red'}
 ];
 function tabCorrente(){
   const h=location.hash.slice(1).split('/')[0];
-  return TABS.find(t=>t.id===h)||TABS[0];
+  return TABS.find(t=>t.id===h&&(!t.solo||t.solo()))||TABS[0];
 }
+function toast(m){MSG=m;render();clearTimeout(toast.t);toast.t=setTimeout(()=>{MSG='';render();},2600);}
 function render(){
   const cur=tabCorrente();
-  document.getElementById('tabs').innerHTML=TABS.map(t=>
-    `<a class="nav__tab" href="#${t.id}" ${t.id===cur.id?'aria-current="page"':''} style="text-decoration:none">${t.nome}</a>`).join('');
-  document.getElementById('app').innerHTML=cur.vista();
+  document.getElementById('tabs').innerHTML=TABS.filter(t=>!t.solo||t.solo()).map(t=>
+    `<a class="nav__tab ${t.cls||''}" href="#${t.id}" ${t.id===cur.id?'aria-current="page"':''} style="text-decoration:none"><span class="nl">${t.nome}</span><span class="nc">${t.corto||t.nome}</span></a>`).join('');
+  const attivo=document.activeElement&&document.activeElement.id;
+  document.getElementById('app').innerHTML=cur.vista()+(MSG?`<div class="toast">${esc(MSG)}</div>`:'');
+  if(cur.id==='scrivi'){suInput();if(attivo&&document.getElementById(attivo))document.getElementById(attivo).focus();}
 }
-window.addEventListener('hashchange',()=>{SEL=null;render();window.scrollTo(0,0);
+window.addEventListener('hashchange',()=>{SEL=null;CONF=null;render();window.scrollTo(0,0);
   const n=location.hash.split('/')[1];if(n)setTimeout(()=>vaiA(n),50);});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&SEL!==null)copClose();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(SEL!==null)copClose();else if(CONF!==null){CONF=null;render();}}});
 render();
-{const n=location.hash.split('/')[1];if(n)setTimeout(()=>vaiA(n),50);}
+caricaGiornate().then(()=>{const n=location.hash.split('/')[1];if(n)setTimeout(()=>vaiA(n),50);});
+verificaRedattore();
 </script>
