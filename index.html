@@ -195,9 +195,18 @@ h2.sub{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 12px
 @media(max-width:560px){.page{padding:24px 16px 60px}}
 .jump{display:flex;gap:6px;flex-wrap:wrap;margin-top:18px}
 .jump a{text-decoration:none}
-.gio{background:#fff;border:1px solid var(--crema-2);border-radius:6px;padding:24px 26px;margin-top:18px;scroll-margin-top:70px}
-@media(max-width:560px){.gio{padding:19px 18px}}
-.gio__hd{display:flex;gap:16px;align-items:center;border-bottom:1px solid var(--crema-2);padding-bottom:14px;margin-bottom:14px}
+.gio{background:#fff;border:1px solid var(--crema-2);border-radius:6px;margin-top:12px;scroll-margin-top:66px;overflow:hidden}
+
+.gio__hd{display:flex;gap:16px;align-items:center;width:100%;text-align:left;padding:18px 22px;margin:0;background:none;color:inherit;border:0}
+button.gio__hd{cursor:pointer;transition:background .15s}
+button.gio__hd:hover{background:rgba(214,163,26,.06)}
+.gio--open .gio__hd{border-bottom:1px solid var(--crema-2)}
+.gio__tt{flex:1;min-width:0}
+.gio__ris{font-family:var(--display);font-weight:700;color:var(--oro);white-space:nowrap;margin:0 2px}
+.gio__chev{width:10px;height:10px;border-right:2px solid var(--grigio);border-bottom:2px solid var(--grigio);transform:rotate(45deg);flex:none;margin:0 6px 5px 0;transition:transform .2s}
+.gio--open .gio__chev{transform:rotate(-135deg);margin-bottom:-3px}
+.gio__body{padding:18px 22px 24px}
+@media(max-width:560px){.gio__hd{padding:14px 16px;gap:12px}.gio__body{padding:16px 16px 20px}.gio__n{font-size:32px;min-width:38px}.gio__t{font-size:18px}}
 .gio__n{font-family:var(--display);font-size:40px;font-weight:700;line-height:1;color:var(--bosco);flex:none;min-width:50px}
 .gio__n sup{font-size:.42em;color:var(--oro);margin-left:1px}
 .gio__t{font-family:var(--display);font-size:22px;font-weight:600;line-height:1.15;margin:3px 0 0}
@@ -216,7 +225,12 @@ h2.sub{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 12px
 .vuoto__t{font-family:var(--display);font-size:clamp(24px,4vw,32px);font-weight:700;margin:6px 0 8px;line-height:1.1}
 .vuoto__s{color:rgba(243,241,232,.7);margin:0 auto;max-width:430px}
 
-.disclaimer{font-size:13px;font-style:italic;line-height:1.55;color:var(--grigio);border-left:2px solid var(--oro);padding:2px 0 2px 12px;margin:16px 0 0;max-width:640px}
+.disclaimer{font-size:13px;font-style:italic;line-height:1.6;color:var(--grigio);text-align:center;max-width:600px;margin:22px auto 26px;padding:14px 8px;border-top:1px solid rgba(214,163,26,.4);border-bottom:1px solid rgba(214,163,26,.4)}
+.esito{border-radius:4px;padding:10px 12px;font-size:13.5px;line-height:1.5}
+.esito--ok{background:rgba(44,146,87,.08);border:1px solid rgba(44,146,87,.4)}
+.esito--ko{background:rgba(175,58,44,.06);border:1px solid rgba(175,58,44,.45)}
+.esito__warn{color:#8a6a0c;font-weight:500}
+.fld textarea.codice{font-family:var(--mono);font-size:12.5px;min-height:360px;line-height:1.55;tab-size:2}
 /* --- tabellino --- */
 .ml{width:28px;height:28px;border-radius:50%;overflow:hidden;flex:none;display:inline-flex;background:var(--crema-2);box-shadow:0 0 0 1px rgba(0,0,0,.06)}
 .ml img{width:100%;height:100%;object-fit:cover;display:block}
@@ -253,22 +267,6 @@ h2.sub{font-family:var(--display);font-size:20px;font-weight:600;margin:0 0 12px
 .sf__pt{font-family:var(--mono);font-size:10.5px;color:var(--grigio);margin-top:4px;white-space:nowrap}
 .sf__nota{font-size:14px;line-height:1.55;margin:10px 0 0;padding-top:10px;border-top:1px dashed #d8d3c0}
 @media(max-width:480px){.sf__sq,.sf__sq--r{flex-direction:column;text-align:center;font-size:12.5px;gap:5px}}
-/* --- modulo sfide --- */
-.sez{margin-top:16px}
-.sez .sub{margin-bottom:14px}
-.duello{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}
-.duello select{width:100%;min-width:0;padding:9px 6px;border:1px solid var(--crema-2);border-radius:4px;background:var(--crema);color:var(--inch);font:inherit;font-size:13.5px}
-.duello__n{display:flex;align-items:center;gap:6px;color:var(--grigio)}
-.duello__n input{width:62px;padding:9px 4px;text-align:center;border:1px solid var(--crema-2);border-radius:4px;background:var(--crema);color:var(--inch);font:inherit}
-.duello select:focus,.duello__n input:focus{outline:2px solid var(--oro);outline-offset:0;border-color:transparent}
-.duello--pt{margin-top:8px}
-.duello__lbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--grigio);text-align:right}
-@media(max-width:480px){.duello:not(.duello--pt){grid-template-columns:1fr 1fr;grid-template-areas:'c o' 'g g';gap:8px}.duello__c{grid-area:c}.duello__o{grid-area:o}.duello__g{grid-area:g;justify-content:center}.duello select{font-size:13px}}
-.fld textarea.breve{min-height:90px}
-.sfEd{border:1px solid var(--crema-2);border-radius:5px;padding:12px;margin-bottom:12px}
-.sfEd__hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.fldrow--2{grid-template-columns:1fr 1fr}
-@media(max-width:480px){.fldrow--2{grid-template-columns:1fr 1fr}}
 /* --- redazione --- */
 .nav__tab .nc{display:none}
 @media(max-width:480px){.nav__tab .nl{display:none}.nav__tab .nc{display:inline}}
@@ -436,7 +434,7 @@ function testoHTML(t){
     `<p>${esc(p.trim()).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>')}</p>`).join('');
 }
 const fmt=v=>v===null||v===undefined||v===''?'–':String(v).replace('.',',');
-/* squadra per contrada → {club, allenatore, contrada, colore} */
+/* squadra per contrada → {club, allenatore, colore} */
 function sq(contrada){
   const s=SQUADRE[contrada];
   return s?{contrada,club:s.club,allenatore:s.allenatore,col:CONTRADE[contrada]||'#6E6B5E'}
@@ -473,21 +471,35 @@ function altraSfida(s){
       ${lato(1)}</div>
     ${s.nota?`<p class="sf__nota">${esc(s.nota).replace(/\n/g,'<br>')}</p>`:''}</div>`;
 }
-function articolo(g){
+/* riga di sintesi mostrata sulla giornata chiusa */
+function sintesi(g){
+  if(g.titolo)return esc(g.titolo);
+  const p=g.contenuto&&g.contenuto.partita;
+  if(p&&(p.casa||p.ospite))return `${esc(sq(p.casa).club)} <span class="gio__ris">${fmt(p.gol&&p.gol[0])}–${fmt(p.gol&&p.gol[1])}</span> ${esc(sq(p.ospite).club)}`;
+  return 'Il commento della giornata';
+}
+let APERTE=new Set();
+function apriChiudi(n){APERTE.has(n)?APERTE.delete(n):APERTE.add(n);render();
+  if(APERTE.has(n))setTimeout(()=>{const el=document.getElementById('g'+n);if(el&&el.getBoundingClientRect().top<60)el.scrollIntoView({behavior:'smooth'});},20);}
+function articolo(g,sempreAperta){
   const c=g.contenuto||{};
   const altre=(c.altre||[]).filter(s=>s.casa||s.ospite||s.nota);
-  return `<article class="gio" id="g${g.n}">
-    <div class="gio__hd"><div class="gio__n">${g.n}<sup>a</sup></div>
-      <div style="min-width:0"><span class="eyebrow">Giornata ${g.n}${g.data?' · '+esc(g.data):''}</span>
-      ${g.titolo?`<h2 class="gio__t">${esc(g.titolo)}</h2>`:''}</div></div>
-    ${partitaDelGiorno(c.partita)}
-    ${g.testo&&g.testo.trim()?`<div class="gio__b">${testoHTML(g.testo)}</div>`:''}
-    ${altre.length?`<h3 class="gio__sub">Le altre sfide</h3><div class="sfide">${altre.map(altraSfida).join('')}</div>`:''}
+  const aperta=sempreAperta||APERTE.has(g.n);
+  const hd=`<div class="gio__n">${g.n}<sup>a</sup></div>
+      <div class="gio__tt"><span class="eyebrow">Giornata ${g.n}${g.data?' · '+esc(g.data):''}</span>
+      <h2 class="gio__t">${sintesi(g)}</h2></div>`;
+  return `<article class="gio ${aperta?'gio--open':''}" id="g${g.n}">
+    ${sempreAperta?`<div class="gio__hd">${hd}</div>`
+      :`<button class="gio__hd" onclick="apriChiudi(${g.n})" aria-expanded="${aperta}">${hd}<span class="gio__chev" aria-hidden="true"></span></button>`}
+    ${aperta?`<div class="gio__body">
+      ${partitaDelGiorno(c.partita)}
+      ${g.testo&&g.testo.trim()?`<div class="gio__b">${testoHTML(g.testo)}</div>`:''}
+      ${altre.length?`<h3 class="gio__sub">Le altre sfide</h3><div class="sfide">${altre.map(altraSfida).join('')}</div>`:''}
+    </div>`:''}
   </article>`;
 }
 function giornate(){
   const testa=`<span class="eyebrow">Stagione 26/27</span><h1 class="title">Commento giornate</h1>
-    <p class="lede">Il racconto della lega, una giornata alla volta.</p>
     <p class="disclaimer">©️ Telecronache appositamente provocatorie, scritte con moderata malizia e abbondante ironia. Ogni riferimento a rosicate, morali flessibili e polemiche selettive è puramente voluto... ma non mina in alcun modo la vera amicizia che ci lega ❤️</p>`;
   if(GIORNATE===null) return `<div class="page">${testa}<div class="caric">Carico i commenti…</div></div>`;
   if(ERR_G&&!GIORNATE.length) return `<div class="page">${testa}<div class="errbox"><b>Non riesco a caricare i commenti.</b>
@@ -495,10 +507,10 @@ function giornate(){
     <button class="btn btn--sm" onclick="GIORNATE=null;render();caricaGiornate()">Riprova</button></div></div>`;
   const list=GIORNATE.slice().sort((a,b)=>b.n-a.n);
   if(!list.length) return `<div class="page">${testa}${vuoto('Il primo commento arriva presto','Appena si chiude la prima giornata, qui trovi il racconto di com\'è andata.')}</div>`;
-  const jump=list.length>3?`<div class="jump">${list.map(g=>`<a class="chip" href="#giornate/${g.n}" onclick="event.preventDefault();vaiA(${g.n})">G${g.n}</a>`).join('')}</div>`:'';
-  return `<div class="page">${testa}${jump}${list.map(articolo).join('')}</div>`;
+  return `<div class="page">${testa}${list.map(g=>articolo(g)).join('')}</div>`;
 }
-function vaiA(n){const el=document.getElementById('g'+n);if(el)el.scrollIntoView({behavior:'smooth'});}
+function vaiA(n){n=+n;if(!APERTE.has(n)){APERTE.add(n);render();}
+  setTimeout(()=>{const el=document.getElementById('g'+n);if(el)el.scrollIntoView({behavior:'smooth'});},30);}
 
 /* ---------------- redazione ---------------- */
 function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
@@ -526,8 +538,7 @@ async function verificaRedattore(){
   try{
     RED=await chiamaFunzione({tipo:'chi_sono'});
     lsSet('fantabun_redazione',TOKEN);
-    const bozza=lsGet('fantabun_bozza');
-    if(bozza){try{F=normF(JSON.parse(bozza));}catch(e){}}
+    CODICE=lsGet('fantabun_bozza_codice')||'';
     if(daLink&&!location.hash)location.hash='scrivi';
     render();
   }catch(e){
@@ -536,94 +547,192 @@ async function verificaRedattore(){
     TOKEN=null;
   }
 }
-function prossimaGiornata(){return Math.min(38,(GIORNATE&&GIORNATE.length?Math.max(...GIORNATE.map(g=>g.n)):0)+1);}
 function esistente(n){return (GIORNATE||[]).find(g=>g.n===+n);}
 
-/* --- stato del modulo ---
-   F.p = partita del giorno, F.a = altre sfide. Numeri tenuti come testo
-   finché non si salva, così l'utente può scrivere "75,5" senza sorprese. */
-const sfidaVuota=()=>({casa:'',ospite:'',g1:'',g2:'',p1:'',p2:'',nota:''});
-const fVuoto=()=>({n:'',data:'',titolo:'',testo:'',
-  p:{casa:'',ospite:'',g1:'',g2:'',p1:'',p2:'',mvp:'',flop:''},
-  a:[sfidaVuota(),sfidaVuota(),sfidaVuota(),sfidaVuota()]});
-F=fVuoto();
-function normF(o){
-  const v=fVuoto();o=o||{};
-  return {n:o.n??'',data:o.data??'',titolo:o.titolo??'',testo:o.testo??'',
-    p:Object.assign(v.p,o.p||{}),
-    a:Array.isArray(o.a)&&o.a.length?o.a.map(s=>Object.assign(sfidaVuota(),s)):v.a};
-}
-const sv=v=>v===null||v===undefined?'':String(v).replace('.',',');
-function daGiornataAF(g){
-  const c=g.contenuto||{},p=c.partita||{};
-  const toS=s=>({casa:s.casa||'',ospite:s.ospite||'',g1:sv(s.gol&&s.gol[0]),g2:sv(s.gol&&s.gol[1]),
-    p1:sv(s.punti&&s.punti[0]),p2:sv(s.punti&&s.punti[1]),nota:s.nota||''});
-  const a=(c.altre||[]).map(toS);
-  while(a.length<4)a.push(sfidaVuota());
-  return {n:String(g.n),data:g.data||'',titolo:g.titolo||'',testo:g.testo||'',
-    p:Object.assign(toS(p),{mvp:p.mvp||'',flop:p.flop||''}),a};
-}
-const num=v=>{const s=String(v??'').trim().replace(',','.');if(!s)return null;const n=Number(s);return Number.isFinite(n)?n:null;};
-function contenutoDaF(){
-  const toC=s=>({casa:s.casa||null,ospite:s.ospite||null,gol:[num(s.g1),num(s.g2)],punti:[num(s.p1),num(s.p2)]});
-  return {partita:Object.assign(toC(F.p),{mvp:F.p.mvp.trim()||null,flop:F.p.flop.trim()||null}),
-    altre:F.a.filter(s=>s.casa||s.ospite||s.nota.trim()).map(s=>Object.assign(toC(s),{nota:s.nota.trim()||null}))};
-}
-function leggiForm(){
-  const g=id=>{const e=document.getElementById(id);return e?e.value:'';};
-  if(!document.getElementById('f-testo'))return;
-  F.n=g('f-n');F.data=g('f-data');F.titolo=g('f-titolo');F.testo=g('f-testo');
-  ['casa','ospite','g1','g2','p1','p2','mvp','flop'].forEach(k=>F.p[k]=g('p-'+k));
-  F.a=[...document.querySelectorAll('[data-sfida]')].map((el,i)=>{
-    const s={};['casa','ospite','g1','g2','p1','p2','nota'].forEach(k=>s[k]=g(`a${i}-${k}`));return s;});
-}
-/* aggiorna anteprima e pulsante senza ridisegnare il modulo
-   (ridisegnarlo farebbe perdere il cursore mentre si scrive) */
-function suInput(){
-  leggiForm();
-  lsSet('fantabun_bozza',JSON.stringify(F));
-  const ex=esistente(F.n);
-  const b=document.getElementById('f-pubblica');
-  if(b&&!INVIO)b.textContent=ex?`Aggiorna giornata ${F.n}`:'Pubblica';
-  const av=document.getElementById('f-avviso');
-  if(av)av.style.display=ex?'':'none';
-  const an=document.getElementById('f-anteprima');
-  if(an){
-    const c=contenutoDaF();
-    const pieno=F.testo.trim()||c.partita.casa||c.partita.ospite||c.altre.length;
-    an.innerHTML=pieno?articolo({n:+F.n||'?',data:F.data.trim(),titolo:F.titolo.trim(),testo:F.testo,contenuto:c})
-      :'<div class="note">L\'anteprima compare qui mentre scrivi.</div>';
+/* ---------- lettura del codice incollato ----------
+   Il codice ha la forma  GIORNATE[3] = { partitaDelGiorno:{...}, altreSfide:[...] };
+   Non lo eseguo (eval): lo leggo con un piccolo parser che capisce solo dati —
+   oggetti, liste, testi fra '…' "…" `…`, numeri, null/true/false, commenti. */
+function leggiLetterale(s){
+  let i=0;
+  const riga=()=>s.slice(0,i).split('\n').length;
+  const err=m=>{throw new Error(`${m} (riga ${riga()})`);};
+  function ws(){
+    for(;;){
+      if(/\s/.test(s[i]||'')){i++;continue;}
+      if(s.startsWith('//',i)){const j=s.indexOf('\n',i);i=j<0?s.length:j;continue;}
+      if(s.startsWith('/*',i)){const j=s.indexOf('*/',i+2);if(j<0)err('Commento non chiuso');i=j+2;continue;}
+      return;
+    }
   }
+  function testo(){
+    const q=s[i++];let out='';
+    while(i<s.length){
+      const c=s[i++];
+      if(c===q)return out;
+      if(c==='\\'){
+        const n=s[i++];
+        if(n==='n')out+='\n';else if(n==='t')out+='\t';else if(n==='r'){}
+        else if(n==='u'){out+=String.fromCharCode(parseInt(s.substr(i,4),16));i+=4;}
+        else if(n==='\n'){}else out+=n;
+        continue;
+      }
+      if(q==='`'&&c==='$'&&s[i]==='{')err('Nel testo non si può usare ${…}');
+      if(c==='\n'&&q!=='`')err('Testo tra virgolette non chiuso');
+      out+=c;
+    }
+    err('Testo non chiuso: manca '+q);
+  }
+  function chiave(){
+    ws();const c=s[i];
+    if(c==='"'||c==="'"||c==='`')return testo();
+    const m=/^[A-Za-z_$À-ÿ][\w$À-ÿ]*/.exec(s.slice(i));
+    if(!m)err('Nome di campo non valido');
+    i+=m[0].length;return m[0];
+  }
+  function valore(){
+    ws();const c=s[i];
+    if(c==='{'){i++;const o={};
+      for(;;){ws();if(s[i]==='}'){i++;return o;}
+        const k=chiave();ws();if(s[i]!==':')err(`Mancano i due punti dopo "${k}"`);i++;
+        o[k]=valore();ws();
+        if(s[i]===','){i++;continue;} if(s[i]==='}'){i++;return o;}
+        err('Manca una virgola o una } ');}
+    }
+    if(c==='['){i++;const a=[];
+      for(;;){ws();if(s[i]===']'){i++;return a;}
+        a.push(valore());ws();
+        if(s[i]===','){i++;continue;} if(s[i]===']'){i++;return a;}
+        err('Manca una virgola o una ]');}
+    }
+    if(c==='"'||c==="'"||c==='`')return testo();
+    const m=/^[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?/.exec(s.slice(i));
+    if(m){i+=m[0].length;return Number(m[0]);}
+    for(const [k,v] of [['null',null],['undefined',null],['true',true],['false',false]])
+      if(s.startsWith(k,i)){i+=k.length;return v;}
+    err('Valore non riconosciuto');
+  }
+  ws();
+  let n=null;
+  const pre=/^GIORNATE\s*\[\s*(\d+)\s*\]\s*=/.exec(s.slice(i))||/^(?:const|let|var)\s+[\w$]+\s*=/.exec(s.slice(i));
+  if(pre){if(pre[1])n=+pre[1];i+=pre[0].length;}
+  const o=valore();ws();if(s[i]===';')i++;ws();
+  if(i<s.length)err('C\'è del testo in più dopo la fine della giornata');
+  if(!o||typeof o!=='object'||Array.isArray(o))throw new Error('Il codice deve contenere una giornata { … }');
+  return {n,o};
 }
-function aggiungiSfida(){leggiForm();F.a.push(sfidaVuota());render();}
-function togliSfida(i){leggiForm();F.a.splice(i,1);if(!F.a.length)F.a.push(sfidaVuota());render();}
-function usate(){return [F.p.casa,F.p.ospite,...F.a.flatMap(s=>[s.casa,s.ospite])].filter(Boolean);}
+const norm=t=>String(t||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase()
+  .replace(/[^a-z0-9 ]+/g,' ').replace(/\b(fc|ac|ssc|cf|sc)\b/g,' ').replace(/\s+/g,' ').trim();
+/* nome squadra come lo scrive la redattrice → contrada (per logo e allenatore) */
+function trovaSquadra(nome,allenatore){
+  const nn=norm(nome),na=norm(allenatore).split(' ')[0];
+  const voci=Object.entries(SQUADRE);
+  let c=voci.filter(([k,s])=>norm(s.club)===nn);
+  if(!c.length&&nn.length>=3)c=voci.filter(([k,s])=>{const cn=norm(s.club);return cn.includes(nn)||nn.includes(cn);});
+  if(c.length!==1&&na)c=voci.filter(([k,s])=>norm(s.allenatore).split(' ').includes(na));
+  if(c.length===1)return c[0][0];
+  throw new Error(`Squadra non riconosciuta: "${nome||'(vuota)'}"`);
+}
+const num=v=>{if(v===null||v===undefined||v==='')return null;const n=Number(String(v).replace(',','.'));return Number.isFinite(n)?n:null;};
+function interpretaCodice(src){
+  const {n:nPre,o}=leggiLetterale(src);
+  const n=nPre??num(o.giornata);
+  if(!Number.isInteger(n)||n<1||n>38)throw new Error('Manca il numero della giornata: il codice deve iniziare con GIORNATE[numero] =');
+  const coppia=v=>[num(v&&v[0]),num(v&&v[1])];
+  const sfida=(x,dove)=>{
+    if(!x||typeof x!=='object')throw new Error(`${dove}: formato non valido`);
+    const sqs=Array.isArray(x.squadre)?x.squadre:[],al=Array.isArray(x.allenatori)?x.allenatori:[];
+    if(sqs.length!==2)throw new Error(`${dove}: servono due squadre`);
+    let casa,ospite;
+    try{casa=trovaSquadra(sqs[0],al[0]);ospite=trovaSquadra(sqs[1],al[1]);}catch(e){throw new Error(`${dove}: ${e.message}`);}
+    return {casa,ospite,gol:coppia(x.punteggio),punti:coppia(x.valori)};
+  };
+  const pd=o.partitaDelGiorno;
+  if(!pd)throw new Error('Manca partitaDelGiorno');
+  const partita=Object.assign(sfida(pd,'Partita del giorno'),{mvp:pd.mvp?String(pd.mvp):null,flop:pd.flop?String(pd.flop):null});
+  const altre=(Array.isArray(o.altreSfide)?o.altreSfide:[]).map((x,k)=>Object.assign(sfida(x,`Sfida ${k+2}`),{nota:x.nota?String(x.nota):null}));
+  const tutte=[partita,...altre].flatMap(x=>[x.casa,x.ospite]);
+  const dup=tutte.find((c,k)=>tutte.indexOf(c)!==k);
+  if(dup)throw new Error(`${sq(dup).club} compare in due sfide`);
+  return {n,data:o.data?String(o.data):'',titolo:o.titolo?String(o.titolo):'',testo:String(pd.testo||''),contenuto:{partita,altre}};
+}
+/* da una giornata salvata → codice nello stesso formato, per modificarla */
+function codiceDa(g){
+  const c=g.contenuto||{},p=c.partita||{};
+  const q=v=>v===null||v===undefined?'null':JSON.stringify(v);
+  const bt=t=>'`'+String(t||'').replace(/\\/g,'\\\\').replace(/`/g,'\\`').replace(/\$\{/g,'\\${')+'`';
+  const coppia=v=>`[${q(v&&v[0])}, ${q(v&&v[1])}]`;
+  const nomi=x=>`[${q(sq(x.casa).club)}, ${q(sq(x.ospite).club)}]`;
+  const all=x=>`[${q(sq(x.casa).allenatore||null)}, ${q(sq(x.ospite).allenatore||null)}]`;
+  const altre=(c.altre||[]).map(x=>`    {
+      squadre: ${nomi(x)},
+      allenatori: ${all(x)},
+      punteggio: ${coppia(x.gol)},
+      valori: ${coppia(x.punti)},
+      nota: ${q(x.nota||null)}
+    }`).join(',\n');
+  return `GIORNATE[${g.n}] = {
+${g.data?`  data: ${q(g.data)},\n`:''}${g.titolo?`  titolo: ${q(g.titolo)},\n`:''}  partitaDelGiorno: {
+    squadre: ${nomi(p)},
+    allenatori: ${all(p)},
+    punteggio: ${coppia(p.gol)},
+    valori: ${coppia(p.punti)},
+    testo: ${bt(g.testo)},
+    mvp: ${q(p.mvp||null)},
+    flop: ${q(p.flop||null)}
+  },
+  altreSfide: [
+${altre}
+  ],
+  media: []
+};`;
+}
 
+let CODICE='', ESITO=null;   /* ESITO = {ok, g, errore} dell'ultimo controllo */
+function controlla(){
+  const src=CODICE.trim();
+  if(!src){ESITO=null;return;}
+  try{ESITO={ok:true,g:interpretaCodice(src)};}
+  catch(e){ESITO={ok:false,errore:e.message};}
+}
+/* aggiorna esito e anteprima senza ridisegnare la textarea
+   (ridisegnarla farebbe perdere il cursore mentre si incolla o si scrive) */
+function suCodice(){
+  const el=document.getElementById('f-codice');if(el)CODICE=el.value;
+  lsSet('fantabun_bozza_codice',CODICE||null);
+  controlla();
+  const box=document.getElementById('f-esito'),an=document.getElementById('f-anteprima'),b=document.getElementById('f-pubblica');
+  if(box)box.innerHTML=esitoHTML();
+  if(an)an.innerHTML=ESITO&&ESITO.ok?articolo(ESITO.g,true):'<div class="note">L\'anteprima compare qui quando il codice è corretto.</div>';
+  if(b){b.disabled=INVIO||!(ESITO&&ESITO.ok);b.textContent=INVIO?'Invio…':(ESITO&&ESITO.ok&&esistente(ESITO.g.n))?`Aggiorna giornata ${ESITO.g.n}`:'Pubblica';}
+}
+function esitoHTML(){
+  if(!ESITO)return'';
+  if(!ESITO.ok)return `<div class="esito esito--ko"><b>Il codice non va ancora bene.</b> ${esc(ESITO.errore)}</div>`;
+  const g=ESITO.g,p=g.contenuto.partita;
+  return `<div class="esito esito--ok"><b>Giornata ${g.n} riconosciuta.</b>
+    ${esc(sq(p.casa).club)} ${fmt(p.gol[0])}–${fmt(p.gol[1])} ${esc(sq(p.ospite).club)} · ${g.contenuto.altre.length} altre sfide
+    ${esistente(g.n)?`<br><span class="esito__warn">La giornata ${g.n} è già pubblicata: pubblicando la sostituisci.</span>`:''}</div>`;
+}
 async function pubblica(){
-  leggiForm();
-  const n=+F.n;
-  if(!Number.isInteger(n)||n<1||n>38)return toast('Scegli una giornata da 1 a 38');
-  const contenuto=contenutoDaF();
-  const vuotaP=!contenuto.partita.casa&&!contenuto.partita.ospite;
-  if(!F.testo.trim()&&vuotaP&&!contenuto.altre.length)return toast('Il commento è vuoto');
-  const dup=usate().filter((c,i,a)=>a.indexOf(c)!==i);
-  if(dup.length)return toast(`${sq(dup[0]).club} compare in due sfide`);
+  controlla();
+  if(!ESITO||!ESITO.ok)return toast(ESITO?ESITO.errore:'Incolla prima il codice');
+  const g=ESITO.g;
   INVIO=true;render();
   try{
-    const r=await chiamaFunzione({tipo:'salva',giornata:n,data:F.data,titolo:F.titolo,testo:F.testo,contenuto});
+    const r=await chiamaFunzione({tipo:'salva',giornata:g.n,data:g.data,titolo:g.titolo,testo:g.testo,contenuto:g.contenuto});
     const nuova=daRiga(r.commento);
-    GIORNATE=(GIORNATE||[]).filter(g=>g.n!==nuova.n).concat(nuova);
-    F=fVuoto();lsSet('fantabun_bozza',null);
-    INVIO=false;toast(`Giornata ${n} pubblicata`);
+    GIORNATE=(GIORNATE||[]).filter(x=>x.n!==nuova.n).concat(nuova);
+    CODICE='';ESITO=null;lsSet('fantabun_bozza_codice',null);
+    INVIO=false;toast(`Giornata ${g.n} pubblicata`);
   }catch(e){INVIO=false;toast(e.message);}
 }
 function modifica(n){
   const g=esistente(n);if(!g)return;
-  F=daGiornataAF(g);
-  lsSet('fantabun_bozza',JSON.stringify(F));
+  CODICE=codiceDa(g);lsSet('fantabun_bozza_codice',CODICE);controlla();
   render();window.scrollTo({top:0,behavior:'smooth'});
 }
-function svuota(){F=fVuoto();lsSet('fantabun_bozza',null);render();}
+function svuota(){CODICE='';ESITO=null;lsSet('fantabun_bozza_codice',null);render();}
 async function elimina(){
   const n=CONF;CONF=null;INVIO=true;render();
   try{
@@ -632,85 +741,33 @@ async function elimina(){
     INVIO=false;toast(`Giornata ${n} eliminata`);
   }catch(e){INVIO=false;toast(e.message);}
 }
-function esci(){lsSet('fantabun_redazione',null);lsSet('fantabun_bozza',null);TOKEN=null;RED=null;location.hash='giornate';render();}
-
-function selSquadra(id,val){
-  const opz=Object.entries(SQUADRE).map(([k,s])=>({k,club:s.club,all:s.allenatore}))
-    .sort((a,b)=>a.club.localeCompare(b.club));
-  return `<select id="${id}" onchange="suInput()">
-    <option value="">— squadra —</option>
-    ${opz.map(o=>`<option value="${o.k}" ${o.k===val?'selected':''}>${esc(o.club)} · ${esc(o.all)}</option>`).join('')}
-  </select>`;
-}
-const inp=(id,val,ph,extra)=>`<input id="${id}" value="${esc(val)}" placeholder="${ph||''}" oninput="suInput()" ${extra||''}>`;
-const numInp=(id,val,ph)=>inp(id,val,ph,'inputmode="decimal" class="corto"');
-function righeSfida(pre,s){
-  return `<div class="duello">
-    <div class="duello__sq duello__c">${selSquadra(pre+'-casa',s.casa)}</div>
-    <div class="duello__n duello__g">${numInp(pre+'-g1',s.g1,'gol')}<span>–</span>${numInp(pre+'-g2',s.g2,'gol')}</div>
-    <div class="duello__sq duello__o">${selSquadra(pre+'-ospite',s.ospite)}</div>
-  </div>
-  <div class="duello duello--pt">
-    <span class="duello__lbl">fantapunti</span>
-    <div class="duello__n">${numInp(pre+'-p1',s.p1,'pt')}<span>·</span>${numInp(pre+'-p2',s.p2,'pt')}</div>
-    <span></span>
-  </div>`;
-}
+function esci(){lsSet('fantabun_redazione',null);lsSet('fantabun_bozza_codice',null);TOKEN=null;RED=null;location.hash='giornate';render();}
 
 function scrivi(){
   if(!RED)return giornate();
-  if(F.n==='')F.n=String(prossimaGiornata());
-  const n=F.n,ex=esistente(n);
+  controlla();
+  const ok=ESITO&&ESITO.ok;
   const pubb=(GIORNATE||[]).slice().sort((a,b)=>b.n-a.n);
   return `<div class="page">
-    <span class="eyebrow">Redazione · ${esc(RED.nome)}</span><h1 class="title">Scrivi un commento</h1>
-    <p class="lede">Quello che pubblichi compare subito nel tab Commento giornate, per tutti. La bozza si salva da sola su questo dispositivo.</p>
-
+    <span class="eyebrow">Redazione · ${esc(RED.nome)}</span><h1 class="title">Pubblica una giornata</h1>
+    <p class="lede">Incolla qui il codice della giornata, così come lo generi. Il controllo è immediato e l'anteprima compare sotto.</p>
     <div class="card" style="margin-top:22px">
-      <div class="fldrow">
-        <label class="fld"><span>Giornata</span><input id="f-n" type="number" min="1" max="38" value="${esc(n)}" oninput="suInput()"></label>
-        <label class="fld"><span>Data (facoltativa)</span>${inp('f-data',F.data,'es. 21 settembre','maxlength="60"')}</label>
+      <label class="fld" style="margin-bottom:10px"><span>Codice della giornata</span>
+        <textarea id="f-codice" class="codice" spellcheck="false" placeholder="GIORNATE[2] = {&#10;  partitaDelGiorno: { … },&#10;  altreSfide: [ … ],&#10;  media: []&#10;};" oninput="suCodice()">${esc(CODICE)}</textarea></label>
+      <div id="f-esito">${esitoHTML()}</div>
+      <div class="azioni" style="margin-top:14px">
+        <button class="btn btn--oro" id="f-pubblica" onclick="pubblica()" ${INVIO||!ok?'disabled':''}>${INVIO?'Invio…':ok&&esistente(ESITO.g.n)?`Aggiorna giornata ${ESITO.g.n}`:'Pubblica'}</button>
+        <button class="btn btn--ghost" onclick="svuota()" ${INVIO?'disabled':''}>Svuota</button>
       </div>
-      <label class="fld" style="margin-bottom:0"><span>Titolo (facoltativo)</span>${inp('f-titolo',F.titolo,'Il titolo della giornata','maxlength="200"')}</label>
+      <p class="hint" style="margin:14px 0 0">Le squadre si riconoscono dal nome (anche con emoji o “FC”) o dall'allenatore · nel testo, riga vuota = nuovo paragrafo e <code>**parola**</code> = <b>grassetto</b> · la bozza resta salvata su questo dispositivo.</p>
     </div>
-
-    <div class="card sez">
-      <h2 class="sub">Partita del giorno</h2>
-      ${righeSfida('p',F.p)}
-      <label class="fld" style="margin-top:14px"><span>Commento</span><textarea id="f-testo" placeholder="Com'è andata?" oninput="suInput()">${esc(F.testo)}</textarea></label>
-      <p class="hint">Riga vuota = nuovo paragrafo · <code>**parola**</code> = <b>grassetto</b></p>
-      <div class="fldrow fldrow--2">
-        <label class="fld"><span>MVP</span>${inp('p-mvp',F.p.mvp,'facoltativo','maxlength="80"')}</label>
-        <label class="fld"><span>Flop</span>${inp('p-flop',F.p.flop,'facoltativo','maxlength="80"')}</label>
-      </div>
-    </div>
-
-    <div class="card sez">
-      <h2 class="sub">Le altre sfide</h2>
-      ${F.a.map((s,i)=>`<div class="sfEd" data-sfida>
-        <div class="sfEd__hd"><span class="eyebrow" style="color:var(--grigio)">Sfida ${i+2}</span>
-          <button class="btn btn--sm btn--ghost" onclick="togliSfida(${i})" title="Rimuovi questa sfida">Rimuovi</button></div>
-        ${righeSfida('a'+i,s)}
-        <label class="fld" style="margin:12px 0 0"><span>Nota</span><textarea id="a${i}-nota" class="breve" placeholder="Due righe su com'è andata" oninput="suInput()">${esc(s.nota)}</textarea></label>
-      </div>`).join('')}
-      <button class="btn btn--sm btn--ghost" onclick="aggiungiSfida()" style="margin-top:4px">+ Aggiungi una sfida</button>
-      <p class="hint" style="margin:10px 0 0">Le sfide lasciate senza squadre non vengono pubblicate.</p>
-    </div>
-
-    <div class="avviso" id="f-avviso" style="margin-top:18px;${ex?'':'display:none'}">Questa giornata è già pubblicata: salvando sostituisci il commento esistente.</div>
-    <div class="azioni" style="margin-top:16px">
-      <button class="btn btn--oro" id="f-pubblica" onclick="pubblica()" ${INVIO?'disabled':''}>${INVIO?'Invio…':ex?`Aggiorna giornata ${esc(n)}`:'Pubblica'}</button>
-      <button class="btn btn--ghost" onclick="svuota()" ${INVIO?'disabled':''}>Svuota</button>
-    </div>
-
     <h2 class="sub" style="margin:32px 0 0">Anteprima</h2>
-    <div id="f-anteprima"></div>
-
+    <div id="f-anteprima">${ok?articolo(ESITO.g,true):'<div class="note">L\'anteprima compare qui quando il codice è corretto.</div>'}</div>
     <div class="card" style="margin-top:28px">
       <div class="card__hd"><h2 class="sub" style="margin:0">Già pubblicati</h2><span class="num mut">${pubb.length}</span></div>
       ${pubb.length?pubb.map(g=>`<div class="pubbl"><span class="pubbl__n">${g.n}</span>
-        <span class="pubbl__t">${esc(g.titolo||((g.contenuto&&g.contenuto.partita)?sq(g.contenuto.partita.casa).club+' – '+sq(g.contenuto.partita.ospite).club:'Giornata '+g.n))}</span>
-        <button class="btn btn--sm btn--ghost" onclick="modifica(${g.n})">Modifica</button>
+        <span class="pubbl__t">${sintesi(g)}</span>
+        <button class="btn btn--sm btn--ghost" onclick="modifica(${g.n})" title="Rimette il codice di questa giornata nel riquadro sopra">Modifica</button>
         <button class="btn btn--sm btn--rosso" onclick="CONF=${g.n};render()">Elimina</button></div>`).join('')
         :'<div class="note">Ancora nessun commento pubblicato.</div>'}
     </div>
@@ -753,7 +810,7 @@ function render(){
     `<a class="nav__tab ${t.cls||''}" href="#${t.id}" ${t.id===cur.id?'aria-current="page"':''} style="text-decoration:none"><span class="nl">${t.nome}</span><span class="nc">${t.corto||t.nome}</span></a>`).join('');
   const attivo=document.activeElement&&document.activeElement.id;
   document.getElementById('app').innerHTML=cur.vista()+(MSG?`<div class="toast">${esc(MSG)}</div>`:'');
-  if(cur.id==='scrivi'){suInput();if(attivo&&document.getElementById(attivo))document.getElementById(attivo).focus();}
+  if(cur.id==='scrivi'){suCodice();if(attivo&&document.getElementById(attivo))document.getElementById(attivo).focus();}
 }
 window.addEventListener('hashchange',()=>{SEL=null;CONF=null;render();window.scrollTo(0,0);
   const n=location.hash.split('/')[1];if(n)setTimeout(()=>vaiA(n),50);});
